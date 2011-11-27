@@ -62,7 +62,7 @@ public class Grid extends JPanel {
                             icon.colorize(color);
                         }
                     }
-                    Util.sleep(100);
+                    Util.sleep(500);
                     repaint();
                 }
             }
