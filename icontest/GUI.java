@@ -18,6 +18,8 @@ public class GUI extends JFrame {
         Color.MAGENTA,
     };
 
+    private final Color bgColor = new Color(0x444240);
+
     public GUI() {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -26,9 +28,14 @@ public class GUI extends JFrame {
         icon = new Icon();
 
         container = getContentPane();
-        container.setLayout(new BoxLayout(container, BoxLayout.LINE_AXIS));
+        container.setLayout(new GridLayout(3, 3));
         container.add(icon);
-        container.add(new Icon());
+        for (int i=0; i < 8; i++) {
+            container.add(new Icon());
+        }
+
+        this     .setBackground(bgColor);
+        container.setBackground(bgColor);
         //container.add(new JButton("A"));
         //container.add(new JButton("B"));
 

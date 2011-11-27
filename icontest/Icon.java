@@ -15,7 +15,7 @@ public class Icon extends JComponent {
     private ImageFilter filter;
 
     private Image image;
-    private File  file;
+    private Image overlay;
     private Color color;
 
     private final int width;
@@ -23,8 +23,6 @@ public class Icon extends JComponent {
     private final Dimension dimension;
 
     public Icon() {
-        file = new File("img/sprites/paula.png");
-
         width  = 64;
         height = 64;
 
@@ -33,20 +31,22 @@ public class Icon extends JComponent {
 
         dimension = new Dimension(width, height);
 
-        image = loadImage();
-        image = filterImage();
+        image = loadImage("img/sprites/paula.png");
+        image = filterImage(image);
+
+        overlay = loadImage("img/overlays/eating.png");
     }
 
-    private Image loadImage() {
+    private Image loadImage(String filename) {
         try {
             Image tmp;
 
-            tmp = ImageIO.read(file);
+            tmp = ImageIO.read(new File(filename));
 
             return tmp;
         }
         catch (IOException e) {
-            System.err.printf("File '%s' could not be read\n", file);
+            System.err.printf("File '%s' could not be read\n", filename);
             return null;
         }
     }
@@ -54,16 +54,30 @@ public class Icon extends JComponent {
     public void colorize(Color newColor) {
         color  = newColor;
         filter = new ColorizeFilter(color);
-        image  = filterImage();
+        image  = filterImage(image);
     }
 
-    private Image filterImage() {
+    private Image filterImage(Image image) {
         return createImage(new FilteredImageSource(image.getSource(), filter));
     }
 
     public Dimension getPreferredSize() { return dimension; }
 
     public void paintComponent(Graphics g) {
-        g.drawImage(image, 12, 12, 48, 48, null);
+        final int w = getWidth();
+        final int h = getHeight();
+
+        final int imageX = (int) (0.25 * w);
+        final int imageY = (int) (0.25 * h);
+        final int imageW = w - imageX;
+        final int imageH = h - imageY;
+
+        final int overlayX = 0;
+        final int overlayY = 0;
+        final int overlayW = w - imageW;
+        final int overlayH = h - imageH;
+
+        g.drawImage(image,     imageX,   imageY,   imageW,   imageH, null);
+        g.drawImage(overlay, overlayX, overlayY, overlayW, overlayH, null);
     }
 }
