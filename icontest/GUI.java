@@ -2,21 +2,22 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GUI extends JFrame {
-    public static final String TITLE = "Just another Java test";
+    private static final String TITLE = "Just another Java test";
 
     private Container container;
+
+    private Grid grid;
 
     public GUI() {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         setTitle(TITLE);
 
+        grid = new Grid(9, 9);
+
         container = getContentPane();
-        container.setLayout(new BoxLayout(container, BoxLayout.LINE_AXIS));
-        container.add(new Icon());
-        container.add(new Icon());
-        //container.add(new JButton("A"));
-        //container.add(new JButton("B"));
+
+        container.add(grid);
 
         pack();
 
