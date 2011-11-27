@@ -6,14 +6,11 @@ import java.awt.image.*;
 import java.io.*;
 
 public class Icon extends JComponent {
-    /*
-     * Image src = getImage("doc:///demo/images/duke/T1.gif");
-     * ImageFilter colorfilter = new RedBlueSwapFilter();
-     * Image img = createImage(new FilteredImageSource(src.getSource(), colorfilter));
-     */
+    private static final Color bgColor = new Color(0x141210);
 
     private ImageFilter filter;
 
+    private Image untainedImage;
     private Image image;
     private Image overlay;
     private Color color;
@@ -26,13 +23,14 @@ public class Icon extends JComponent {
         width  = 64;
         height = 64;
 
-        color  = Color.BLACK;
+        color  = Color.RED;
         filter = new ColorizeFilter(color);
 
         dimension = new Dimension(width, height);
 
+        untainedImage = loadImage("img/sprites/paula.png");
         image = loadImage("img/sprites/paula.png");
-        image = filterImage(image);
+        image = filterImage(untainedImage);
 
         overlay = loadImage("img/overlays/eating.png");
     }
@@ -54,7 +52,7 @@ public class Icon extends JComponent {
     public void colorize(Color newColor) {
         color  = newColor;
         filter = new ColorizeFilter(color);
-        image  = filterImage(image);
+        image  = filterImage(untainedImage);
     }
 
     private Image filterImage(Image image) {
@@ -76,6 +74,9 @@ public class Icon extends JComponent {
         final int overlayY = 0;
         final int overlayW = w - imageW;
         final int overlayH = h - imageH;
+
+        g.setColor(bgColor);
+        g.fillRect(0, 0, w, h);
 
         g.drawImage(image,     imageX,   imageY,   imageW,   imageH, null);
         g.drawImage(overlay, overlayX, overlayY, overlayW, overlayH, null);
