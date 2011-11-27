@@ -19,7 +19,7 @@ public class Icon extends JComponent {
     private final int height;
     private final Dimension dimension;
 
-    public Icon() {
+    public Icon(String filename) {
         width  = 64;
         height = 64;
 
@@ -28,8 +28,8 @@ public class Icon extends JComponent {
 
         dimension = new Dimension(width, height);
 
-        untainedImage = loadImage("img/sprites/paula.png");
-        image = loadImage("img/sprites/paula.png");
+        untainedImage = loadImage(filename);
+        image = loadImage(filename);
         image = filterImage(untainedImage);
 
         overlay = loadImage("img/overlays/eating.png");

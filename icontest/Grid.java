@@ -37,7 +37,10 @@ public class Grid extends JPanel {
 
         for (int r=0; r < rows; r++) {
             for (int c=0; c < cols; c++) {
-                Icon icon = new Icon();
+                String filename = Math.random() < 0.5
+                    ? "img/sprites/m.png"
+                    : "img/sprites/f.png";
+                Icon icon = new Icon(filename);
                 icons[r][c] = icon;
                 add(icon);
             }
@@ -59,7 +62,7 @@ public class Grid extends JPanel {
                             icon.colorize(color);
                         }
                     }
-                    Util.sleep(5);
+                    Util.sleep(100);
                     repaint();
                 }
             }
