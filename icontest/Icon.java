@@ -12,10 +12,11 @@ public class Icon extends JComponent {
      * Image img = createImage(new FilteredImageSource(src.getSource(), colorfilter));
      */
 
-    private final ImageFilter filter;
-    private final Image       image;
-    private final File        file;
-    private final Color       color;
+    private ImageFilter filter;
+
+    private Image image;
+    private File  file;
+    private Color color;
 
     private final int width;
     private final int height;
@@ -24,15 +25,16 @@ public class Icon extends JComponent {
     public Icon() {
         file = new File("img/sprites/paula.png");
 
-        width  = 32;
-        height = 32;
+        width  = 64;
+        height = 64;
 
-        color  = Color.GREEN;
+        color  = Color.BLACK;
         filter = new ColorizeFilter(color);
 
         dimension = new Dimension(width, height);
 
         image = loadImage();
+        image = filterImage();
     }
 
     private Image loadImage() {
@@ -40,7 +42,6 @@ public class Icon extends JComponent {
             Image tmp;
 
             tmp = ImageIO.read(file);
-            tmp = createImage(new FilteredImageSource(tmp.getSource(), filter));
 
             return tmp;
         }
@@ -50,9 +51,19 @@ public class Icon extends JComponent {
         }
     }
 
+    public void colorize(Color newColor) {
+        color  = newColor;
+        filter = new ColorizeFilter(color);
+        image  = filterImage();
+    }
+
+    private Image filterImage() {
+        return createImage(new FilteredImageSource(image.getSource(), filter));
+    }
+
     public Dimension getPreferredSize() { return dimension; }
 
     public void paintComponent(Graphics g) {
-        g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+        g.drawImage(image, 12, 12, 48, 48, null);
     }
 }

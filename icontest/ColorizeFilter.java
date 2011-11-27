@@ -14,7 +14,6 @@ public class ColorizeFilter extends RGBImageFilter {
     }
 
     public int filterRGB(int x, int y, int rgb) {
-        // Use input alpha but ignore the color... for now.
         int filterR = color.getRed();
         int filterG = color.getGreen();
         int filterB = color.getBlue();
