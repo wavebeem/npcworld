@@ -6,20 +6,29 @@ import java.awt.image.*;
 import java.io.*;
 
 public class Icon extends JComponent {
-    private static final String FILE = "img/test.png";
+    /*
+     * Image src = getImage("doc:///demo/images/duke/T1.gif");
+     * ImageFilter colorfilter = new RedBlueSwapFilter();
+     * Image img = createImage(new FilteredImageSource(src.getSource(), colorfilter));
+     */
 
-    private final Image image;
-    private final File  file;
+    private final ImageFilter filter;
+    private final Image       image;
+    private final File        file;
+    private final Color       color;
 
     private final int width;
     private final int height;
     private final Dimension dimension;
 
     public Icon() {
-        file = new File(FILE);
+        file = new File("img/sprites/paula.png");
 
         width  = 32;
         height = 32;
+
+        color  = Color.GREEN;
+        filter = new ColorizeFilter(color);
 
         dimension = new Dimension(width, height);
 
@@ -28,7 +37,12 @@ public class Icon extends JComponent {
 
     private Image loadImage() {
         try {
-            return ImageIO.read(file);
+            Image tmp;
+
+            tmp = ImageIO.read(file);
+            tmp = createImage(new FilteredImageSource(tmp.getSource(), filter));
+
+            return tmp;
         }
         catch (IOException e) {
             System.err.printf("File '%s' could not be read\n", file);
