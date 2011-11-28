@@ -1,4 +1,5 @@
 import javax.swing.border.*;
+import javax.swing.UIManager.*;
 import javax.swing.*;
 import java.awt.image.*;
 import java.awt.geom.*;
@@ -17,19 +18,44 @@ public class Util {
 
     public static Image loadImage(String filename) {
         try {
-            Image tmp;
-
-            tmp = ImageIO.read(new File(filename));
+            Image tmp = ImageIO.read(new File(filename));
 
             return tmp;
         }
         catch (IOException e) {
             System.err.printf("File '%s' could not be read\n", filename);
+
             return null;
         }
     }
 
     public static Border makeBorder(int size) {
         return BorderFactory.createEmptyBorder(size, size, size, size);
+    }
+
+    public static void tryForNiceTheme() {
+        try {
+            for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (Exception e) {
+        }
+    }
+
+    public static JLabel leftLabel(String text) {
+        JLabel label = new JLabel(text);
+        label.setHorizontalAlignment(JLabel.LEFT);
+
+        return label;
+    }
+
+    public static JLabel rightLabel(String text) {
+        JLabel label = new JLabel(text);
+        label.setHorizontalAlignment(JLabel.RIGHT);
+
+        return label;
     }
 }

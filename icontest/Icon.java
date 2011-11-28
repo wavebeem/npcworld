@@ -31,8 +31,8 @@ public class Icon extends JComponent {
     private final Dimension dimension;
 
     public Icon(int gender) {
-        width  = 64;
-        height = 64;
+        width  = 68;
+        height = 68;
 
         fontSize = 14;
         font = new Font(Font.MONOSPACED, Font.BOLD, fontSize);

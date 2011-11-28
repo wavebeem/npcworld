@@ -9,19 +9,22 @@ public class Sidebar extends JPanel {
 
     private LayoutManager layout;
 
+    private static final String[] items = {
+        "Population size:",
+        "Oldest age:",
+        "Average age:",
+        "Youngest age:",
+    };
+
     public Sidebar() {
-        layout = new GridLayout(0, 2, gapH, gapV);
+        layout = new GridLayout(0, 4, gapH, gapV);
 
         setLayout(layout);
 
-        add(new JButton("1"));
-        add(new JButton("2"));
-        add(new JButton("3"));
-        add(new JButton("4"));
-        add(new JButton("5"));
-        add(new JButton("6"));
-        add(new JButton("7"));
-        add(new JButton("8"));
+        for (String item: items) {
+            add(Util.rightLabel(item));
+            add(Util.leftLabel("<null>"));
+        }
 
         setBorder(Util.makeBorder(borderW));
     }

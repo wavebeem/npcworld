@@ -15,6 +15,8 @@ public class GUI extends JFrame {
     private Sidebar sidebar;
 
     public GUI() {
+        Util.tryForNiceTheme();
+
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         setTitle(TITLE);
@@ -28,8 +30,8 @@ public class GUI extends JFrame {
         sidebar = new Sidebar();
 
         container.add(grid,    BorderLayout.CENTER);
-        container.add(toolbar, BorderLayout.SOUTH);
-        container.add(sidebar, BorderLayout.EAST);
+        container.add(toolbar, BorderLayout.NORTH);
+        container.add(sidebar, BorderLayout.SOUTH);
 
         pack();
 
