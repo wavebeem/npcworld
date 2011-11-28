@@ -45,7 +45,7 @@ public class NpcWorld implements World {
     }
 
     private Individual mate(Individual i1, Individual i2) {
-        System.out.println("Mating two individuals);
+        System.out.println("Mating two individuals");
         return null;
     }
 }
