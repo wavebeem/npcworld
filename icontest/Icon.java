@@ -74,15 +74,17 @@ public class Icon extends JComponent {
         final int w = getWidth();
         final int h = getHeight();
 
-        final int imageX = (int) (0.25 * w);
-        final int imageY = (int) (0.25 * h);
-        final int imageW = w - imageX;
-        final int imageH = h - imageY;
+        final int dim = Math.min(w, h);
 
-        final int overlayW = w - imageW;
-        final int overlayH = h - imageH;
+        final int overlayW = Math.max(16, (int) (dim * 0.25));
+        final int overlayH = Math.max(16, (int) (dim * 0.25));
         final int overlayX = 0;
         final int overlayY = h - overlayH;
+
+        final int imageW = dim - overlayW;
+        final int imageH = dim - overlayH;
+        final int imageX = w - imageW;
+        final int imageY = h - imageH;
 
         g.setColor(bgColor);
         g.fillRect(0, 0, w, h);
