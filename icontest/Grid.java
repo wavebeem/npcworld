@@ -60,6 +60,7 @@ public class Grid extends JPanel {
                     for (Icon[] row: icons) {
                         for (Icon icon: row) {
                             icon.colorize(color);
+                            icon.happyBirthday();
                         }
                     }
                     Util.sleep(500);

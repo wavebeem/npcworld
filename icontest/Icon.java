@@ -7,6 +7,9 @@ import java.io.*;
 
 public class Icon extends JComponent {
     private static final Color bgColor = new Color(0x141210);
+    private static final Color fgColor = new Color(0xffffff);
+
+    private int fontSize;
 
     private ImageFilter filter;
 
@@ -14,6 +17,8 @@ public class Icon extends JComponent {
     private Image image;
     private Image overlay;
     private Color color;
+    private Font  font;
+    private int   age;
 
     private final int width;
     private final int height;
@@ -22,6 +27,11 @@ public class Icon extends JComponent {
     public Icon(String filename) {
         width  = 64;
         height = 64;
+
+        fontSize = 14;
+        font = new Font(Font.MONOSPACED, Font.BOLD, fontSize);
+
+        age = 0;
 
         color  = Color.RED;
         filter = new ColorizeFilter(color);
@@ -49,6 +59,10 @@ public class Icon extends JComponent {
         }
     }
 
+    public void happyBirthday() {
+        age++;
+    }
+
     public void colorize(Color newColor) {
         color  = newColor;
         filter = new ColorizeFilter(color);
@@ -70,15 +84,19 @@ public class Icon extends JComponent {
         final int imageW = w - imageX;
         final int imageH = h - imageY;
 
-        final int overlayX = 0;
-        final int overlayY = 0;
         final int overlayW = w - imageW;
         final int overlayH = h - imageH;
+        final int overlayX = 0;
+        final int overlayY = h - overlayH;
 
         g.setColor(bgColor);
         g.fillRect(0, 0, w, h);
 
         g.drawImage(image,     imageX,   imageY,   imageW,   imageH, null);
         g.drawImage(overlay, overlayX, overlayY, overlayW, overlayH, null);
+
+        g.setColor(fgColor);
+        g.setFont(font);
+        g.drawString("" + age, 0, fontSize);
     }
 }
