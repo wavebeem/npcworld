@@ -1,6 +1,9 @@
 /*
  * @author afisher
  */
+
+import java.util.HashMap;
+
 public class NpcPopulation implements Population {
     private HashMap<Integer, NpcIndividual> individuals; // key is the ID#
 
@@ -10,7 +13,7 @@ public class NpcPopulation implements Population {
 
     public int getMaxAge() {
         int max = 0;
-        for (Individual i : individuals) {
+        for (Individual i : individuals.values()) {
             int cur = i.getAge();
             if (cur > max) max = cur;
         }
@@ -19,7 +22,7 @@ public class NpcPopulation implements Population {
 
     public int getMinAge() {
         int min = Integer.MAX_VALUE;
-        for (Individual i : individuals) {
+        for (Individual i : individuals.values()) {
             int cur = i.getAge();
             if (cur < min) min = cur;
         }
@@ -28,7 +31,7 @@ public class NpcPopulation implements Population {
 
     public int getAverageAge() {
         int total = 0;
-        for (Individual i : individuals) {
+        for (Individual i : individuals.values()) {
             total += i.getAge();
         }
         return total / individuals.size();
@@ -37,11 +40,11 @@ public class NpcPopulation implements Population {
     public int getSize() { return individuals.size(); }
 
     public void add(Individual i) {
-        individuals.put((NpcIndividual) i.getID(), i);
+        individuals.put(((NpcIndividual) i).getID(), (NpcIndividual) i);
     }
 
     public void remove(Individual i) {
-        individuals.remove((NpcIndividual) i.getID());
+        individuals.remove(((NpcIndividual) i).getID());
     }
 
     public void remove(int id) {
