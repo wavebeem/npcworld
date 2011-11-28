@@ -4,6 +4,10 @@
 public class NpcPopulation implements Population {
     private HashMap<Integer, NpcIndividual> individuals; // key is the ID#
 
+    public NpcPopulation() {
+        individuals = new HashMap<Integer, NpcIndividual>();
+    }
+
     public int getMaxAge() {
         int max = 0;
         for (Individual i : individuals) {

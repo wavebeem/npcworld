@@ -2,16 +2,29 @@
  * @author afisher
  */
 public class NpcWorld implements World {
-    private Population population;
+    private NpcPopulation population;
 
     private boolean running;
     private int     runSpeed;
 
     private int oldAge;
 
-    private double mutationPercent;
-    private double crossoverPercent;
+    private double mutationChance;
+    private double crossoverChance;
     private double deathChance;
+
+    public NpcWorld() {
+        population = new NpcPopulation();
+
+        running = false;
+        runSpeed = 1;
+
+        oldAge = 100;
+
+        mutationChance = 0.1;
+        crossoverChance = 0.1;
+        deathChance = 0.01;
+    }
 
     private Dna crossover(Dna d1, Dna d2) {
         System.out.println("Crossing over!");
