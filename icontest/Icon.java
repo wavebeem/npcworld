@@ -34,8 +34,7 @@ public class Icon extends JComponent {
         width  = 68;
         height = 68;
 
-        fontSize = 14;
-        font = new Font(Font.MONOSPACED, Font.BOLD, fontSize);
+        setFontSize(16);
 
         age = 0;
 
@@ -52,6 +51,14 @@ public class Icon extends JComponent {
         image = filterImage(untaintedImage);
 
         overlay = overlayEating;
+    }
+
+    private void setFontSize(int size) {
+        if (fontSize == size)
+            return;
+
+        fontSize = size;
+        font     = new Font(Font.MONOSPACED, Font.BOLD, fontSize);
     }
 
     public void happyBirthday() {
@@ -93,6 +100,7 @@ public class Icon extends JComponent {
         g.drawImage(overlay, overlayX, overlayY, overlayW, overlayH, null);
 
         g.setColor(fgColor);
+        setFontSize(overlayH - 4);
         g.setFont(font);
         g.drawString("" + age, 0, fontSize);
     }
