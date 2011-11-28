@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Grid extends JPanel {
-    private final Color bgColor = new Color(0x242220);
+    private final Color bgColor = new Color(0x222222);
 
     private final Color[] rainbow = {
         Color.RED,

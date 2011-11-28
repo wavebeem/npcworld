@@ -5,7 +5,7 @@ import java.awt.image.*;
 import java.io.*;
 
 public class Icon extends JComponent {
-    private static final Color bgColor = new Color(0x141210);
+    private static final Color bgColor = new Color(0x111111);
     private static final Color fgColor = new Color(0xffffff);
 
     private static final Image overlayEating   = Util.loadImage("img/overlays/eating.png");
