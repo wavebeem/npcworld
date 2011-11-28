@@ -26,30 +26,30 @@ public class NpcWorld implements World {
         deathChance = 0.01;
     }
 
-    private Dna crossover(Dna d1, Dna d2) {
+    public Dna crossover(Dna d1, Dna d2) {
         System.out.println("Crossing over!");
         return null;
     }
 
-    private Dna mutate(Dna d) {
+    public Dna mutate(Dna d) {
         System.out.println("Mutating some DNA!");
         return null;
     }
 
-    private Population merge(Population p1, Population p2) {
+    public Population merge(Population p1, Population p2) {
         System.out.println("Merging two populations");
         return null;
     }
 
-    private void step() {
+    public void step() {
         System.out.println("One step");
     }
 
-    private void run() {
+    public void run() {
         System.out.println("Running the simulation");
     }
 
-    private void reproduce() {
+    public void reproduce() {
         System.out.println("Reproducing");
     }
 
@@ -57,7 +57,7 @@ public class NpcWorld implements World {
         running = !running;
     }
 
-    private Individual mate(Individual i1, Individual i2) {
+    public Individual mate(Individual i1, Individual i2) {
         System.out.println("Mating two individuals");
         return null;
     }
