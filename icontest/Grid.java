@@ -37,10 +37,8 @@ public class Grid extends JPanel {
 
         for (int r=0; r < rows; r++) {
             for (int c=0; c < cols; c++) {
-                String filename = Math.random() < 0.5
-                    ? "img/sprites/m.png"
-                    : "img/sprites/f.png";
-                Icon icon = new Icon(filename);
+                int gender = Math.random() < 0.5 ? 0 : 1;
+                Icon icon = new Icon(gender);
                 icons[r][c] = icon;
                 add(icon);
             }

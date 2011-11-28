@@ -1,5 +1,4 @@
 import javax.swing.*;
-import javax.imageio.*;
 import java.awt.*;
 import java.awt.geom.*;
 import java.awt.image.*;
@@ -9,11 +8,18 @@ public class Icon extends JComponent {
     private static final Color bgColor = new Color(0x141210);
     private static final Color fgColor = new Color(0xffffff);
 
+    private static final Image overlayEating   = Util.loadImage("img/overlays/eating.png");
+    private static final Image overlayMating   = Util.loadImage("img/overlays/mating.png");
+    private static final Image overlaySleeping = Util.loadImage("img/overlays/sleeping.png");
+
+    private static final Image imageMale   = Util.loadImage("img/sprites/m.png");
+    private static final Image imageFemale = Util.loadImage("img/sprites/f.png");
+
     private int fontSize;
 
     private ImageFilter filter;
 
-    private Image untainedImage;
+    private Image untaintedImage;
     private Image image;
     private Image overlay;
     private Color color;
@@ -24,7 +30,7 @@ public class Icon extends JComponent {
     private final int height;
     private final Dimension dimension;
 
-    public Icon(String filename) {
+    public Icon(int gender) {
         width  = 64;
         height = 64;
 
@@ -38,25 +44,14 @@ public class Icon extends JComponent {
 
         dimension = new Dimension(width, height);
 
-        untainedImage = loadImage(filename);
-        image = loadImage(filename);
-        image = filterImage(untainedImage);
+        untaintedImage =
+            gender == Const.MALE?   imageMale:
+            gender == Const.FEMALE? imageFemale:
+            null;
+        image = untaintedImage;
+        image = filterImage(untaintedImage);
 
-        overlay = loadImage("img/overlays/eating.png");
-    }
-
-    private Image loadImage(String filename) {
-        try {
-            Image tmp;
-
-            tmp = ImageIO.read(new File(filename));
-
-            return tmp;
-        }
-        catch (IOException e) {
-            System.err.printf("File '%s' could not be read\n", filename);
-            return null;
-        }
+        overlay = overlayEating;
     }
 
     public void happyBirthday() {
@@ -66,7 +61,7 @@ public class Icon extends JComponent {
     public void colorize(Color newColor) {
         color  = newColor;
         filter = new ColorizeFilter(color);
-        image  = filterImage(untainedImage);
+        image  = filterImage(untaintedImage);
     }
 
     private Image filterImage(Image image) {
