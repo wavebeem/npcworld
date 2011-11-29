@@ -30,6 +30,8 @@ public class NpcPopulation implements Population {
     }
 
     public int getAverageAge() {
+        if (individuals.size() == 0) return 0;
+
         int total = 0;
         for (Individual i : individuals.values()) {
             total += i.getAge();
