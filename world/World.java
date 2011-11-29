@@ -8,7 +8,6 @@ public interface World {
     public Population merge(Population p1, Population p2);
 
     public void step();
-    public void run();
     public void reproduce();
 
     public Individual mate(Individual i1, Individual i2);
