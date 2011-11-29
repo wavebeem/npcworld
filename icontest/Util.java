@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.image.*;
 import java.awt.geom.*;
 import java.awt.*;
+import java.awt.event.*;
 import javax.imageio.*;
 import java.io.*;
 
@@ -57,5 +58,12 @@ public class Util {
         label.setHorizontalAlignment(JLabel.RIGHT);
 
         return label;
+    }
+
+    public static JButton clickableButton(String text, ActionListener listener) {
+        JButton button = new JButton(text);
+        button.addActionListener(listener);
+
+        return button;
     }
 }

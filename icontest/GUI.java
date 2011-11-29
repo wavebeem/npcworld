@@ -26,7 +26,7 @@ public class GUI extends JFrame {
         container = getContentPane();
 
         grid    = new Grid(9, 9);
-        toolbar = new Toolbar();
+        toolbar = new Toolbar(this);
         infobar = new Infobar();
 
         container.add(grid,    BorderLayout.CENTER);
