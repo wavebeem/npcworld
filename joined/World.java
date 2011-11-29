@@ -7,6 +7,8 @@ public interface World {
 
     public Population merge(Population p1, Population p2);
 
+    public Population getPopulation();
+
     public void step();
     public void reproduce();
 

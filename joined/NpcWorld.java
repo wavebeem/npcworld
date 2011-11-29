@@ -48,6 +48,10 @@ public class NpcWorld implements World {
         System.out.println("Reproducing");
     }
 
+    public Population getPopulation() {
+        return population;
+    }
+
     public Individual mate(Individual i1, Individual i2) {
         System.out.println("Mating two individuals");
         return null;

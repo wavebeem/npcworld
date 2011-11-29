@@ -38,7 +38,7 @@ public class GUI extends JFrame {
 
         grid    = new Grid(9, 9);
         toolbar = new Toolbar(this);
-        infobar = new Infobar();
+        infobar = new Infobar(this);
 
         container.add(grid,    BorderLayout.CENTER);
         container.add(toolbar, BorderLayout.NORTH);
@@ -47,6 +47,11 @@ public class GUI extends JFrame {
         pack();
 
         setVisible(true);
+    }
+
+    public void step() {
+        world.step();
+        infobar.fillInfo();
     }
 
     public World getWorld() {
@@ -88,7 +93,7 @@ public class GUI extends JFrame {
     private class RunnerThread extends Thread {
         public void run() {
             while (running) {
-                world.step();
+                step();
                 Util.sleep(runDelay);
             }
         }

@@ -9,23 +9,52 @@ public class Infobar extends JPanel {
 
     private LayoutManager layout;
 
-    private static final String[] items = {
-        "Population size:",
-        "Oldest age:",
-        "Average age:",
-        "Youngest age:",
+    private GUI gui;
+
+    private static final String[][] fields = {
+        {"Population size:", "<null>"},
+        {"Oldest age:",      "<null>"},
+        {"Average age:",     "<null>"},
+        {"Youngest age:",    "<null>"},
     };
 
-    public Infobar() {
+    private JLabel[] valueLabels;
+
+    public Infobar(GUI gui) {
+        this.gui = gui;
+
         layout = new GridLayout(0, 4, gapH, gapV);
 
         setLayout(layout);
 
-        for (String item: items) {
-            add(Util.rightLabel(item));
-            add(Util.leftLabel("<null>"));
+        valueLabels = new JLabel[fields.length];
+
+        int i = 0;
+        for (String[] pair: fields) {
+            final String a = pair[0];
+            final String b = pair[1];
+
+            JLabel c = Util.rightLabel(a);
+            JLabel d = Util.leftLabel(b);
+
+            valueLabels[i] = d;
+
+            add(c);
+            add(d);
+
+            i++;
         }
 
         setBorder(Util.makeBorder(borderW));
+    }
+
+    public void fillInfo() {
+        Population pop = gui.getWorld().getPopulation();
+
+        // Change the label values here... TODO
+        valueLabels[0].setText("" + pop.getSize());
+        valueLabels[1].setText("" + pop.getMaxAge());
+        valueLabels[2].setText("" + pop.getAverageAge());
+        valueLabels[3].setText("" + pop.getMinAge());
     }
 }
