@@ -11,6 +11,10 @@ public class NpcPopulation implements Population {
         individuals = new HashMap<Integer, NpcIndividual>();
     }
 
+    public HashMap<Integer, NpcIndividual> getIndividuals() {
+        return individuals;
+    }
+
     public int getMaxAge() {
         if (individuals.size() == 0) return 0;
 
