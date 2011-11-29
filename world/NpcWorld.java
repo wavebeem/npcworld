@@ -13,9 +13,6 @@ public class NpcWorld implements World {
     public NpcWorld() {
         population = new NpcPopulation();
 
-        running = false;
-        runSpeed = 1;
-
         oldAge = 100;
 
         mutationChance = 0.1;
