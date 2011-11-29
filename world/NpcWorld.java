@@ -4,9 +4,6 @@
 public class NpcWorld implements World {
     private NpcPopulation population;
 
-    private boolean running;
-    private int     runSpeed;
-
     private int oldAge;
 
     private double mutationChance;
@@ -15,9 +12,6 @@ public class NpcWorld implements World {
 
     public NpcWorld() {
         population = new NpcPopulation();
-
-        running = false;
-        runSpeed = 1;
 
         oldAge = 100;
 
@@ -45,16 +39,8 @@ public class NpcWorld implements World {
         System.out.println("One step");
     }
 
-    public void run() {
-        System.out.println("Running the simulation");
-    }
-
     public void reproduce() {
         System.out.println("Reproducing");
-    }
-
-    private void toggleRunning() {
-        running = !running;
     }
 
     public Individual mate(Individual i1, Individual i2) {
