@@ -1,25 +1,26 @@
 import java.util.ArrayList;
 import java.awt.*;
+import javax.swing.JComponent;
 
 /*
  * @author tgriswol
  */
 public class NpcIndividual implements Individual {
 	private NpcDna dna;
-	private Image sprite;
-	private static Image[] icons;
 	private int ID, age, currentAction, stepsRemaining, hunger, sleepiness;
-	
+        private Icon icon;
+
 	public NpcIndividual(){
 		dna = new NpcDna();
+                icon = new Icon(dna.getGender());
 	}
-	
+
 	public Dna getDna(){
 		return dna;
 	}
-	public Image getImage(){
-		return null; //Brian?
-	}
+	public JComponent getWidget() {
+                return icon;
+        }
 	public int getAge(){
 		return age;
 	}

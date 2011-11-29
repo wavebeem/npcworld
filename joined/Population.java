@@ -3,7 +3,7 @@
  */
 public interface Population {
     public int getMaxAge();
-    public int getMinAge(); 
+    public int getMinAge();
     public int getAverageAge();
     public int getSize();
 
