@@ -1,3 +1,4 @@
+import java.util.Collection;
 /*
  * @author afisher
  */
@@ -17,8 +18,12 @@ public class NpcPopulation implements Population {
         individuals = new HashMap<Integer, NpcIndividual>();
     }
 
-    public HashMap<Integer, NpcIndividual> getIndividuals() {
-        return individuals;
+    public Collection<Integer> getKeys() {
+        return individuals.keySet();
+    }
+
+    public Individual get(Integer k) {
+        return individuals.get(k);
     }
 
     public int getMaxAge() {

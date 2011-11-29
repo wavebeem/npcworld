@@ -78,11 +78,11 @@ public class NpcWorld implements World {
         System.out.println("Step number " + stepNumber);
         stepNumber++;
 
-        ArrayList<Integer> keys = new ArrayList<Integer>(population.getIndividuals().keySet());
+        ArrayList<Integer> keys = new ArrayList<Integer>(population.getKeys());
         Collections.shuffle(keys);
 
         for (Integer k : keys) {
-            Individual curIndividual = population.getIndividuals().get(k);
+            Individual curIndividual = population.get(k);
 
             // make the individual choose an action and act on it
             // based on the current state of the population
