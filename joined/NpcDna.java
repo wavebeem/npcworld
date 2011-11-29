@@ -2,27 +2,40 @@
  * @author tgriswol
  */
 public class NpcDna implements Dna {
+	public static final nucleotideSize = 1;
 	private boolean[] nucleotides;
 	private int eatingDuration, sleepDuration, gender;
 	
 	public NpcDna(){
-		nucleotides = new boolean[1];
+		initNucleotides();
 		initEatingDuration();
 		initSleepDuration();
 		initGender();
 	}
 	
+	public void initNucleotides(){
+		nucleotides = new boolean[nucleotideSize];
+		for(int idx = 0; idx < nucleotideSize; idx++){
+			if(Util.random.nextInt(2) == 0) (Random number between 0 and 1)
+				nucleotides[idx] = true; 
+			else
+				nucleotides[idx] = false; 
+		}
+	}
 	private void initEatingDuration(){
-		System.out.println("Initializing the EatingDuration base of nucleotides.");
-		eatingDuration = 0;
+		System.out.println("Initializing the EatingDuration based off nucleotides.");
+		eatingDuration = 1;
 	}
 	private void initSleepDuration(){
-		System.out.println("Initializing the SleepDuration base of nucleotides.");
-		sleepDuration = 0;
+		System.out.println("Initializing the SleepDuration based off nucleotides.");
+		sleepDuration = 1;
 	}
 	private void initGender(){
-		System.out.println("Initializing the Gender base of nucleotides.");
-		gender = 0;
+		System.out.println("Initializing the Gender based off nucleotides.");
+		if(nucleotides[1] == true)
+			gender = Const.MALE
+		else
+			gender = Const.FEMALE;
 	}
 	
 	public int getEatingDuration(){

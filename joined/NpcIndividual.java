@@ -7,7 +7,6 @@ import java.awt.*;
 public class NpcIndividual implements Individual {
 	private NpcDna dna;
 	private Image sprite;
-	private static Image[] icons;
 	private int ID, age, currentAction, stepsRemaining, hunger, sleepiness;
 	
 	public NpcIndividual(){
@@ -17,7 +16,7 @@ public class NpcIndividual implements Individual {
 	public Dna getDna(){
 		return dna;
 	}
-	public Image getImage(){
+	public JComponent getImage(){
 		return null; //Brian?
 	}
 	public int getAge(){
@@ -55,7 +54,7 @@ public class NpcIndividual implements Individual {
 		sleepiness -= change;
 	}
 	public int chooseAction(ArrayList<Integer> availableActions){
-		System.out.println("Returning a chosen action");
-		return 0;
+		System.out.println("Returning a chosen action (first one right now)");
+		return availableActions.get(0);
 	}
 }
