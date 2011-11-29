@@ -20,6 +20,10 @@ public class NpcWorld implements World {
         deathChance = 0.01;
     }
 
+    public Population getPopulation() { 
+        return population;
+    }
+
     public Dna crossover(Dna d1, Dna d2) {
         System.out.println("Crossing over!");
         return null;
