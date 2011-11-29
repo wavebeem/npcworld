@@ -12,7 +12,7 @@ public class GUI extends JFrame {
 
     private Grid    grid;
     private Toolbar toolbar;
-    private Sidebar sidebar;
+    private Infobar infobar;
 
     public GUI() {
         Util.tryForNiceTheme();
@@ -27,11 +27,11 @@ public class GUI extends JFrame {
 
         grid    = new Grid(9, 9);
         toolbar = new Toolbar();
-        sidebar = new Sidebar();
+        infobar = new Infobar();
 
         container.add(grid,    BorderLayout.CENTER);
         container.add(toolbar, BorderLayout.NORTH);
-        container.add(sidebar, BorderLayout.SOUTH);
+        container.add(infobar, BorderLayout.SOUTH);
 
         pack();
 

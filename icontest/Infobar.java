@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class Sidebar extends JPanel {
+public class Infobar extends JPanel {
     private static final int gapV = 3;
     private static final int gapH = 3;
 
@@ -16,7 +16,7 @@ public class Sidebar extends JPanel {
         "Youngest age:",
     };
 
-    public Sidebar() {
+    public Infobar() {
         layout = new GridLayout(0, 4, gapH, gapV);
 
         setLayout(layout);
