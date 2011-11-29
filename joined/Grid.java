@@ -47,24 +47,5 @@ public class Grid extends JPanel {
         setBackground(bgColor);
 
         setBorder(Util.makeBorder(borderW));
-
-        new RainbowThread().start();
-    }
-
-    private class RainbowThread extends Thread {
-        public void run() {
-            while (true) {
-                for (Color color: rainbow) {
-                    for (Icon[] row: icons) {
-                        for (Icon icon: row) {
-                            icon.colorize(color);
-                            icon.happyBirthday();
-                        }
-                    }
-                    Util.sleep(500);
-                    repaint();
-                }
-            }
-        }
     }
 }
