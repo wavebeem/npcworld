@@ -12,6 +12,8 @@ public class NpcPopulation implements Population {
     }
 
     public int getMaxAge() {
+        if (individuals.size() == 0) return 0;
+
         int max = 0;
         for (Individual i : individuals.values()) {
             int cur = i.getAge();
@@ -21,6 +23,8 @@ public class NpcPopulation implements Population {
     }
 
     public int getMinAge() {
+        if (individuals.size() == 0) return 0;
+
         int min = Integer.MAX_VALUE;
         for (Individual i : individuals.values()) {
             int cur = i.getAge();
