@@ -1,0 +1,15 @@
+public class Settings {
+    public static final int POPULATION_SIZE = 50;
+	public static final int NUCLEOTIDES_SIZE = 5;
+	public static final double MUTATION_CHANCE = 0.1;
+	public static final double CROSSOVER_CHANCE = 0.1;
+	public static final int OLD_AGE = 100;
+	public static final double DEATH_CHANCE = 0.01;
+	public static final int EATING_CAPACITY = 10;
+	public static final int SLEEPING_CAPACITY = 10;
+	public static final int MATING_CAPACITY = 10;
+	public static final int MAX_HUNGER = 100;
+	public static final int MAX_SLEEPINESS = 50;
+	public static final int HUNGER_CHANGE = 3;
+	public static final int SLEEPINESS_CHANGE = 3;
+}
