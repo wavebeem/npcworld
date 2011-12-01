@@ -138,6 +138,8 @@ public class NpcWorld implements World {
             }
         }
 
+        ArrayList<NpcIndividual> matingPoolMales = new ArrayList<NpcIndividual>();
+        ArrayList<NpcIndividual> matingPoolFemales = new ArrayList<NpcIndividual>();
 
         for (Integer k : keys) {
             NpcIndividual curIndividual = (NpcIndividual)population.get(k);
@@ -166,6 +168,11 @@ public class NpcWorld implements World {
                     sleepingAvailability--;
                 } else if (action == Const.MATING) {
                     matingAvailability--;
+                    if (curIndividual.getGender() == Const.MALE) {
+                        matingPoolMales.add(curIndividual);
+                    } else {
+                        matingPoolFemales.add(curIndividual();
+                    }
                 }
             } 
             curIndividual.decreaseStepsRemaining(); 
@@ -184,12 +191,12 @@ public class NpcWorld implements World {
             if (curIndividual.getHunger() > maxHunger) {
                 population.remove(curIndividual);
             }
-
-            reproduce(); // mate the individuals who chose to mate
         }
+
+        reproduce(matingPoolMales, matingPoolFemales); // mate the individuals who chose to mate
     }
 
-    public void reproduce() {
+    public void reproduce(ArrayList<Individual> males, ArrayList<Individual> females) {
         System.out.println("Reproducing");
     }
 
