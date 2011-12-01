@@ -2,7 +2,7 @@
  * @author tgriswol
  */
 public class NpcDna implements Dna {
-	public static final nucleotideSize = 1;
+	public static final int nucleotideSize = 1;
 	private boolean[] nucleotides;
 	private int eatingDuration, sleepDuration, gender;
 	
@@ -32,8 +32,8 @@ public class NpcDna implements Dna {
 	}
 	private void initGender(){
 		Debug.echo("Initializing the Gender based off nucleotides.");
-		if(nucleotides[1] == true)
-			gender = Const.MALE
+		if(nucleotides[0] == true)
+			gender = Const.MALE;
 		else
 			gender = Const.FEMALE;
 	}
