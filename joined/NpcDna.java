@@ -16,22 +16,22 @@ public class NpcDna implements Dna {
 	public void initNucleotides(){
 		nucleotides = new boolean[nucleotideSize];
 		for(int idx = 0; idx < nucleotideSize; idx++){
-			if(Util.random.nextInt(2) == 0) (Random number between 0 and 1)
+			if(Util.random.nextInt(2) == 0) //(Random number between 0 and 1)
 				nucleotides[idx] = true; 
 			else
 				nucleotides[idx] = false; 
 		}
 	}
 	private void initEatingDuration(){
-		System.out.println("Initializing the EatingDuration based off nucleotides.");
+		Debug.echo("Initializing the EatingDuration based off nucleotides.");
 		eatingDuration = 1;
 	}
 	private void initSleepDuration(){
-		System.out.println("Initializing the SleepDuration based off nucleotides.");
+		Debug.echo("Initializing the SleepDuration based off nucleotides.");
 		sleepDuration = 1;
 	}
 	private void initGender(){
-		System.out.println("Initializing the Gender based off nucleotides.");
+		Debug.echo("Initializing the Gender based off nucleotides.");
 		if(nucleotides[1] == true)
 			gender = Const.MALE
 		else

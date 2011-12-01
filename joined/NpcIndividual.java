@@ -1,23 +1,25 @@
 import java.util.ArrayList;
 import java.awt.*;
+import javax.swing.JComponent;
 
 /*
  * @author tgriswol
  */
 public class NpcIndividual implements Individual {
 	private NpcDna dna;
-	private Image sprite;
 	private int ID, age, currentAction, stepsRemaining, hunger, sleepiness;
-	
+    private Icon icon;
+
 	public NpcIndividual(){
 		dna = new NpcDna();
+        icon = new Icon(dna.getGender());
 	}
 	
 	public Dna getDna(){
 		return dna;
 	}
-	public JComponent getImage(){
-		return null; //Brian?
+	public JComponent getWidget() {
+		return icon;
 	}
 	public int getAge(){
 		return age;
@@ -54,7 +56,7 @@ public class NpcIndividual implements Individual {
 		sleepiness -= change;
 	}
 	public int chooseAction(ArrayList<Integer> availableActions){
-		System.out.println("Returning a chosen action (first one right now)");
+		Debug.echo("Returning a chosen action (first one right now)");
 		return availableActions.get(0);
 	}
 }
