@@ -23,6 +23,9 @@ public class NpcWorld implements World {
     private int sleepingAvailability;
     private int matingAvailability;
 
+    private int hungerChange;
+    private int sleepinessChange;
+
     private int stepNumber;
 
     public NpcWorld() {
@@ -43,19 +46,33 @@ public class NpcWorld implements World {
         eatingAvailability   = eatingCapacity;
         sleepingAvailability = sleepingCapacity;
         matingAvailability   = matingCapacity;
+
+        hungerChange = 3;
+        sleepinessChange = 3;
     }
 
     // setters for capacities
     public void setEatingCapacity(int c) {
+        eatingAvailability += c - eatingCapacity; 
         eatingCapacity = c;
     }
 
     public void setSleepingCapacity(int c) {
+        sleepingAvailability += c - sleepingCapacity; 
         sleepingCapacity = c;
     }
 
     public void setMatingCapacity(int c) {
+        matingAvailability += c - matingCapacity; 
         matingCapacity = c;
+    }
+
+    public void setHungerChange(int c) {
+        hungerChange = c;
+    }
+
+    public void setSleepinessChange(int c) {
+        sleepinessChange = c;
     }
 
     // genetic operators
@@ -82,10 +99,46 @@ public class NpcWorld implements World {
         Collections.shuffle(keys);
 
         for (Integer k : keys) {
-            Individual curIndividual = population.get(k);
+            NpcIndividual curIndividual = (NpcIndividual)population.get(k);
 
             // make the individual choose an action and act on it
             // based on the current state of the population
+            if (curIndividual.getStepsRemaining() == 0) {
+                ArrayList<Integer> actions = new ArrayList<Integer>();
+                if (eatingAvailability > 0) {
+                    actions.add(Const.EATING);
+                }
+                if (sleepingAvailability > 0) {
+                    actions.add(Const.SLEEPING);
+                }
+                if (matingAvailability > 0) {
+                    actions.add(Const.MATING);
+                }
+
+                int action = curIndividual.chooseAction(actions);
+
+                //TODO update the individual's icon
+                if (action == Const.EATING) {
+                    eatingAvailability--;
+                } else if (action == Const.SLEEPING) {
+                    sleepingAvailability--;
+                } else if (action == Const.MATING) {
+                    matingAvailability--;
+                }
+            } 
+            curIndividual.decreaseStepsRemaining(); 
+
+            if (curIndividual.getCurrentAction() == Const.EATING) {
+                curIndividual.decreaseHunger(hungerChange);
+            } else if (curIndividual.getCurrentAction() == Const.SLEEPING) {
+                curIndividual.decreaseSleepiness(sleepinessChange);
+            }
+
+            curIndividual.increaseHunger();
+            curIndividual.increaseSleepiness();
+            curIndividual.increaseAge();
+
+            reproduce(); // mate the individuals who chose to mate
         }
     }
 
