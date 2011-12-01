@@ -124,18 +124,29 @@ public class NpcWorld implements World {
         ArrayList<Integer> keys = new ArrayList<Integer>(population.getKeys());
         Collections.shuffle(keys);
 
+        // go through all of the individuals and increment availabilities
+        // if the individual is done with its action
         for (Integer k : keys) {
             NpcIndividual curIndividual = (NpcIndividual)population.get(k);
 
-            // make the individual choose an action and act on it
-            // based on the current state of the population
             if (curIndividual.getStepsRemaining() == 0) {
                 if (curIndividual.getCurrentAction() == Const.EATING) {
                     eatingAvailability++;
                 } else if (curIndividual.getCurrentAction() == Const.SLEEPING) {
                     sleepingAvailability++;
                 }
+            }
+        }
 
+        ArrayList<NpcIndividual> matingPoolMales = new ArrayList<NpcIndividual>();
+        ArrayList<NpcIndividual> matingPoolFemales = new ArrayList<NpcIndividual>();
+
+        for (Integer k : keys) {
+            NpcIndividual curIndividual = (NpcIndividual)population.get(k);
+
+            // make the individual choose an action and act on it
+            // based on the current state of the population
+            if (curIndividual.getStepsRemaining() == 0) {
                 ArrayList<Integer> actions = new ArrayList<Integer>();
                 if (eatingAvailability > 0) {
                     actions.add(Const.EATING);
@@ -157,6 +168,11 @@ public class NpcWorld implements World {
                     sleepingAvailability--;
                 } else if (action == Const.MATING) {
                     matingAvailability--;
+                    if (curIndividual.getGender() == Const.MALE) {
+                        matingPoolMales.add(curIndividual);
+                    } else {
+                        matingPoolFemales.add(curIndividual();
+                    }
                 }
             } 
             curIndividual.decreaseStepsRemaining(); 
@@ -175,12 +191,12 @@ public class NpcWorld implements World {
             if (curIndividual.getHunger() > maxHunger) {
                 population.remove(curIndividual);
             }
-
-            reproduce(); // mate the individuals who chose to mate
         }
+
+        reproduce(matingPoolMales, matingPoolFemales); // mate the individuals who chose to mate
     }
 
-    public void reproduce() {
+    public void reproduce(ArrayList<Individual> males, ArrayList<Individual> females) {
         System.out.println("Reproducing");
     }
 
