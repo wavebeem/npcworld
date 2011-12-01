@@ -2,7 +2,6 @@
  * @author tgriswol
  */
 public class NpcDna implements Dna {
-	public static final int nucleotideSize = 1;
 	private boolean[] nucleotides;
 	private int eatingDuration, sleepDuration, gender;
 	
@@ -14,8 +13,8 @@ public class NpcDna implements Dna {
 	}
 	
 	public void initNucleotides(){
-		nucleotides = new boolean[nucleotideSize];
-		for(int idx = 0; idx < nucleotideSize; idx++){
+		nucleotides = new boolean[Settings.NUCLEOTIDES_SIZE];
+		for(int idx = 0; idx < nucleotides.length; idx++){
 			if(Util.random.nextInt(2) == 0) //(Random number between 0 and 1)
 				nucleotides[idx] = true; 
 			else
