@@ -124,18 +124,27 @@ public class NpcWorld implements World {
         ArrayList<Integer> keys = new ArrayList<Integer>(population.getKeys());
         Collections.shuffle(keys);
 
+        // go through all of the individuals and increment availabilities
+        // if the individual is done with its action
         for (Integer k : keys) {
             NpcIndividual curIndividual = (NpcIndividual)population.get(k);
 
-            // make the individual choose an action and act on it
-            // based on the current state of the population
             if (curIndividual.getStepsRemaining() == 0) {
                 if (curIndividual.getCurrentAction() == Const.EATING) {
                     eatingAvailability++;
                 } else if (curIndividual.getCurrentAction() == Const.SLEEPING) {
                     sleepingAvailability++;
                 }
+            }
+        }
 
+
+        for (Integer k : keys) {
+            NpcIndividual curIndividual = (NpcIndividual)population.get(k);
+
+            // make the individual choose an action and act on it
+            // based on the current state of the population
+            if (curIndividual.getStepsRemaining() == 0) {
                 ArrayList<Integer> actions = new ArrayList<Integer>();
                 if (eatingAvailability > 0) {
                     actions.add(Const.EATING);
