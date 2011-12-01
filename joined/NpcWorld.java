@@ -130,6 +130,12 @@ public class NpcWorld implements World {
             // make the individual choose an action and act on it
             // based on the current state of the population
             if (curIndividual.getStepsRemaining() == 0) {
+                if (curIndividual.getCurrentAction() == Const.EATING) {
+                    eatingAvailability++;
+                } else if (curIndividual.getCurrentAction() == Const.SLEEPING) {
+                    sleepingAvailability++;
+                }
+
                 ArrayList<Integer> actions = new ArrayList<Integer>();
                 if (eatingAvailability > 0) {
                     actions.add(Const.EATING);
