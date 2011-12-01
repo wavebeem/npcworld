@@ -1,3 +1,4 @@
+import java.util.Collection;
 /*
  * @author afisher
  */
@@ -17,7 +18,17 @@ public class NpcPopulation implements Population {
         individuals = new HashMap<Integer, NpcIndividual>();
     }
 
+    public Collection<Integer> getKeys() {
+        return individuals.keySet();
+    }
+
+    public Individual get(Integer k) {
+        return individuals.get(k);
+    }
+
     public int getMaxAge() {
+        if (individuals.size() == 0) return 0;
+
         int max = 0;
         for (Individual i : individuals.values()) {
             int cur = i.getAge();
@@ -27,6 +38,8 @@ public class NpcPopulation implements Population {
     }
 
     public int getMinAge() {
+        if (individuals.size() == 0) return 0;
+
         int min = Integer.MAX_VALUE;
         for (Individual i : individuals.values()) {
             int cur = i.getAge();
