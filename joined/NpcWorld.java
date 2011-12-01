@@ -171,11 +171,11 @@ public class NpcWorld implements World {
                     if (curIndividual.getGender() == Const.MALE) {
                         matingPoolMales.add(curIndividual);
                     } else {
-                        matingPoolFemales.add(curIndividual();
+                        matingPoolFemales.add(curIndividual);
                     }
                 }
-            } 
-            curIndividual.decreaseStepsRemaining(); 
+            }
+            curIndividual.decreaseStepsRemaining();
 
             if (curIndividual.getCurrentAction() == Const.EATING) {
                 curIndividual.decreaseHunger(hungerChange);
