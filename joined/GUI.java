@@ -52,6 +52,7 @@ public class GUI extends JFrame {
     public void step() {
         world.step();
         infobar.fillInfo();
+		repaint();
     }
 
     public World getWorld() {
