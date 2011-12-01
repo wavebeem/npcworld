@@ -44,6 +44,7 @@ public class NpcIndividual implements Individual {
 	
 	public void increaseAge(){
 		age++;
+		icon.happyBirthday();
 	}
 	public void decreaseStepsRemaining(){
 		stepsRemaining--;
