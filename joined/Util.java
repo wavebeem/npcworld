@@ -7,8 +7,10 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.imageio.*;
 import java.io.*;
+import java.util.Random;
 
 public class Util {
+	public static final Random random = new Random();
     public static void sleep(int ms) {
         try {
             Thread.sleep(ms);
