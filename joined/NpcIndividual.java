@@ -14,6 +14,7 @@ public class NpcIndividual implements Individual {
 		this.ID = ID;
 		dna = new NpcDna();
         icon = new Icon(dna.getGender());
+		stepsRemaining = 0;
 	}
 	
 	public Dna getDna(){
@@ -62,6 +63,7 @@ public class NpcIndividual implements Individual {
 	public int chooseAction(ArrayList<Integer> availableActions){
 		Debug.echo("Returning a chosen action (first one right now)");
 		currentAction = availableActions.get(0);
+		int stepsRemaining = 1;
 		return currentAction;
 	}
 }
