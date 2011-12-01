@@ -41,6 +41,9 @@ public class NpcIndividual implements Individual {
 		return sleepiness;
 	}
 	
+	public void increaseAge(){
+		age++;
+	}
 	public void decreaseStepsRemaining(){
 		stepsRemaining--;
 	}
