@@ -140,6 +140,7 @@ public class NpcWorld implements World {
                 if (matingAvailability > 0) {
                     actions.add(Const.MATING);
                 }
+                actions.add(Const.PLAYING);
 
                 int action = curIndividual.chooseAction(actions);
 
