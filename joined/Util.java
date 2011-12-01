@@ -9,6 +9,7 @@ import javax.imageio.*;
 import java.io.*;
 
 public class Util {
+	public static final Random random = new Random();
     public static void sleep(int ms) {
         try {
             Thread.sleep(ms);
