@@ -1,6 +1,5 @@
 public class Settings {
     public static final int POPULATION_SIZE = 50;
-	public static final int NUCLEOTIDES_SIZE = 5;
 	public static final double MUTATION_CHANCE = 0.1;
 	public static final double CROSSOVER_CHANCE = 0.1;
 	public static final int OLD_AGE = 100;
@@ -12,4 +11,9 @@ public class Settings {
 	public static final int MAX_SLEEPINESS = 50;
 	public static final int HUNGER_CHANGE = 3;
 	public static final int SLEEPINESS_CHANGE = 3;
+    public static final int NUCLEOTIDES_SIZE = 8;
+    public static final int GENDER_START_IDX = 0;
+    public static final int EATING_DURATION_START_IDX = 1;
+    public static final int SLEEPING_DURATION_START_IDX = 3;
+    public static final int COLORIDX_START_IDX = 5;
 }

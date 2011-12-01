@@ -14,6 +14,7 @@ public class NpcIndividual implements Individual {
 		this.ID = ID;
 		dna = new NpcDna();
         icon = new Icon(dna.getGender());
+        icon.colorize(dna.getColor());
 		stepsRemaining = 0;
 	}
 	
