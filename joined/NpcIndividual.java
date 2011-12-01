@@ -8,19 +8,21 @@ import javax.swing.JComponent;
 public class NpcIndividual implements Individual {
 	private NpcDna dna;
 	private int ID, age, currentAction, stepsRemaining, hunger, sleepiness;
-        private Icon icon;
+    private Icon icon;
 
-	public NpcIndividual(){
+	public NpcIndividual(int ID){
+		this.ID = ID;
 		dna = new NpcDna();
-                icon = new Icon(dna.getGender());
+        icon = new Icon(dna.getGender());
+		stepsRemaining = 0;
 	}
-
+	
 	public Dna getDna(){
 		return dna;
 	}
 	public JComponent getWidget() {
-                return icon;
-        }
+		return icon;
+	}
 	public int getAge(){
 		return age;
 	}
@@ -40,6 +42,10 @@ public class NpcIndividual implements Individual {
 		return sleepiness;
 	}
 	
+	public void increaseAge(){
+		age++;
+		icon.happyBirthday();
+	}
 	public void decreaseStepsRemaining(){
 		stepsRemaining--;
 	}
@@ -56,7 +62,9 @@ public class NpcIndividual implements Individual {
 		sleepiness -= change;
 	}
 	public int chooseAction(ArrayList<Integer> availableActions){
-		System.out.println("Returning a chosen action");
-		return 0;
+		Debug.echo("Returning a chosen action (first one right now)");
+		currentAction = availableActions.get(0);
+		int stepsRemaining = 1;
+		return currentAction;
 	}
 }

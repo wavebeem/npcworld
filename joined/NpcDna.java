@@ -6,23 +6,35 @@ public class NpcDna implements Dna {
 	private int eatingDuration, sleepDuration, gender;
 	
 	public NpcDna(){
-		nucleotides = new boolean[1];
+		initNucleotides();
 		initEatingDuration();
 		initSleepDuration();
 		initGender();
 	}
 	
+	public void initNucleotides(){
+		nucleotides = new boolean[Settings.NUCLEOTIDES_SIZE];
+		for(int idx = 0; idx < nucleotides.length; idx++){
+			if(Util.random.nextInt(2) == 0) //(Random number between 0 and 1)
+				nucleotides[idx] = true; 
+			else
+				nucleotides[idx] = false; 
+		}
+	}
 	private void initEatingDuration(){
-		System.out.println("Initializing the EatingDuration base of nucleotides.");
-		eatingDuration = 0;
+		Debug.echo("Initializing the EatingDuration based off nucleotides.");
+		eatingDuration = 1;
 	}
 	private void initSleepDuration(){
-		System.out.println("Initializing the SleepDuration base of nucleotides.");
-		sleepDuration = 0;
+		Debug.echo("Initializing the SleepDuration based off nucleotides.");
+		sleepDuration = 1;
 	}
 	private void initGender(){
-		System.out.println("Initializing the Gender base of nucleotides.");
-		gender = 0;
+		Debug.echo("Initializing the Gender based off nucleotides.");
+		if(nucleotides[0] == true)
+			gender = Const.MALE;
+		else
+			gender = Const.FEMALE;
 	}
 	
 	public int getEatingDuration(){
