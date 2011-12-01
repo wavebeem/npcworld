@@ -58,7 +58,7 @@ public class NpcIndividual implements Individual {
 	}
 	public int chooseAction(ArrayList<Integer> availableActions){
 		Debug.echo("Returning a chosen action (first one right now)");
-		currentAction = availableActions.get(0)
+		currentAction = availableActions.get(0);
 		return currentAction;
 	}
 }
