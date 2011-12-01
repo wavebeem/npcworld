@@ -10,7 +10,8 @@ public class NpcIndividual implements Individual {
 	private int ID, age, currentAction, stepsRemaining, hunger, sleepiness;
     private Icon icon;
 
-	public NpcIndividual(){
+	public NpcIndividual(int ID){
+		this.ID = ID;
 		dna = new NpcDna();
         icon = new Icon(dna.getGender());
 	}
@@ -57,6 +58,7 @@ public class NpcIndividual implements Individual {
 	}
 	public int chooseAction(ArrayList<Integer> availableActions){
 		Debug.echo("Returning a chosen action (first one right now)");
-		return availableActions.get(0);
+		currentAction = availableActions.get(0)
+		return currentAction;
 	}
 }
