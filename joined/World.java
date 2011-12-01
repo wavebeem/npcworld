@@ -10,7 +10,7 @@ public interface World {
     public Population getPopulation();
 
     public void step();
-    public void reproduce(ArrayList<Individual> males, ArrayList<Individual> females);
+    public void reproduce();
 
     public Individual mate(Individual i1, Individual i2);
 }

@@ -7,6 +7,9 @@ import java.util.Collections;
 public class NpcWorld implements World {
     private NpcPopulation population;
 
+    private ArrayList<NpcIndividual> matingPoolMales;
+    private ArrayList<NpcIndividual> matingPoolFemales;
+
     private int oldAge;
 
     private double mutationChance;
@@ -138,8 +141,8 @@ public class NpcWorld implements World {
             }
         }
 
-        ArrayList<NpcIndividual> matingPoolMales = new ArrayList<NpcIndividual>();
-        ArrayList<NpcIndividual> matingPoolFemales = new ArrayList<NpcIndividual>();
+        matingPoolMales = new ArrayList<NpcIndividual>();
+        matingPoolFemales = new ArrayList<NpcIndividual>();
 
         for (Integer k : keys) {
             NpcIndividual curIndividual = (NpcIndividual)population.get(k);
@@ -168,7 +171,7 @@ public class NpcWorld implements World {
                     sleepingAvailability--;
                 } else if (action == Const.MATING) {
                     matingAvailability--;
-                    if (curIndividual.getGender() == Const.MALE) {
+                    if (((NpcDna)curIndividual.getDna()).getGender() == Const.MALE) {
                         matingPoolMales.add(curIndividual);
                     } else {
                         matingPoolFemales.add(curIndividual);
@@ -193,10 +196,10 @@ public class NpcWorld implements World {
             }
         }
 
-        reproduce(matingPoolMales, matingPoolFemales); // mate the individuals who chose to mate
+        reproduce(); // mate the individuals who chose to mate
     }
 
-    public void reproduce(ArrayList<Individual> males, ArrayList<Individual> females) {
+    public void reproduce() {
         System.out.println("Reproducing");
     }
 
