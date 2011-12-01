@@ -10,12 +10,12 @@ import javax.swing.JComponent;
 public class NpcPopulation implements Population {
     private HashMap<Integer, NpcIndividual> individuals; // key is the ID#
 
-    public Collection<NpcIndividual> getIndividuals() {
-        return individuals.values();
-    }
-
     public NpcPopulation() {
         individuals = new HashMap<Integer, NpcIndividual>();
+    }
+
+    public Collection<NpcIndividual> getIndividuals() {
+        return individuals.values();
     }
 
     public Collection<Integer> getKeys() {

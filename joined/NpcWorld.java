@@ -23,32 +23,58 @@ public class NpcWorld implements World {
     private int sleepingAvailability;
     private int matingAvailability;
 
+    private int maxHunger;
+    private int maxSleepiness;
+
     private int hungerChange;
     private int sleepinessChange;
 
     private int stepNumber;
+    private int currentID;
 
     public NpcWorld() {
         population = new NpcPopulation();
 
-        oldAge = 100;
+        // initialize the population
+        for (int i = 0; i < Settings.POPULATION_SIZE; i++) {
+            population.add(new NpcIndividual(currentID));
+            currentID++;
+        }
+
+        oldAge = Settings.OLD_AGE;
 
         stepNumber = 0;
+        currentID  = 0;
 
-        mutationChance  = 0.1;
-        crossoverChance = 0.1;
-        deathChance     = 0.01;
+        mutationChance  = Settings.MUTATION_CHANCE;
+        crossoverChance = Settings.CROSSOVER_CHANCE;
+        deathChance     = Settings.DEATH_CHANCE;
 
-        eatingCapacity   = 10;
-        sleepingCapacity = 10;
-        matingCapacity   = 10;
+        eatingCapacity   = Settings.EATING_CAPACITY;
+        sleepingCapacity = Settings.SLEEPING_CAPACITY;
+        matingCapacity   = Settings.MATING_CAPACITY;
 
         eatingAvailability   = eatingCapacity;
         sleepingAvailability = sleepingCapacity;
         matingAvailability   = matingCapacity;
 
-        hungerChange = 3;
-        sleepinessChange = 3;
+        maxHunger     = Settings.MAX_HUNGER;
+        maxSleepiness = Settings.MAX_SLEEPINESS;
+
+        hungerChange     = Settings.HUNGER_CHANGE;
+        sleepinessChange = Settings.SLEEPINESS_CHANGE;
+    }
+
+    public void setMutationChance(double c) {
+        mutationChance = c / 100;
+    }
+
+    public void setCrossoverChance(double c) {
+        crossoverChance = c / 100;
+    }
+
+    public void setDeathChance(double c) {
+        deathChance = c / 100;
     }
 
     // setters for capacities
@@ -137,6 +163,11 @@ public class NpcWorld implements World {
             curIndividual.increaseHunger();
             curIndividual.increaseSleepiness();
             curIndividual.increaseAge();
+
+            //TODO implement death chance
+            if (curIndividual.getHunger() > maxHunger) {
+                population.remove(curIndividual);
+            }
 
             reproduce(); // mate the individuals who chose to mate
         }
