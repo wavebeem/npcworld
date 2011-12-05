@@ -214,7 +214,7 @@ public class NpcWorld implements World {
             curIndividual.increaseAge();
 
             //TODO implement death chance
-            if (curIndividual.getHunger() > maxHunger) {
+            if (curIndividual.getHunger() > maxHunger || curIndividual.getSleepiness() > maxSleepiness) {
                 population.remove(curIndividual);
             }
         }
