@@ -18,6 +18,14 @@ public class NpcIndividual implements Individual {
         stepsRemaining = 0;
     }
 
+    public NpcIndividual(int ID, NpcDna dna) {
+        this.ID = ID;
+        this.dna = dna;
+        icon = new Icon(dna.getGender());
+        icon.colorize(dna.getColor());
+        stepsRemaining = 0;
+    }
+
     public Dna getDna(){
         return dna;
     }

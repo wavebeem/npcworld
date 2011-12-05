@@ -223,7 +223,16 @@ public class NpcWorld implements World {
     }
 
     public void reproduce() {
-        System.out.println("Reproducing");
+        for (int i = 0; i < matingPoolMales.size(); i++) {
+            if (i < matingPoolMales.size() && i < matingPoolFemales.size()) {
+                NpcIndividual male   = matingPoolMales.get(i);
+                NpcIndividual female = matingPoolFemales.get(i);
+
+                System.out.println("HARDCORE MATING ACTION");
+                population.add(mate(male, female));
+                currentID++;
+            }
+        }
     }
 
     public Population getPopulation() {
@@ -231,7 +240,7 @@ public class NpcWorld implements World {
     }
 
     public Individual mate(Individual i1, Individual i2) {
-        System.out.println("Mating two individuals");
-        return null;
+        Dna dna = mutate(crossover(i1.getDna(), i2.getDna()));
+        return new NpcIndividual(currentID, (NpcDna)dna);
     }
 }
