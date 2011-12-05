@@ -25,6 +25,14 @@ public class NpcDna implements Dna {
         initColorIdx();
     }
 
+    public NpcDna(boolean[] n) {
+        nucleotides = n;
+        initGender();
+        initEatingDuration();
+        initSleepDuration();
+        initColorIdx();
+    }
+
     public void initNucleotides(){
         nucleotides = new boolean[Settings.NUCLEOTIDES_SIZE];
         for(int idx = 0; idx < Settings.NUCLEOTIDES_SIZE; idx++){

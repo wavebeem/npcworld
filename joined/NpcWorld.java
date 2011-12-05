@@ -106,13 +106,36 @@ public class NpcWorld implements World {
 
     // genetic operators
     public Dna crossover(Dna d1, Dna d2) {
-        System.out.println("Crossing over!");
-        return null;
+        boolean[] n1 = d1.getNucleotides();
+        boolean[] n2 = d2.getNucleotides();
+
+        boolean[] newDNA = new boolean[n1.length];
+
+        boolean crossover = true;
+
+        for (int i = 0; i < newDNA.length; i++) {
+            if (Math.random() < crossoverChance) {
+                crossover = !crossover;
+            }
+
+            if (crossover) {
+                newDNA[i] = n1[i];
+            } else {
+                newDNA[i] = n2[i];
+            }
+        }
+
+        return new NpcDna(newDNA);
     }
 
     public Dna mutate(Dna d) {
-        System.out.println("Mutating some DNA!");
-        return null;
+        boolean[] nucleotides = d.getNucleotides();
+        for (int i = 0; i < nucleotides.length; i++) {
+            if (Math.random() < mutationChance) {
+                nucleotides[i] = !nucleotides[i];
+            }
+        }
+        return new NpcDna(nucleotides);
     }
 
     public Population merge(Population p1, Population p2) {
