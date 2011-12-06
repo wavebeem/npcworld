@@ -63,7 +63,7 @@ public class Icon extends JComponent {
         image = untaintedImage;
         image = filterImage(untaintedImage);
 
-        setAction(Const.MATING);
+        setAction(Const.PLAYING);
     }
 
     public void setAction(int state) {
