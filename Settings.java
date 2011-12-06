@@ -17,6 +17,6 @@ public class Settings {
     public static final int EATING_DURATION_START_IDX = 1;
     public static final int SLEEPING_DURATION_START_IDX = 3;
     public static final int COLORIDX_START_IDX = 5;
-    public static final int HEALTHINESS_PERCENT = 50;
-    public static final int MATING_FREQUENCY = 10;
+    public static final int HEALTHINESS_PERCENT = 75;
+    public static final int MATING_FREQUENCY = 20;
 }
