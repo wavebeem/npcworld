@@ -116,6 +116,7 @@ public class NpcIndividual implements Individual {
         }
         
         Debug.echo("Returning a chosen action of "+currentAction+" with "+stepsRemaining+" steps remaining.");
+        icon.setAction(currentAction);
         return currentAction;
     }
 }
