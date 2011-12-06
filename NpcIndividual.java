@@ -5,7 +5,7 @@ import javax.swing.JComponent;
 /*
  * @author tgriswol
  */
-public class NpcIndividual implements Individual {
+public class NpcIndividual implements Individual, Comparable {
     private static int youngAge = Settings.YOUNG_AGE;
     private static int maxSleepiness = Settings.MAX_SLEEPINESS;
     private static int maxHunger = Settings.MAX_HUNGER;
@@ -118,5 +118,10 @@ public class NpcIndividual implements Individual {
         Debug.echo("Returning a chosen action of "+currentAction+" with "+stepsRemaining+" steps remaining.");
         icon.setAction(currentAction);
         return currentAction;
+    }
+    
+    public int compareTo(Object o){ //Compares indivuals by current action
+        int otherAction = ((NpcIndividual) o).getCurrentAction();
+        return ((Integer) currentAction).compareTo(otherAction);
     }
 }
