@@ -213,8 +213,13 @@ public class NpcWorld implements World {
             curIndividual.increaseSleepiness();
             curIndividual.increaseAge();
 
-            //TODO implement death chance
-            if (curIndividual.getHunger() > maxHunger || curIndividual.getSleepiness() > maxSleepiness) {
+            if (curIndividual.getHunger() > maxHunger ||
+                curIndividual.getSleepiness() > maxSleepiness ||
+                Math.random() < deathChance) {
+                population.remove(curIndividual);
+            }
+
+            if (curIndividual.getAge() >= oldAge && Math.random() < deathChance + 0.1) {
                 population.remove(curIndividual);
             }
         }
@@ -228,7 +233,6 @@ public class NpcWorld implements World {
                 NpcIndividual male   = matingPoolMales.get(i);
                 NpcIndividual female = matingPoolFemales.get(i);
 
-                System.out.println("HARDCORE MATING ACTION");
                 population.add(mate(male, female));
 
                 male.mated();
