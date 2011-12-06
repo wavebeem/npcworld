@@ -204,9 +204,9 @@ public class NpcWorld implements World {
             curIndividual.decreaseStepsRemaining();
 
             if (curIndividual.getCurrentAction() == Const.EATING) {
-                curIndividual.decreaseHunger(hungerChange);
+                curIndividual.decreaseHunger();
             } else if (curIndividual.getCurrentAction() == Const.SLEEPING) {
-                curIndividual.decreaseSleepiness(sleepinessChange);
+                curIndividual.decreaseSleepiness();
             }
 
             curIndividual.increaseHunger();

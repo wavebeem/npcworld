@@ -6,6 +6,8 @@ import javax.swing.JComponent;
  * @author tgriswol
  */
 public class NpcIndividual implements Individual {
+    private static int hungerChange = Settings.HUNGER_CHANGE;
+    private static int sleepinessChange = Settings.SLEEPINESS_CHANGE;
     private NpcDna dna;
     private int ID, age, currentAction, stepsRemaining, hunger, sleepiness;
     private Icon icon;
@@ -51,6 +53,12 @@ public class NpcIndividual implements Individual {
         return sleepiness;
     }
 
+    public void setHungerChange(int change){
+        hungerChange = change;
+    }
+    public void setSleepinessChange(int change){
+        sleepinessChange = change;
+    }
     public void increaseAge(){
         age++;
         icon.happyBirthday();
@@ -61,19 +69,30 @@ public class NpcIndividual implements Individual {
     public void increaseHunger(){
         hunger++;
     }
-    public void decreaseHunger(int change){
-        hunger -= change;
+    public void decreaseHunger(){
+        hunger -= hungerChange;
     }
     public void increaseSleepiness(){
         sleepiness++;
     }
-    public void decreaseSleepiness(int change){
-        sleepiness -= change;
+    public void decreaseSleepiness(){
+        sleepiness -= sleepinessChange;
     }
     public int chooseAction(ArrayList<Integer> availableActions){
-        Debug.echo("Returning a chosen action (first one right now)");
-        currentAction = availableActions.get(0);
-        int stepsRemaining = 1;
+        if (availableActions.contains(Const.EATING) && hunger < (dna.getEatingDuration() * hungerChange)){ //If eating is available, and you are hungry enough to eat
+            stepsRemaining = dna.getEatingDuration();
+            currentAction = Const.EATING;
+        } else if (availableActions.contains(Const.SLEEPING) && sleepiness < (dna.getSleepingDuration() * sleepinessChange)){ //If sleeping is available, and you are sleepy enough to sleep
+            stepsRemaining = dna.getSleepingDuration();
+            currentAction = Const.SLEEPING;
+        } else if (availableActions.contains(Const.MATING) ) { //If mating is available, and you are eligible to mate
+            currentAction = Const.MATING;
+        } else { //Otherwise, just play
+            stepsRemaining = 1;
+            currentAction = Const.PLAYING;
+        }
+        
+        Debug.echo("Returning a chosen action of "+currentAction+" with "+stepsRemaining+" steps remaining.");
         return currentAction;
     }
 }

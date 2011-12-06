@@ -74,7 +74,7 @@ public class NpcDna implements Dna {
     public int getEatingDuration(){
         return eatingDuration;
     }
-    public int getSleepDuration(){
+    public int getSleepingDuration(){
         return sleepDuration;
     }
     public int getGender(){
