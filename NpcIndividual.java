@@ -120,8 +120,8 @@ public class NpcIndividual implements Individual, Comparable {
         return currentAction;
     }
     
-    public int compareTo(Object o){ //Compares indivuals by current action
-        int otherAction = ((NpcIndividual) o).getCurrentAction();
-        return ((Integer) currentAction).compareTo(otherAction);
+    public int compareTo(Object o){ //Compares individuals by ID
+        int otherID = ((NpcIndividual) o).getID();
+        return ((Integer) ID).compareTo(otherID);
     }
 }
