@@ -230,6 +230,9 @@ public class NpcWorld implements World {
 
                 System.out.println("HARDCORE MATING ACTION");
                 population.add(mate(male, female));
+
+                male.mated();
+                female.mated();
                 currentID++;
             }
         }
