@@ -29,9 +29,6 @@ public class NpcWorld implements World {
     private int maxHunger;
     private int maxSleepiness;
 
-    private int hungerChange;
-    private int sleepinessChange;
-
     private int stepNumber;
     private int currentID;
 
@@ -63,9 +60,6 @@ public class NpcWorld implements World {
 
         maxHunger     = Settings.MAX_HUNGER;
         maxSleepiness = Settings.MAX_SLEEPINESS;
-
-        hungerChange     = Settings.HUNGER_CHANGE;
-        sleepinessChange = Settings.SLEEPINESS_CHANGE;
     }
 
     public void setMutationChance(double c) {
@@ -94,14 +88,6 @@ public class NpcWorld implements World {
     public void setMatingCapacity(int c) {
         matingAvailability += c - matingCapacity; 
         matingCapacity = c;
-    }
-
-    public void setHungerChange(int c) {
-        hungerChange = c;
-    }
-
-    public void setSleepinessChange(int c) {
-        sleepinessChange = c;
     }
 
     // genetic operators
@@ -150,16 +136,22 @@ public class NpcWorld implements World {
         ArrayList<Integer> keys = new ArrayList<Integer>(population.getKeys());
         Collections.shuffle(keys);
 
-        // go through all of the individuals and increment availabilities
-        // if the individual is done with its action
+        eatingAvailability = eatingCapacity;
+        sleepingAvailability = sleepingCapacity;
+        matingAvailability = matingCapacity;
+
+        // go through all of the individuals and decrement availabilities
+        // if the individual is not done with its action
         for (Integer k : keys) {
             NpcIndividual curIndividual = (NpcIndividual)population.get(k);
 
-            if (curIndividual.getStepsRemaining() == 0) {
+            if (curIndividual.getStepsRemaining() != 0) {
                 if (curIndividual.getCurrentAction() == Const.EATING) {
-                    eatingAvailability++;
+                    eatingAvailability--;
                 } else if (curIndividual.getCurrentAction() == Const.SLEEPING) {
-                    sleepingAvailability++;
+                    sleepingAvailability--;
+                } else if (curIndividual.getCurrentAction() == Const.MATING) {
+                    matingAvailability--;
                 }
             }
         }
@@ -183,7 +175,6 @@ public class NpcWorld implements World {
                 if (matingAvailability > 0) {
                     actions.add(Const.MATING);
                 }
-                actions.add(Const.PLAYING);
 
                 int action = curIndividual.chooseAction(actions);
 
