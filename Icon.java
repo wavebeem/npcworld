@@ -11,6 +11,7 @@ public class Icon extends JComponent {
     private static final Image overlayEating   = Util.loadImage("img/overlays/eating.png");
     private static final Image overlayMating   = Util.loadImage("img/overlays/mating.png");
     private static final Image overlaySleeping = Util.loadImage("img/overlays/sleeping.png");
+    private static final Image overlayPlaying  = null;
 
     private static final Image imageMale   = Util.loadImage("img/sprites/m.png");
     private static final Image imageFemale = Util.loadImage("img/sprites/f.png");
@@ -25,6 +26,7 @@ public class Icon extends JComponent {
     private Color color;
     private Font  font;
     private int   age;
+    private int   action;
 
     private final int width;
     private final int height;
@@ -50,7 +52,18 @@ public class Icon extends JComponent {
         image = untaintedImage;
         image = filterImage(untaintedImage);
 
-        overlay = overlayEating;
+        setAction(Const.MATING);
+    }
+
+    public void setAction(int state) {
+        this.action = state;
+
+        switch (action) {
+        case Const.SLEEPING: overlay = overlaySleeping; break;
+        case Const.EATING:   overlay = overlayEating;   break;
+        case Const.MATING:   overlay = overlayMating;   break;
+        case Const.PLAYING:  overlay = overlayPlaying;  break;
+        }
     }
 
     private void setFontSize(int size) {
