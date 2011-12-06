@@ -19,6 +19,8 @@ public class Util {
         }
     }
 
+    public static final JComponent NULL_ICON = new NullIcon();
+
     public static void joinThread(Thread thread) {
         try {
             thread.join();
