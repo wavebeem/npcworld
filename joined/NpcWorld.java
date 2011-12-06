@@ -92,8 +92,17 @@ public class NpcWorld implements World {
 
     // genetic operators
     public Dna crossover(Dna d1, Dna d2) {
-        boolean[] n1 = d1.getNucleotides();
-        boolean[] n2 = d2.getNucleotides();
+        boolean[] n1;
+        boolean[] n2;
+
+        // 50/50 chance of which DNA to start out with
+        if (Math.random() < 0.5) {
+            n1 = d1.getNucleotides();
+            n2 = d2.getNucleotides();
+        } else {
+            n1 = d2.getNucleotides();
+            n2 = d1.getNucleotides();
+        }
 
         boolean[] newDNA = new boolean[n1.length];
 
