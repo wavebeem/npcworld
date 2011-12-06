@@ -5,13 +5,24 @@ import java.awt.image.*;
 import java.io.*;
 
 public class Icon extends JComponent {
-    private static final Color bgColor = new Color(0x111111);
-    private static final Color fgColor = new Color(0xffffff);
+    private Color bgColor  = new Color(0x111111);
+    private Color fgColor  = new Color(0xffffff);
+    private Color fgShadow = new Color(0x000000);
+
+    private static final int shadowOffsetX = 1;
+    private static final int shadowOffsetY = 1;
+
+    private Color textBg = new Color(0x111111);
 
     private static final Image overlayEating   = Util.loadImage("img/overlays/eating.png");
     private static final Image overlayMating   = Util.loadImage("img/overlays/mating.png");
     private static final Image overlaySleeping = Util.loadImage("img/overlays/sleeping.png");
     private static final Image overlayPlaying  = null;
+
+    private static final Color bgEating   = new Color(0x881111);
+    private static final Color bgMating   = new Color(0x118811);
+    private static final Color bgSleeping = new Color(0x114488);
+    private static final Color bgPlaying  = new Color(0x111111);
 
     private static final Image imageMale   = Util.loadImage("img/sprites/m.png");
     private static final Image imageFemale = Util.loadImage("img/sprites/f.png");
@@ -59,10 +70,10 @@ public class Icon extends JComponent {
         this.action = state;
 
         switch (action) {
-        case Const.SLEEPING: overlay = overlaySleeping; break;
-        case Const.EATING:   overlay = overlayEating;   break;
-        case Const.MATING:   overlay = overlayMating;   break;
-        case Const.PLAYING:  overlay = overlayPlaying;  break;
+        case Const.SLEEPING: overlay = overlaySleeping; bgColor = bgSleeping; break;
+        case Const.EATING:   overlay = overlayEating;   bgColor = bgEating;   break;
+        case Const.MATING:   overlay = overlayMating;   bgColor = bgMating;   break;
+        case Const.PLAYING:  overlay = overlayPlaying;  bgColor = bgPlaying;  break;
         }
     }
 
@@ -112,9 +123,12 @@ public class Icon extends JComponent {
         g.drawImage(image,     imageX,   imageY,   imageW,   imageH, null);
         g.drawImage(overlay, overlayX, overlayY, overlayW, overlayH, null);
 
-        g.setColor(fgColor);
+        g.setColor(textBg);
+        //g.fillRect(0, 0, w, overlayH - 1);
+
         setFontSize(overlayH - 4);
         g.setFont(font);
-        g.drawString("" + age, 0, fontSize);
+        g.setColor(fgShadow); g.drawString("" + age, 3 + shadowOffsetX, fontSize + shadowOffsetY);
+        g.setColor(fgColor);  g.drawString("" + age, 3,                 fontSize);
     }
 }
