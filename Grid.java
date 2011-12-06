@@ -39,16 +39,20 @@ public class Grid extends JPanel {
         layout = new GridLayout(rows, cols, gapH, gapV);
         setLayout(layout);
 
-        /*
-        for (int r=0; r < rows; r++) {
-            for (int c=0; c < cols; c++) {
-                int gender = Math.random() < 0.5 ? 0 : 1;
-                Icon icon = new Icon(gender);
-                icons[r][c] = icon;
-                add(icon);
-            }
-        }
-        */
+        populateGrid();
+
+        setBackground(bgColor);
+
+        setBorder(Util.makeBorder(borderW));
+    }
+
+    public void repopulate() {
+        clearGrid();
+        populateGrid();
+    }
+
+    private void populateGrid() {
+        clearGrid();
 
         Iterator<NpcIndividual> it = ((NpcPopulation) gui.getWorld().getPopulation()).getIndividuals().iterator();
         for (int r=0; r < rows; r++) {
@@ -60,9 +64,17 @@ public class Grid extends JPanel {
                 }
             }
         }
+    }
 
-        setBackground(bgColor);
-
-        setBorder(Util.makeBorder(borderW));
+    private void clearGrid() {
+        for (int r=0; r < rows; r++) {
+            for (int c=0; c < cols; c++) {
+                JComponent icon = icons[r][c];
+                icons[r][c] = null;
+                if (icon != null) {
+                    remove(icon);
+                }
+            }
+        }
     }
 }

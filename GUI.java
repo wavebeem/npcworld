@@ -26,7 +26,7 @@ public class GUI extends JFrame {
 
         thread   = null;
         running  = false;
-        runDelay = 500;
+        runDelay = 250;
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -51,8 +51,9 @@ public class GUI extends JFrame {
 
     public void step() {
         world.step();
+        grid.repopulate();
         infobar.fillInfo();
-		repaint();
+        repaint();
     }
 
     public World getWorld() {
