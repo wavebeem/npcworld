@@ -34,7 +34,7 @@ public class Grid extends JPanel {
         this.cols = cols;
         this.gui  = gui;
 
-        icons = new Icon[rows][cols];
+        icons = new JComponent[rows][cols];
 
         layout = new GridLayout(rows, cols, gapH, gapV);
         setLayout(layout);
@@ -59,6 +59,12 @@ public class Grid extends JPanel {
             for (int c=0; c < cols; c++) {
                 if (it.hasNext()) {
                     JComponent icon = it.next().getWidget();
+                    icons[r][c] = icon;
+                    add(icon);
+                }
+                else {
+                    JComponent icon = new NullIcon();
+                    //icons[r][c] = null;
                     icons[r][c] = icon;
                     add(icon);
                 }
