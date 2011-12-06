@@ -47,11 +47,11 @@ public class NpcDna implements Dna {
         Debug.echo("Initializing the Gender based off nucleotides to "+gender+".");
     }
     private void initEatingDuration(){
-        eatingDuration = toDecimal(nucleotides, Settings.EATING_DURATION_START_IDX, Settings.SLEEPING_DURATION_START_IDX);
+        eatingDuration = toDecimal(nucleotides, Settings.EATING_DURATION_START_IDX, Settings.SLEEPING_DURATION_START_IDX)+1;
         Debug.echo("Initializing the EatingDuration based off nucleotides to "+eatingDuration+".");
     }
     private void initSleepDuration(){
-        sleepDuration = toDecimal(nucleotides, Settings.SLEEPING_DURATION_START_IDX, Settings.COLORIDX_START_IDX);
+        sleepDuration = toDecimal(nucleotides, Settings.SLEEPING_DURATION_START_IDX, Settings.COLORIDX_START_IDX)+1;
         Debug.echo("Initializing the SleepDuration based off nucleotides to "+sleepDuration+".");
     }
     private void initColorIdx(){

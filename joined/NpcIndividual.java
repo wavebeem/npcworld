@@ -79,13 +79,14 @@ public class NpcIndividual implements Individual {
         sleepiness -= sleepinessChange;
     }
     public int chooseAction(ArrayList<Integer> availableActions){
-        if (availableActions.contains(Const.EATING) && hunger < (dna.getEatingDuration() * hungerChange)){ //If eating is available, and you are hungry enough to eat
+        if (availableActions.contains(Const.EATING) && hunger >= (dna.getEatingDuration() * hungerChange)){ //If eating is available, and you are hungry enough to eat
             stepsRemaining = dna.getEatingDuration();
             currentAction = Const.EATING;
-        } else if (availableActions.contains(Const.SLEEPING) && sleepiness < (dna.getSleepingDuration() * sleepinessChange)){ //If sleeping is available, and you are sleepy enough to sleep
+        } else if (availableActions.contains(Const.SLEEPING) && sleepiness >= (dna.getSleepingDuration() * sleepinessChange)){ //If sleeping is available, and you are sleepy enough to sleep
             stepsRemaining = dna.getSleepingDuration();
             currentAction = Const.SLEEPING;
-        } else if (availableActions.contains(Const.MATING) ) { //If mating is available, and you are eligible to mate
+        } else if (availableActions.contains(Const.MATING)) { //If mating is available, and you are eligible to mate
+            stepsRemaining = 1;
             currentAction = Const.MATING;
         } else { //Otherwise, just play
             stepsRemaining = 1;
