@@ -5,11 +5,11 @@ import java.awt.Color;
  */
 public class NpcDna implements Dna {
     private static final Color[] colors = {
-        Color.RED,
-        Color.YELLOW,
-        Color.GREEN,
-        Color.BLUE,
-        Color.MAGENTA,
+        new Color(0xcc0000),
+        new Color(0xffff00),
+        new Color(0x00cc00),
+        new Color(0x0044ff),
+        new Color(0x00ccff),
         new Color(0x6600cc),
         new Color(0x00ffff),
         new Color(0xcc6600)
