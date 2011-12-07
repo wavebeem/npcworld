@@ -3,6 +3,8 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class Preferences extends JFrame {
+    private static final String TITLE = "Preferences | NPC World";
+
     private LayoutManager layout;
     private Container     container;
 
@@ -20,6 +22,8 @@ public class Preferences extends JFrame {
         this.gui = gui;
 
         runDelaySpinner = new JSpinner();
+
+        setTitle(TITLE);
 
         container = getContentPane();
         panel     = new JPanel();
