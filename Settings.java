@@ -1,5 +1,6 @@
 public class Settings {
     public static final int POPULATION_SIZE = 50;
+    public static final int MAX_SIZE = 1000;
     public static final double MUTATION_CHANCE = 0.1;
     public static final double CROSSOVER_CHANCE = 0.1;
     public static final int OLD_AGE = 100;
