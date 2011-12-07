@@ -95,6 +95,30 @@ public class NpcWorld implements World {
         matingCapacity = c;
     }
 
+    public double getMutationChance() {
+        return mutationChance * 100;
+    }
+
+    public double getCrossoverChance() {
+        return crossoverChance * 100;
+    }
+
+    public double getDeathChance() {
+        return deathChance * 100;
+    }
+
+    public int getEatingCapacity() {
+        return eatingCapacity;
+    }
+
+    public int getSleepingCapacity() {
+        return sleepingCapacity;
+    }
+
+    public int setMatingCapacity() {
+        return matingCapacity;
+    }
+
     // genetic operators
     public Dna crossover(Dna d1, Dna d2) {
         boolean[] n1;
