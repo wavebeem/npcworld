@@ -34,7 +34,7 @@ public class Grid extends JPanel {
     public Grid(int rows, int cols, GUI gui) {
         this.rows = rows;
         this.cols = cols;
-        this.size = rows * cols;
+        this.size = Settings.MAX_SIZE;
         this.gui  = gui;
 
         icons = new ArrayList<JComponent>(size);
@@ -85,8 +85,14 @@ public class Grid extends JPanel {
             }
         }
 
-        for (JComponent icon: icons) {
-            add(icon);
+        Iterator<JComponent> iconIt = icons.iterator();
+        for (int i=0; i < (rows * cols); i++) {
+            if (iconIt.hasNext()) {
+                add(iconIt.next());
+            }
+            else {
+                break;
+            }
         }
     }
 
