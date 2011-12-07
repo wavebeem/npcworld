@@ -19,6 +19,10 @@ public class GUI extends JFrame {
     private boolean running;
     private int     runDelay;
 
+    public void setRunDelay(int runDelay) { this.runDelay = runDelay; }
+
+    public int getRunDelay() { return runDelay; }
+
     public GUI() {
         Util.tryForNiceTheme();
 
