@@ -68,11 +68,25 @@ public class Grid extends JPanel {
         it    = inds.iterator();
 
         for (int x=0; x < size; x++) {
-            JComponent icon = it.hasNext()
-                ? it.next().getWidget()
-                : new NullIcon();
-            icons.add(icon);
-            this .add(icon);
+            icons.add(new NullIcon());
+        }
+
+        for (int x=0; x < size; x++) {
+            if (it.hasNext()) {
+                NpcIndividual thing;
+                JComponent icon;
+                int idx;
+
+                thing = it.next();
+                idx   = thing.getID();
+                icon  = thing.getWidget();
+
+                icons.set(idx, icon);
+            }
+        }
+
+        for (JComponent icon: icons) {
+            add(icon);
         }
     }
 
@@ -80,8 +94,8 @@ public class Grid extends JPanel {
         Iterator<JComponent> it = icons.iterator();
         while (it.hasNext()) {
             JComponent icon = it.next();
-            this.remove(icon);
-            it  .remove();
+            remove(icon);
+            it.remove();
         }
     }
 }
