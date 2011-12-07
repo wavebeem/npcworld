@@ -253,7 +253,7 @@ public class NpcWorld implements World {
         }
     }
 
-    public Population getPopulation() {
+    public NpcPopulation getPopulation() {
         return population;
     }
 
