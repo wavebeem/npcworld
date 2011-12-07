@@ -31,7 +31,7 @@ public class NpcWorld implements World {
 
     private int stepNumber;
 
-    private boolean[] availableIDs = new boolean[200];
+    private boolean[] availableIDs = new boolean[Settings.MAX_SIZE];
 
     public NpcWorld() {
         population = new NpcPopulation();
