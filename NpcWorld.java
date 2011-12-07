@@ -67,6 +67,10 @@ public class NpcWorld implements World {
         maxSleepiness = Settings.MAX_SLEEPINESS;
     }
 
+    public void setOldAge(int age) {
+        oldAge = age;
+    }
+
     public void setMutationChance(double c) {
         mutationChance = c / 100;
     }
@@ -95,6 +99,10 @@ public class NpcWorld implements World {
         matingCapacity = c;
     }
 
+    public int getOldAge() {
+        return oldAge;
+    }
+
     public double getMutationChance() {
         return mutationChance * 100;
     }
@@ -115,7 +123,7 @@ public class NpcWorld implements World {
         return sleepingCapacity;
     }
 
-    public int setMatingCapacity() {
+    public int getMatingCapacity() {
         return matingCapacity;
     }
 
