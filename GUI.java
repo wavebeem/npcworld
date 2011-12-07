@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GUI extends JFrame {
-    private static final String TITLE = "Just another Java test";
+    private static final String TITLE = "NPC World";
 
     private Container     container;
     private LayoutManager layout;
