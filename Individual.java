@@ -6,6 +6,6 @@ import javax.swing.JComponent;
  */
 public interface Individual {
     public Dna getDna();
-	public JComponent getWidget();
-	public int getAge();
+    public JComponent getWidget();
+    public int getAge();
 }
