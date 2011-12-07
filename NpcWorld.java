@@ -242,13 +242,15 @@ public class NpcWorld implements World {
                 NpcIndividual male   = matingPoolMales.get(i);
                 NpcIndividual female = matingPoolFemales.get(i);
 
-                NpcIndividual child = (NpcIndividual)mate(male, female);
-                population.add(child);
+                Individual child = mate(male, female);
+                if (child != null) {
+                    population.add(child);
 
-                availableIDs[child.getID()] = false;
+                    availableIDs[((NpcIndividual)child).getID()] = false;
 
-                male.mated();
-                female.mated();
+                    male.mated();
+                    female.mated();
+                }
             }
         }
     }
