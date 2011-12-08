@@ -10,7 +10,12 @@ import java.io.*;
 import java.util.Random;
 
 public class Util {
-	public static final Random random = new Random();
+    public static final Random random = new Random();
+
+    public static int intFromSpinner(JSpinner spinner) {
+        return new Integer((Integer) spinner.getValue());
+    }
+
     public static void sleep(int ms) {
         try {
             Thread.sleep(ms);

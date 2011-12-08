@@ -66,12 +66,6 @@ public class NpcIndividual implements Individual, Comparable {
         return sleepiness;
     }
 
-    public void setHungerChange(int change){
-        hungerChange = change;
-    }
-    public void setSleepinessChange(int change){
-        sleepinessChange = change;
-    }
     public void increaseAge(){
         age++;
         icon.happyBirthday();
@@ -120,8 +114,30 @@ public class NpcIndividual implements Individual, Comparable {
         return currentAction;
     }
     
-    public int compareTo(Object o){ //Compares indivuals by current action
-        int otherAction = ((NpcIndividual) o).getCurrentAction();
-        return ((Integer) currentAction).compareTo(otherAction);
+    public int compareTo(Object o){ //Compares individuals by ID
+        int otherID = ((NpcIndividual) o).getID();
+        return ((Integer) ID).compareTo(otherID);
+    }
+    
+    public static void setYoungAge(int newVal){
+        youngAge = newVal;
+    }
+    public static void setMaxSleepiness(int newVal){
+        maxSleepiness = newVal;
+    }
+    public static void setMaxHunger(int newVal){
+        maxHunger = newVal;
+    }
+    public static void setHealthinessPercent(int newVal){
+        healthinessPercent = newVal;
+    }
+    public static void setMatingFrequency(int newVal){
+        matingFrequency = newVal;
+    }
+    public static void setHungerChange(int newVal){
+        hungerChange = newVal;
+    }
+    public static void setSleepinessChange(int newVal){
+        sleepinessChange = newVal;
     }
 }

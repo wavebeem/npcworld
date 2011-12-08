@@ -19,9 +19,9 @@ public class Icon extends JComponent {
     private static final Image overlaySleeping = Util.loadImage("img/overlays/sleeping.png");
     private static final Image overlayPlaying  = null;
 
-    private static final Color bgEating   = new Color(0x114411);
+    private static final Color bgEating   = new Color(0x115511);
     private static final Color bgMating   = new Color(0x661111);
-    private static final Color bgSleeping = new Color(0x112244);
+    private static final Color bgSleeping = new Color(0x114455);
     private static final Color bgPlaying  = new Color(0x111111);
 
     private static final Image imageMale   = Util.loadImage("img/sprites/m.png");

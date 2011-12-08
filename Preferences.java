@@ -3,6 +3,8 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class Preferences extends JFrame {
+    private static final String TITLE = "Preferences | NPC World";
+
     private LayoutManager layout;
     private Container     container;
 
@@ -14,8 +16,14 @@ public class Preferences extends JFrame {
     private static final int gapV = 3;
     private static final int pad  = 3;
 
+    private JSpinner runDelaySpinner;
+
     public Preferences(GUI gui) {
         this.gui = gui;
+
+        runDelaySpinner = new JSpinner();
+
+        setTitle(TITLE);
 
         container = getContentPane();
         panel     = new JPanel();
@@ -26,9 +34,7 @@ public class Preferences extends JFrame {
         panel.setBorder(Util.makeBorder(pad));
 
         panel.add(Util.rightLabel("Click here:"));
-        panel.add(new JSpinner());
-        panel.add(Util.rightLabel("And here:"));
-        panel.add(new JSpinner());
+        panel.add(runDelaySpinner);
 
         panel.add(Util.clickableButton("OK",     new OkHandler()));
         panel.add(Util.clickableButton("Cancel", new CancelHandler()));
@@ -37,11 +43,22 @@ public class Preferences extends JFrame {
 
         pack();
 
+        loadCurrentValues();
+
         setVisible(true);
+    }
+
+    private void loadCurrentValues() {
+        runDelaySpinner.setValue(gui.getRunDelay());
+    }
+
+    private void saveCurrentValues() {
+        gui.setRunDelay(Util.intFromSpinner(runDelaySpinner));
     }
 
     private class OkHandler implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+            saveCurrentValues();
             Debug.echo("ok...");
             dispose();
         }

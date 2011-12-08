@@ -30,21 +30,26 @@ public class NpcWorld implements World {
     private int maxSleepiness;
 
     private int stepNumber;
-    private int currentID;
+
+    private boolean[] availableIDs = new boolean[Settings.MAX_SIZE];
 
     public NpcWorld() {
         population = new NpcPopulation();
 
+        for (int i = 0; i < availableIDs.length; i++) {
+            availableIDs[i] = true;
+        }
+
         // initialize the population
         for (int i = 0; i < Settings.POPULATION_SIZE; i++) {
-            population.add(new NpcIndividual(currentID));
-            currentID++;
+            population.add(new NpcIndividual(i));
+
+            availableIDs[i] = false;
         }
 
         oldAge = Settings.OLD_AGE;
 
         stepNumber = 0;
-        currentID  = 0;
 
         mutationChance  = Settings.MUTATION_CHANCE;
         crossoverChance = Settings.CROSSOVER_CHANCE;
@@ -213,9 +218,18 @@ public class NpcWorld implements World {
             curIndividual.increaseSleepiness();
             curIndividual.increaseAge();
 
-            //TODO implement death chance
-            if (curIndividual.getHunger() > maxHunger || curIndividual.getSleepiness() > maxSleepiness) {
+            if (curIndividual.getHunger() > maxHunger ||
+                curIndividual.getSleepiness() > maxSleepiness ||
+                Math.random() < deathChance) {
                 population.remove(curIndividual);
+
+                availableIDs[curIndividual.getID()] = true;
+            }
+
+            if (curIndividual.getAge() >= oldAge && Math.random() < deathChance + 0.1) {
+                population.remove(curIndividual);
+
+                availableIDs[curIndividual.getID()] = true;
             }
         }
 
@@ -228,22 +242,32 @@ public class NpcWorld implements World {
                 NpcIndividual male   = matingPoolMales.get(i);
                 NpcIndividual female = matingPoolFemales.get(i);
 
-                System.out.println("HARDCORE MATING ACTION");
-                population.add(mate(male, female));
+                Individual child = mate(male, female);
+                if (child != null) {
+                    population.add(child);
 
-                male.mated();
-                female.mated();
-                currentID++;
+                    availableIDs[((NpcIndividual)child).getID()] = false;
+
+                    male.mated();
+                    female.mated();
+                }
             }
         }
     }
 
-    public Population getPopulation() {
+    public NpcPopulation getPopulation() {
         return population;
     }
 
     public Individual mate(Individual i1, Individual i2) {
         Dna dna = mutate(crossover(i1.getDna(), i2.getDna()));
-        return new NpcIndividual(currentID, (NpcDna)dna);
+
+        for (int i = 0; i < availableIDs.length; i++) {
+            if (availableIDs[i]) {
+                return new NpcIndividual(i, (NpcDna)dna);
+            }
+        }
+
+        return null;
     }
 }
