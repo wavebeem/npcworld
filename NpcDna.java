@@ -34,8 +34,8 @@ public class NpcDna implements Dna {
     }
 
     public void initNucleotides(){
-        nucleotides = new boolean[Settings.NUCLEOTIDES_SIZE];
-        for(int idx = 0; idx < Settings.NUCLEOTIDES_SIZE; idx++){
+        nucleotides = new boolean[Const.NUCLEOTIDES_SIZE];
+        for(int idx = 0; idx < Const.NUCLEOTIDES_SIZE; idx++){
             if(Util.random.nextInt(2) == 1) //(Random number between 0 and 1)
                 nucleotides[idx] = true; 
             else
@@ -43,19 +43,19 @@ public class NpcDna implements Dna {
         }
     }
     private void initGender(){
-        gender = toDecimal(nucleotides, Settings.GENDER_START_IDX, Settings.EATING_DURATION_START_IDX);
+        gender = toDecimal(nucleotides, Const.GENDER_START_IDX, Const.EATING_DURATION_START_IDX);
         Debug.echo("Initializing the Gender based off nucleotides to "+gender+".");
     }
     private void initEatingDuration(){
-        eatingDuration = toDecimal(nucleotides, Settings.EATING_DURATION_START_IDX, Settings.SLEEPING_DURATION_START_IDX)+1;
+        eatingDuration = toDecimal(nucleotides, Const.EATING_DURATION_START_IDX, Const.SLEEPING_DURATION_START_IDX)+1;
         Debug.echo("Initializing the EatingDuration based off nucleotides to "+eatingDuration+".");
     }
     private void initSleepDuration(){
-        sleepDuration = toDecimal(nucleotides, Settings.SLEEPING_DURATION_START_IDX, Settings.COLORIDX_START_IDX)+1;
+        sleepDuration = toDecimal(nucleotides, Const.SLEEPING_DURATION_START_IDX, Const.COLORIDX_START_IDX)+1;
         Debug.echo("Initializing the SleepDuration based off nucleotides to "+sleepDuration+".");
     }
     private void initColorIdx(){
-        colorIdx = toDecimal(nucleotides, Settings.COLORIDX_START_IDX, Settings.NUCLEOTIDES_SIZE);
+        colorIdx = toDecimal(nucleotides, Const.COLORIDX_START_IDX, Const.NUCLEOTIDES_SIZE);
         Debug.echo("Initializing the ColorIdx based off nucleotides to "+colorIdx+".");
     }
 
