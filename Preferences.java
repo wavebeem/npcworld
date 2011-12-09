@@ -29,6 +29,7 @@ public class Preferences extends JFrame {
         fooSpinner      = new JSpinner();
         gooSpinner      = new JSpinner();
         mooSpinner      = new JSpinner();
+        pooSpinner      = new JSpinner();
 
         setTitle(TITLE);
 
@@ -37,22 +38,22 @@ public class Preferences extends JFrame {
         //container.setLayout(new GridLayout(0, 1, gapH, gapV));
         //container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
         container.add(panel);
-        panel.setLayout(new GridLayout(0, 2, gapH, gapV));
+        panel.setLayout(new GridLayout(0, 4, gapH, gapV));
         panel.setBorder(Util.makeBorder(pad));
 
-        panel.add(Util.rightLabel("Run delay:"));
-        panel.add(runDelaySpinner);
-        panel.add(Util.rightLabel("This is how we foo it:"));
-        panel.add(fooSpinner);
-        panel.add(Util.rightLabel("Goo balls:"));
-        panel.add(gooSpinner);
-        panel.add(Util.rightLabel("Poop:"));
-        panel.add(pooSpinner);
-        panel.add(Util.rightLabel("Moo moo moo:"));
-        panel.add(mooSpinner);
+        addPair("Run delay:", runDelaySpinner);
+        addPair("Foo you:",   fooSpinner);
 
+        addPair("Goo balls:", gooSpinner);
+        addPair("Poop:",      pooSpinner);
+
+        addPair("Moo moo:",   mooSpinner);
+        addPair("",           new ZeroPaddingComponent());
+
+        panel.add(new ZeroPaddingComponent());
         panel.add(Util.clickableButton("OK",     new OkHandler()));
         panel.add(Util.clickableButton("Cancel", new CancelHandler()));
+        panel.add(new ZeroPaddingComponent());
 
         setResizable(false);
 
@@ -61,6 +62,11 @@ public class Preferences extends JFrame {
         loadCurrentValues();
 
         setVisible(true);
+    }
+
+    private void addPair(String label, JComponent component) {
+        panel.add(Util.rightLabel(label));
+        panel.add(component);
     }
 
     private void loadCurrentValues() {
