@@ -17,11 +17,18 @@ public class Preferences extends JFrame {
     private static final int pad  = 3;
 
     private JSpinner runDelaySpinner;
+    private JSpinner fooSpinner;
+    private JSpinner gooSpinner;
+    private JSpinner pooSpinner;
+    private JSpinner mooSpinner;
 
     public Preferences(GUI gui) {
         this.gui = gui;
 
         runDelaySpinner = new JSpinner();
+        fooSpinner      = new JSpinner();
+        gooSpinner      = new JSpinner();
+        mooSpinner      = new JSpinner();
 
         setTitle(TITLE);
 
@@ -33,8 +40,16 @@ public class Preferences extends JFrame {
         panel.setLayout(new GridLayout(0, 2, gapH, gapV));
         panel.setBorder(Util.makeBorder(pad));
 
-        panel.add(Util.rightLabel("Click here:"));
+        panel.add(Util.rightLabel("Run delay:"));
         panel.add(runDelaySpinner);
+        panel.add(Util.rightLabel("This is how we foo it:"));
+        panel.add(fooSpinner);
+        panel.add(Util.rightLabel("Goo balls:"));
+        panel.add(gooSpinner);
+        panel.add(Util.rightLabel("Poop:"));
+        panel.add(pooSpinner);
+        panel.add(Util.rightLabel("Moo moo moo:"));
+        panel.add(mooSpinner);
 
         panel.add(Util.clickableButton("OK",     new OkHandler()));
         panel.add(Util.clickableButton("Cancel", new CancelHandler()));

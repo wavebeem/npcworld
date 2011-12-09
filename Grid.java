@@ -6,16 +6,6 @@ import java.util.List;
 public class Grid extends JPanel {
     private final Color bgColor = new Color(0x222222);
 
-    private final Color[] rainbow = {
-        Color.RED,
-        Color.ORANGE,
-        Color.YELLOW,
-        Color.GREEN,
-        Color.CYAN,
-        Color.BLUE,
-        Color.MAGENTA,
-    };
-
     private static final int gapH = 3;
     private static final int gapV = 3;
 
@@ -34,7 +24,7 @@ public class Grid extends JPanel {
     public Grid(int rows, int cols, GUI gui) {
         this.rows = rows;
         this.cols = cols;
-        this.size = Settings.MAX_SIZE;
+        this.size = Settings.maxSize;
         this.gui  = gui;
 
         icons = new ArrayList<JComponent>(size);
