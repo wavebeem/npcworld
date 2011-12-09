@@ -25,10 +25,4 @@ public class Settings {
     public static int healthinessPercent = 75;
 
     public static int matingFrequency = 10;
-
-    public static int nucleotidesSize          = 8;
-    public static int genderStartIdx           = 0;
-    public static int eatingDurationStartIdx   = 1;
-    public static int sleepingDurationStartIdx = 3;
-    public static int coloridxStartIdx         = 5;
 }
