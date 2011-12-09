@@ -10,28 +10,14 @@ public class NpcWorld implements World {
     private ArrayList<NpcIndividual> matingPoolMales;
     private ArrayList<NpcIndividual> matingPoolFemales;
 
-    private int oldAge;
-
-    private double mutationChance;
-    private double crossoverChance;
-    private double deathChance;
-
-    // max capacities
-    private int eatingCapacity;
-    private int sleepingCapacity;
-    private int matingCapacity;
-
     // current availability
     private int eatingAvailability;
     private int sleepingAvailability;
     private int matingAvailability;
 
-    private int maxHunger;
-    private int maxSleepiness;
-
     private int stepNumber;
 
-    private boolean[] availableIDs = new boolean[Settings.MAX_SIZE];
+    private boolean[] availableIDs = new boolean[Settings.maxSize];
 
     public NpcWorld() {
         population = new NpcPopulation();
@@ -41,90 +27,17 @@ public class NpcWorld implements World {
         }
 
         // initialize the population
-        for (int i = 0; i < Settings.POPULATION_SIZE; i++) {
+        for (int i = 0; i < Settings.populationSize; i++) {
             population.add(new NpcIndividual(i));
 
             availableIDs[i] = false;
         }
 
-        oldAge = Settings.OLD_AGE;
-
         stepNumber = 0;
 
-        mutationChance  = Settings.MUTATION_CHANCE;
-        crossoverChance = Settings.CROSSOVER_CHANCE;
-        deathChance     = Settings.DEATH_CHANCE;
-
-        eatingCapacity   = Settings.EATING_CAPACITY;
-        sleepingCapacity = Settings.SLEEPING_CAPACITY;
-        matingCapacity   = Settings.MATING_CAPACITY;
-
-        eatingAvailability   = eatingCapacity;
-        sleepingAvailability = sleepingCapacity;
-        matingAvailability   = matingCapacity;
-
-        maxHunger     = Settings.MAX_HUNGER;
-        maxSleepiness = Settings.MAX_SLEEPINESS;
-    }
-
-    public void setOldAge(int age) {
-        oldAge = age;
-    }
-
-    public void setMutationChance(double c) {
-        mutationChance = c / 100;
-    }
-
-    public void setCrossoverChance(double c) {
-        crossoverChance = c / 100;
-    }
-
-    public void setDeathChance(double c) {
-        deathChance = c / 100;
-    }
-
-    // setters for capacities
-    public void setEatingCapacity(int c) {
-        eatingAvailability += c - eatingCapacity; 
-        eatingCapacity = c;
-    }
-
-    public void setSleepingCapacity(int c) {
-        sleepingAvailability += c - sleepingCapacity; 
-        sleepingCapacity = c;
-    }
-
-    public void setMatingCapacity(int c) {
-        matingAvailability += c - matingCapacity; 
-        matingCapacity = c;
-    }
-
-    public int getOldAge() {
-        return oldAge;
-    }
-
-    public double getMutationChance() {
-        return mutationChance * 100;
-    }
-
-    public double getCrossoverChance() {
-        return crossoverChance * 100;
-    }
-
-    public double getDeathChance() {
-        return deathChance * 100;
-    }
-
-    public int getEatingCapacity() {
-        return eatingCapacity;
-    }
-
-    public int getSleepingCapacity() {
-        return sleepingCapacity;
-    }
-
-    public int getMatingCapacity() {
-        return matingCapacity;
+        eatingAvailability   = Settings.eatingCapacity;
+        sleepingAvailability = Settings.sleepingCapacity;
+        matingAvailability   = Settings.matingCapacity;
     }
 
     // genetic operators
@@ -146,7 +59,7 @@ public class NpcWorld implements World {
         boolean crossover = true;
 
         for (int i = 0; i < newDNA.length; i++) {
-            if (Math.random() < crossoverChance) {
+            if (Math.random() < Settings.crossoverChance) {
                 crossover = !crossover;
             }
 
@@ -163,16 +76,11 @@ public class NpcWorld implements World {
     public Dna mutate(Dna d) {
         boolean[] nucleotides = d.getNucleotides();
         for (int i = 0; i < nucleotides.length; i++) {
-            if (Math.random() < mutationChance) {
+            if (Math.random() < Settings.mutationChance) {
                 nucleotides[i] = !nucleotides[i];
             }
         }
         return new NpcDna(nucleotides);
-    }
-
-    public Population merge(Population p1, Population p2) {
-        System.out.println("Merging two populations");
-        return null;
     }
 
     public void step() {
@@ -182,9 +90,9 @@ public class NpcWorld implements World {
         ArrayList<Integer> keys = new ArrayList<Integer>(population.getKeys());
         Collections.shuffle(keys);
 
-        eatingAvailability = eatingCapacity;
-        sleepingAvailability = sleepingCapacity;
-        matingAvailability = matingCapacity;
+        eatingAvailability   = Settings.eatingCapacity;
+        sleepingAvailability = Settings.sleepingCapacity;
+        matingAvailability   = Settings.matingCapacity;
 
         // go through all of the individuals and decrement availabilities
         // if the individual is not done with its action
@@ -250,15 +158,15 @@ public class NpcWorld implements World {
             curIndividual.increaseSleepiness();
             curIndividual.increaseAge();
 
-            if (curIndividual.getHunger() > maxHunger ||
-                curIndividual.getSleepiness() > maxSleepiness ||
-                Math.random() < deathChance) {
+            if (curIndividual.getHunger() > Settings.maxHunger ||
+                curIndividual.getSleepiness() > Settings.maxSleepiness ||
+                Math.random() < Settings.deathChance) {
                 population.remove(curIndividual);
 
                 availableIDs[curIndividual.getID()] = true;
             }
 
-            if (curIndividual.getAge() >= oldAge && Math.random() < deathChance + 0.1) {
+            if (Math.random() < chanceOfDeath(curIndividual.getAge())) {
                 population.remove(curIndividual);
 
                 availableIDs[curIndividual.getID()] = true;
@@ -304,11 +212,11 @@ public class NpcWorld implements World {
     }
 
     public double chanceOfDeath(int age) {
-        if (age < oldAge) return deathChance;
+        if (age < Settings.oldAge) return Settings.deathChance;
 
-        int ageDiff = age - oldAge;
-        double curDeathChance = deathChance + Settings.DEATH_CHANCE_CHANGE * ageDiff;
+        int ageDiff = age - Settings.oldAge;
+        double curDeathChance = Settings.deathChance + Settings.deathChanceChange * ageDiff;
 
-        return curDeathChance < Settings.DEATH_CHANCE_MAX ? curDeathChance : Settings.DEATH_CHANCE_MAX;
+        return curDeathChance < Settings.deathChanceMax ? curDeathChance : Settings.deathChanceMax;
     }
 }
