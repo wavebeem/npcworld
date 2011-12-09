@@ -302,4 +302,13 @@ public class NpcWorld implements World {
 
         return null;
     }
+
+    public double chanceOfDeath(int age) {
+        if (age < oldAge) return deathChance;
+
+        int ageDiff = age - oldAge;
+        double curDeathChance = deathChance + Settings.DEATH_CHANCE_CHANGE * ageDiff;
+
+        return curDeathChance < Settings.DEATH_CHANCE_MAX ? curDeathChance : Settings.DEATH_CHANCE_MAX;
+    }
 }
