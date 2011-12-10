@@ -11,6 +11,7 @@ public class Preferences extends JFrame {
     private GUI gui;
 
     private JPanel panel;
+    private JPanel okPanel;
 
     private static final int gapH = 3;
     private static final int gapV = 3;
@@ -44,6 +45,8 @@ public class Preferences extends JFrame {
 
     private JSpinner _matingFrequency;
 
+    private JCheckBox _migrationEnabled;
+
     public Preferences(GUI gui) {
         this.gui = gui;
 
@@ -75,13 +78,16 @@ public class Preferences extends JFrame {
 
         _matingFrequency = new JSpinner();
 
+        _migrationEnabled = new JCheckBox();
+
         setTitle(TITLE);
 
         container = getContentPane();
         panel     = new JPanel();
-        //container.setLayout(new GridLayout(0, 1, gapH, gapV));
-        //container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+        okPanel   = new JPanel();
+        container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
         container.add(panel);
+        container.add(okPanel);
         panel.setLayout(new GridLayout(0, 4, gapH, gapV));
         panel.setBorder(Util.makeBorder(pad));
 
@@ -112,12 +118,10 @@ public class Preferences extends JFrame {
         addPair("Healthiness percent:", _healthinessPercent);
 
         addPair("Mating frequency:", _matingFrequency);
-        addPair("", new ZeroPaddingComponent());
+        addPair("Allow migration:", _migrationEnabled);
 
-        panel.add(new ZeroPaddingComponent());
-        panel.add(Util.clickableButton("OK",     new OkHandler()));
-        panel.add(Util.clickableButton("Cancel", new CancelHandler()));
-        panel.add(new ZeroPaddingComponent());
+        okPanel.add(Util.clickableButton("OK",     new OkHandler()));
+        okPanel.add(Util.clickableButton("Cancel", new CancelHandler()));
 
         setResizable(false);
 
@@ -161,6 +165,8 @@ public class Preferences extends JFrame {
         _healthinessPercent.setValue(Settings.healthinessPercent);
 
         _matingFrequency.setValue(Settings.matingFrequency);
+
+        _migrationEnabled.setSelected(Settings.migrationEnabled);
     }
 
     private void saveCurrentValues() {
@@ -191,6 +197,8 @@ public class Preferences extends JFrame {
         Settings.healthinessPercent = Util.intFromSpinner(_healthinessPercent);
 
         Settings.matingFrequency = Util.intFromSpinner(_matingFrequency);
+
+        Settings.migrationEnabled = _migrationEnabled.isSelected();
     }
 
     private class OkHandler implements ActionListener {
