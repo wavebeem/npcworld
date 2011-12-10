@@ -33,7 +33,6 @@ public class Preferences extends JFrame {
 
     private JSpinner _eatingCapacity;
     private JSpinner _sleepingCapacity;
-    private JSpinner _matingCapacity;
 
     private JSpinner _maxHunger;
     private JSpinner _maxSleepiness;
@@ -65,7 +64,6 @@ public class Preferences extends JFrame {
 
         _eatingCapacity   = new JSpinner();
         _sleepingCapacity = new JSpinner();
-        _matingCapacity   = new JSpinner();
 
         _maxHunger     = new JSpinner();
         _maxSleepiness = new JSpinner();
@@ -104,7 +102,6 @@ public class Preferences extends JFrame {
 
         addPair("Eating capacity:", _eatingCapacity);
         addPair("Sleeping capacity:", _sleepingCapacity);
-        addPair("Mating capacity:", _matingCapacity);
 
         addPair("Max hunger:", _maxHunger);
         addPair("Max sleepiness:", _maxSleepiness);
@@ -154,7 +151,6 @@ public class Preferences extends JFrame {
 
         _eatingCapacity.setValue(Settings.eatingCapacity);
         _sleepingCapacity.setValue(Settings.sleepingCapacity);
-        _matingCapacity.setValue(Settings.matingCapacity);
 
         _maxHunger.setValue(Settings.maxHunger);
         _maxSleepiness.setValue(Settings.maxSleepiness);
@@ -164,7 +160,7 @@ public class Preferences extends JFrame {
 
         _healthinessPercent.setValue(Settings.healthinessPercent);
 
-        _matingFrequency.setValue(Settings.matingCapacity);
+        _matingFrequency.setValue(Settings.matingFrequency);
     }
 
     private void saveCurrentValues() {
@@ -185,7 +181,6 @@ public class Preferences extends JFrame {
 
         Settings.eatingCapacity = Util.intFromSpinner(_eatingCapacity);
         Settings.sleepingCapacity = Util.intFromSpinner(_sleepingCapacity);
-        Settings.matingCapacity = Util.intFromSpinner(_matingCapacity);
 
         Settings.maxHunger = Util.intFromSpinner(_maxHunger);
         Settings.maxSleepiness = Util.intFromSpinner(_maxSleepiness);
@@ -195,7 +190,7 @@ public class Preferences extends JFrame {
 
         Settings.healthinessPercent = Util.intFromSpinner(_healthinessPercent);
 
-        Settings.matingFrequency = Util.intFromSpinner(_matingCapacity);
+        Settings.matingFrequency = Util.intFromSpinner(_matingFrequency);
     }
 
     private class OkHandler implements ActionListener {
