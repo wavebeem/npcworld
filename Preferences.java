@@ -27,7 +27,6 @@ public class Preferences extends JFrame {
     private JSpinner _crossoverChance;
 
     private JSpinner _populationSize;
-    private JSpinner _maxSize;
 
     private JSpinner _oldAge;
     private JSpinner _youngAge;
@@ -60,7 +59,6 @@ public class Preferences extends JFrame {
         _crossoverChance    = new JSpinner();
 
         _populationSize = new JSpinner();
-        _maxSize        = new JSpinner();
 
         _oldAge   = new JSpinner();
         _youngAge = new JSpinner();
@@ -92,6 +90,7 @@ public class Preferences extends JFrame {
         panel.setBorder(Util.makeBorder(pad));
 
         addPair("Run delay:", _runDelay);
+        addPair("Initial Population size:", _populationSize);
 
         addPair("Death chance:", _deathChance);
         addPair("Death chance max:", _deathChanceMax);
@@ -99,9 +98,6 @@ public class Preferences extends JFrame {
 
         addPair("Mutation chance:", _mutationChance);
         addPair("Crossover chance:", _crossoverChance);
-
-        addPair("Population size:", _populationSize);
-        addPair("Max size:", _maxSize);
 
         addPair("Old age:", _oldAge);
         addPair("Young age:", _youngAge);
@@ -148,7 +144,6 @@ public class Preferences extends JFrame {
         _crossoverChance.setValue((int) (Settings.crossoverChance * 100));
 
         _populationSize.setValue(Settings.populationSize);
-        _maxSize.setValue(Settings.maxSize);
 
         _oldAge.setValue(Settings.oldAge);
         _youngAge.setValue(Settings.youngAge);
@@ -180,7 +175,6 @@ public class Preferences extends JFrame {
         Settings.crossoverChance = Util.intFromSpinner(_crossoverChance) / 100.0;
 
         Settings.populationSize = Util.intFromSpinner(_populationSize);
-        Settings.maxSize = Util.intFromSpinner(_maxSize);
 
         Settings.oldAge = Util.intFromSpinner(_oldAge);
         Settings.youngAge = Util.intFromSpinner(_youngAge);
