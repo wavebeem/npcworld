@@ -63,6 +63,9 @@ public class NpcIndividual implements Individual, Comparable {
         return sleepiness;
     }
 
+    public void setID(int ID){
+        this.ID = ID;
+    }
     public void increaseAge(){
         age++;
         icon.happyBirthday();
