@@ -17,11 +17,6 @@ public class GUI extends JFrame {
 
     private Thread  thread;
     private boolean running;
-    private int     runDelay;
-
-    public void setRunDelay(int runDelay) { this.runDelay = runDelay; }
-
-    public int getRunDelay() { return runDelay; }
 
     public GUI() {
         Util.tryForNiceTheme();
@@ -30,7 +25,6 @@ public class GUI extends JFrame {
 
         thread   = null;
         running  = false;
-        runDelay = 250;
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -100,7 +94,7 @@ public class GUI extends JFrame {
         public void run() {
             while (running) {
                 step();
-                Util.sleep(runDelay);
+                Util.sleep(Settings.runDelay);
             }
         }
     }
