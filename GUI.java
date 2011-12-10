@@ -24,7 +24,7 @@ public class GUI extends JFrame {
         Util.tryForNiceTheme();
 
         world    = new NpcWorld();
-        selector = new WorldSelector();
+        selector = new WorldSelector(this);
 
         thread   = null;
         running  = false;
@@ -52,6 +52,10 @@ public class GUI extends JFrame {
 
     public void step() {
         world.step();
+        redraw();
+    }
+
+    public void redraw() {
         grid.repopulate();
         infobar.fillInfo();
         repaint();
@@ -59,6 +63,10 @@ public class GUI extends JFrame {
 
     public World getWorld() {
         return world;
+    }
+
+    public void setWorld(World world) {
+        this.world = world;
     }
 
     public void toggleRunning() {
