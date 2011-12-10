@@ -25,6 +25,8 @@ public class NpcUniverse implements Universe {
                 worlds[row][col].step();
             }
         }
+        if(Settings.migrationEnabled)
+            migrateWorlds();
     }
 
     private void migrateWorlds(){
