@@ -10,10 +10,11 @@ public class NpcWorld implements World {
     private ArrayList<NpcIndividual> matingPoolMales;
     private ArrayList<NpcIndividual> matingPoolFemales;
 
+    private ArrayList<NpcIndividual> migrationPool;
+
     // current availability
     private int eatingAvailability;
     private int sleepingAvailability;
-    private int matingAvailability;
 
     private int stepNumber;
 
@@ -37,7 +38,6 @@ public class NpcWorld implements World {
 
         eatingAvailability   = Settings.eatingCapacity;
         sleepingAvailability = Settings.sleepingCapacity;
-        matingAvailability   = Settings.matingCapacity;
     }
 
     public NpcPopulation getPopulation() {
@@ -112,7 +112,6 @@ public class NpcWorld implements World {
     private void freeAvailabilities() {
         eatingAvailability   = Settings.eatingCapacity;
         sleepingAvailability = Settings.sleepingCapacity;
-        matingAvailability   = Settings.matingCapacity;
 
         // go through all of the individuals and decrement availabilities
         // if the individual is not done with its action
@@ -122,8 +121,6 @@ public class NpcWorld implements World {
                     eatingAvailability--;
                 } else if (i.getCurrentAction() == Const.SLEEPING) {
                     sleepingAvailability--;
-                } else if (i.getCurrentAction() == Const.MATING) {
-                    matingAvailability--;
                 }
             }
         }
@@ -137,20 +134,26 @@ public class NpcWorld implements World {
 
             if (eatingAvailability   > 0) actions.add(Const.EATING  );
             if (sleepingAvailability > 0) actions.add(Const.SLEEPING);
-            if (matingAvailability   > 0) actions.add(Const.MATING  );
+            if (Settings.migrationEnabled) actions.add(Const.MIGRATING);
+            actions.add(Const.MATING);
+            actions.add(Const.PLAYING);
 
             int action = ind.chooseAction(actions);
 
-            if      (action == Const.EATING)   eatingAvailability--;
-            else if (action == Const.SLEEPING) sleepingAvailability--;
+            if      (action == Const.EATING)    eatingAvailability--;
+            else if (action == Const.SLEEPING)  sleepingAvailability--;
             else if (action == Const.MATING) {
-                matingAvailability--;
-                if (((NpcDna)ind.getDna()).getGender() == Const.MALE) {
+                if (ind.getGender() == Const.MALE) {
                     matingPoolMales.add(ind);
                 } else {
                     matingPoolFemales.add(ind);
                 }
             }
+            else if (action == Const.MIGRATING) {
+                migrationPool.add(ind);
+                removeIndividual(ind);
+            }
+
         }
 
         ind.decreaseStepsRemaining();
@@ -170,8 +173,7 @@ public class NpcWorld implements World {
         ||  ind.getSleepiness() > Settings.maxSleepiness
         ||  Math.random()       < chanceOfDeath(ind.getAge()))
         {
-            population.remove(ind);
-            availableIDs[ind.getID()] = true;
+            removeIndividual(ind);
             return true;
         }
         return false;
@@ -215,5 +217,32 @@ public class NpcWorld implements World {
         double curDeathChance = Settings.deathChance + Settings.deathChanceChange * ageDiff;
 
         return Math.min(curDeathChance, Settings.deathChanceMax);
+    }
+
+    public int percentMale() {
+        int numMales = 0;
+        for (NpcIndividual ind : population.getIndividuals()) {
+            if (ind.getGender() == Const.MALE) numMales++;
+        }
+        return (int)((100.0 * numMales) / population.getSize());
+    }
+
+    public ArrayList<NpcIndividual> getMigrationPool() {
+        return migrationPool;
+    }
+
+    public void addIndividual(NpcIndividual ind) {
+        int id = 0;
+        while(!availableIDs[id]) {
+            id++;
+        }
+        ind.setID(id);
+        availableIDs[id] = false;
+        population.add(ind);
+    }
+
+    public void removeIndividual(NpcIndividual ind) {
+        population.remove(ind);
+        availableIDs[ind.getID()] = true;
     }
 }
