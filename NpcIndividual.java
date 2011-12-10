@@ -86,21 +86,44 @@ public class NpcIndividual implements Individual, Comparable {
     }
     
     public int chooseAction(ArrayList<Integer> actions){
-        //If it doesn't choose to do anything, then play
-        if (!chooseEating(actions)
-        &&  !chooseSleeping(actions)
-        &&  !chooseMating(actions)
-        &&  !chooseMigration(actions))
-        {
-            stepsRemaining = 1;
-            currentAction = Const.PLAYING;
+        int[] actionOrder;
+    
+        //Build the order in which they prefer to make each action
+        if (dna.getMatingOrNeedsPreference()){
+            if(dna.getEatingOrSleepingPreference()){
+                actionOrder = new int[] {Const.MATING, Const.EATING, Const.SLEEPING, Const.MIGRATING, Const.PLAYING};
+            } else {
+                actionOrder = new int[] {Const.MATING, Const.SLEEPING, Const.EATING, Const.MIGRATING, Const.PLAYING};
+            }
+        } else {
+            if(dna.getEatingOrSleepingPreference()){
+                actionOrder = new int[] {Const.EATING, Const.SLEEPING, Const.MATING, Const.MIGRATING, Const.PLAYING};
+            } else {
+                actionOrder = new int[] {Const.SLEEPING, Const.EATING, Const.MATING, Const.MIGRATING, Const.PLAYING};
+            }
+        }
+        
+        boolean chose = false;
+        //Choose an action, checking in actionOrder
+        for(int idx=0; !chose && idx < actionOrder.length; idx++){
+            if (actionOrder[idx] == Const.EATING) {
+                chose = chooseEating(actions);
+            } else if (actionOrder[idx] == Const.SLEEPING) {
+                chose = chooseSleeping(actions);
+            } else if (actionOrder[idx] == Const.MATING) {
+                chose = chooseMating(actions);
+            } else if (actionOrder[idx] == Const.MIGRATING) {
+                chose = chooseMigrating();
+            } else {
+                chose = choosePlaying();
+            }
         }
         
         Debug.echo("Returning a chosen action of "+currentAction+" with "+stepsRemaining+" steps remaining.");
         icon.setAction(currentAction);
         return currentAction;
     }
-    public boolean chooseEating(ArrayList<Integer> actions){
+    private boolean chooseEating(ArrayList<Integer> actions){
         if (actions.contains(Const.EATING) 
         &&  hunger >= (dna.getEatingDuration() * Settings.hungerChange))
         { 
@@ -110,7 +133,7 @@ public class NpcIndividual implements Individual, Comparable {
         }
         return false;
     }
-    public boolean chooseSleeping(ArrayList<Integer> actions){
+    private boolean chooseSleeping(ArrayList<Integer> actions){
         if (actions.contains(Const.SLEEPING)  
         &&  sleepiness >= (dna.getSleepingDuration() * Settings.sleepinessChange))
         {
@@ -120,8 +143,8 @@ public class NpcIndividual implements Individual, Comparable {
         }
         return false;
     }
-    public boolean chooseMating(ArrayList<Integer> actions){
-        if (actions.contains(Const.MATING)                                          
+    private boolean chooseMating(ArrayList<Integer> actions){
+        if (actions.contains(Const.MATING)
         &&  stepsUntilMating == 0
         &&  age > Settings.youngAge
         &&  hunger < ((0.01)*Settings.maxHunger*(100 - Settings.healthinessPercent))
@@ -133,10 +156,15 @@ public class NpcIndividual implements Individual, Comparable {
         }
         return false;
     }
-    public boolean chooseMigration(ArrayList<Integer> actions) {
+    private boolean chooseMigrating() {
         if (false) {
             return true;
         }
         return false;
+    }
+    private boolean choosePlaying(){
+        stepsRemaining = 1;
+        currentAction = Const.PLAYING;
+        return true;
     }
 }
