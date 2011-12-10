@@ -151,8 +151,7 @@ public class NpcWorld implements World {
             }
             else if (action == Const.MIGRATING) {
                 migrationPool.add(ind);
-                population.remove(ind);
-                availableIDs[ind.getID()] = true;
+                removeIndividual(ind);
             }
 
         }
@@ -174,8 +173,7 @@ public class NpcWorld implements World {
         ||  ind.getSleepiness() > Settings.maxSleepiness
         ||  Math.random()       < chanceOfDeath(ind.getAge()))
         {
-            population.remove(ind);
-            availableIDs[ind.getID()] = true;
+            removeIndividual(ind);
             return true;
         }
         return false;
@@ -231,5 +229,20 @@ public class NpcWorld implements World {
 
     public ArrayList<NpcIndividual> getMigrationPool() {
         return migrationPool;
+    }
+
+    public void addIndividual(NpcIndividual ind) {
+        int id = 0;
+        while(!availableIDs[id]) {
+            id++;
+        }
+        ind.setID(id);
+        availableIDs[id] = false;
+        population.add(ind);
+    }
+
+    public void removeIndividual(NpcIndividual ind) {
+        population.remove(ind);
+        availableIDs[ind.getID()] = true;
     }
 }
