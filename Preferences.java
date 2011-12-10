@@ -138,7 +138,7 @@ public class Preferences extends JFrame {
 
         _deathChance.setValue((int) (Settings.deathChance * 100));
         _deathChanceMax.setValue((int) (Settings.deathChanceMax * 100));
-        _deathChanceChange.setValue((int) (Settings.deathChanceMax * 100));
+        _deathChanceChange.setValue((int) (Settings.deathChanceChange * 100));
 
         _mutationChance.setValue((int) (Settings.mutationChance * 100));
         _crossoverChance.setValue((int) (Settings.crossoverChance * 100));
@@ -168,7 +168,7 @@ public class Preferences extends JFrame {
 
         Settings.deathChance = Util.intFromSpinner(_deathChance) / 100.0;
         Settings.deathChanceMax = Util.intFromSpinner(_deathChanceMax) / 100.0;
-        Settings.deathChanceChange = Util.intFromSpinner(_deathChanceMax) / 100.0;
+        Settings.deathChanceChange = Util.intFromSpinner(_deathChanceChange) / 100.0;
 
         Settings.mutationChance = Util.intFromSpinner(_mutationChance) / 100.0;
         Settings.crossoverChance = Util.intFromSpinner(_crossoverChance) / 100.0;
