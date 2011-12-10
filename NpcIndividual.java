@@ -13,6 +13,15 @@ public class NpcIndividual implements Individual, Comparable {
     public NpcIndividual(int ID){
         this.ID = ID;
         dna = new NpcDna();
+        init();
+    }
+    public NpcIndividual(int ID, NpcDna dna) {
+        this.ID = ID;
+        this.dna = dna;
+        init();
+    }
+    
+    private void init(){
         icon = new Icon(dna.getGender());
         icon.colorize(dna.getColor());
         age = 0;
@@ -21,17 +30,9 @@ public class NpcIndividual implements Individual, Comparable {
         stepsUntilMating = 0;
         stepsRemaining = 0;
     }
-
-    public NpcIndividual(int ID, NpcDna dna) {
-        this.ID = ID;
-        this.dna = dna;
-        icon = new Icon(dna.getGender());
-        icon.colorize(dna.getColor());
-        age = 0;
-        hunger = 0;
-        sleepiness = 0;
-        stepsUntilMating = 0;
-        stepsRemaining = 0;
+    public int compareTo(Object o){ //Compares individuals by ID
+        int otherID = ((NpcIndividual) o).getID();
+        return ((Integer) ID).compareTo(otherID);
     }
 
     public Dna getDna(){
@@ -83,21 +84,14 @@ public class NpcIndividual implements Individual, Comparable {
     public void mated(){
         stepsUntilMating = Settings.matingFrequency;
     }
-    public int chooseAction(ArrayList<Integer> availableActions){
-        if (availableActions.contains(Const.EATING) && hunger >= (dna.getEatingDuration() * Settings.hungerChange)){ //If eating is available, and you are hungry enough to eat
-            stepsRemaining = dna.getEatingDuration();
-            currentAction = Const.EATING;
-        } else if (availableActions.contains(Const.SLEEPING) && sleepiness >= (dna.getSleepingDuration() * Settings.sleepinessChange)){ //If sleeping is available, and you are sleepy enough to sleep
-            stepsRemaining = dna.getSleepingDuration();
-            currentAction = Const.SLEEPING;
-        } else if ( availableActions.contains(Const.MATING) &&                                          //If mating is available,
-                    stepsUntilMating == 0 &&                                                            //and you haven't mated recently
-                    age > Settings.youngAge &&                                                          //and you are atleast a certain age
-                    hunger < ((0.01)*Settings.maxHunger*(100 - Settings.healthinessPercent)) &&         //and you are not healthinessPercent hungry
-                    sleepiness < ((0.01)*Settings.maxSleepiness*(100 - Settings.healthinessPercent))) {  //and you are not sleepinessPercent sleepy
-            stepsRemaining = 1;
-            currentAction = Const.MATING;
-        } else { //Otherwise, just play
+    
+    public int chooseAction(ArrayList<Integer> actions){
+        //If it doesn't choose to do anything, then play
+        if (!chooseEating(actions)
+        &&  !chooseSleeping(actions)
+        &&  !chooseMating(actions)
+        &&  !chooseMigration(actions))
+        {
             stepsRemaining = 1;
             currentAction = Const.PLAYING;
         }
@@ -106,22 +100,43 @@ public class NpcIndividual implements Individual, Comparable {
         icon.setAction(currentAction);
         return currentAction;
     }
-    
-    public int chooseEating(){
-        return Const.PLAYING;
+    public boolean chooseEating(ArrayList<Integer> actions){
+        if (actions.contains(Const.EATING) 
+        &&  hunger >= (dna.getEatingDuration() * Settings.hungerChange))
+        { 
+            stepsRemaining = dna.getEatingDuration();
+            currentAction = Const.EATING;
+            return true;
+        }
+        return false;
     }
-    public int chooseSleeping(){
-        return Const.PLAYING;
+    public boolean chooseSleeping(ArrayList<Integer> actions){
+        if (actions.contains(Const.SLEEPING)  
+        &&  sleepiness >= (dna.getSleepingDuration() * Settings.sleepinessChange))
+        {
+            stepsRemaining = dna.getSleepingDuration();
+            currentAction = Const.SLEEPING;
+            return true;
+        }
+        return false;
     }
-    public int chooseMating(){
-        return Const.PLAYING;
+    public boolean chooseMating(ArrayList<Integer> actions){
+        if (actions.contains(Const.MATING)                                          
+        &&  stepsUntilMating == 0
+        &&  age > Settings.youngAge
+        &&  hunger < ((0.01)*Settings.maxHunger*(100 - Settings.healthinessPercent))
+        &&  sleepiness < ((0.01)*Settings.maxSleepiness*(100 - Settings.healthinessPercent))) 
+        {
+            stepsRemaining = 1;
+            currentAction = Const.MATING;
+            return true;
+        }
+        return false;
     }
-    public int chooseMigration() {
-        return Const.PLAYING;
-    }
-    
-    public int compareTo(Object o){ //Compares individuals by ID
-        int otherID = ((NpcIndividual) o).getID();
-        return ((Integer) ID).compareTo(otherID);
+    public boolean chooseMigration(ArrayList<Integer> actions) {
+        if (false) {
+            return true;
+        }
+        return false;
     }
 }
