@@ -14,7 +14,6 @@ public class Settings {
 
     public static int eatingCapacity   = 10;
     public static int sleepingCapacity = 10;
-    public static int matingCapacity   = 10;
 
     public static int maxHunger     = 100;
     public static int maxSleepiness =  50;
@@ -25,4 +24,6 @@ public class Settings {
     public static int healthinessPercent = 75;
 
     public static int matingFrequency = 10;
+    
+    public static boolean migrationEnabled = false;
 }

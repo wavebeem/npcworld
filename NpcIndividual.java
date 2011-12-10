@@ -38,6 +38,9 @@ public class NpcIndividual implements Individual, Comparable {
     public Dna getDna(){
         return dna;
     }
+    public int getGender(){
+        return dna.getGender();
+    }
     public JComponent getWidget() {
         return icon;
     }
@@ -113,9 +116,9 @@ public class NpcIndividual implements Individual, Comparable {
             } else if (actionOrder[idx] == Const.MATING) {
                 chose = chooseMating(actions);
             } else if (actionOrder[idx] == Const.MIGRATING) {
-                chose = chooseMigrating();
+                chose = chooseMigrating(actions);
             } else {
-                chose = choosePlaying();
+                chose = choosePlaying(actions);
             }
         }
         
@@ -156,15 +159,19 @@ public class NpcIndividual implements Individual, Comparable {
         }
         return false;
     }
-    private boolean chooseMigrating() {
-        if (false) {
-            return true;
+    private boolean chooseMigrating(ArrayList<Integer> actions) {
+        if (actions.contains(Const.MIGRATING)) {
+            return false;
         }
         return false;
     }
-    private boolean choosePlaying(){
-        stepsRemaining = 1;
-        currentAction = Const.PLAYING;
-        return true;
+    private boolean choosePlaying(ArrayList<Integer> actions){
+        if (actions.contains(Const.PLAYING)) {
+            stepsRemaining = 1;
+            currentAction = Const.PLAYING;
+            return true;
+        }
+        Debug.echo("OH NO! THE WORLD IS GOING TO EXPLODE, I CANT PLAY!!!.");
+        return false;
     }
 }
