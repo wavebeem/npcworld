@@ -15,13 +15,16 @@ public class GUI extends JFrame {
     private Infobar infobar;
     private World   world;
 
+    private WorldSelector selector;
+
     private Thread  thread;
     private boolean running;
 
     public GUI() {
         Util.tryForNiceTheme();
 
-        world = new NpcWorld();
+        world    = new NpcWorld();
+        selector = new WorldSelector();
 
         thread   = null;
         running  = false;
