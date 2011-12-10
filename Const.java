@@ -14,4 +14,7 @@ public class Const {
     public static int COLORIDX_START_IDX                = 5;
     public static int EATING_OR_SLEEPING_PREFERENCE_IDX = 6;
     public static int MATING_OR_NEEDS_PREFERENCE_IDX    = 7;
+
+    public static int UNIVERSE_ROWS = 3;
+    public static int UNIVERSE_COLS = 3;
 }
