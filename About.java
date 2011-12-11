@@ -5,24 +5,24 @@ public class About extends JDialog {
     public static final String TITLE = "About NPCWorld";
 
     private JScrollPane scrollPane;
-    private JTextArea   textArea;
+    private JEditorPane editorPane;
     private JPanel      panel;
 
     private static final int margin = 6;
 
-    private static final Dimension preferredSize = new Dimension(400, 100);
+    private static final Dimension preferredSize = new Dimension(400, 400);
 
     public About() {
         super((Frame) null, true);
 
         setTitle(TITLE);
 
-        textArea = new JTextArea(Const.ABOUT_TEXT);
-        textArea.setEditable(false);
-        textArea.setLineWrap(true);
-        textArea.setWrapStyleWord(true);
+        editorPane = new JEditorPane();
+        editorPane.setContentType("text/html");
+        editorPane.setText(Const.ABOUT_TEXT);
+        editorPane.setEditable(false);
 
-        scrollPane = new JScrollPane(textArea);
+        scrollPane = new JScrollPane(editorPane);
         scrollPane.setPreferredSize(preferredSize);
 
         panel = new JPanel();
