@@ -6,13 +6,6 @@ import javax.swing.JComponent;
  * @author tgriswol
  */
 public class NpcIndividual implements Individual, Comparable {
-    private static int youngAge = Settings.YOUNG_AGE;
-    private static int maxSleepiness = Settings.MAX_SLEEPINESS;
-    private static int maxHunger = Settings.MAX_HUNGER;
-    private static int healthinessPercent = Settings.HEALTHINESS_PERCENT;
-    private static int matingFrequency = Settings.MATING_FREQUENCY;
-    private static int hungerChange = Settings.HUNGER_CHANGE;
-    private static int sleepinessChange = Settings.SLEEPINESS_CHANGE;
     private NpcDna dna;
     private int ID, age, currentAction, stepsRemaining, hunger, sleepiness, stepsUntilMating;
     private Icon icon;
@@ -20,6 +13,15 @@ public class NpcIndividual implements Individual, Comparable {
     public NpcIndividual(int ID){
         this.ID = ID;
         dna = new NpcDna();
+        init();
+    }
+    public NpcIndividual(int ID, NpcDna dna) {
+        this.ID = ID;
+        this.dna = dna;
+        init();
+    }
+    
+    private void init(){
         icon = new Icon(dna.getGender());
         icon.colorize(dna.getColor());
         age = 0;
@@ -28,21 +30,16 @@ public class NpcIndividual implements Individual, Comparable {
         stepsUntilMating = 0;
         stepsRemaining = 0;
     }
-
-    public NpcIndividual(int ID, NpcDna dna) {
-        this.ID = ID;
-        this.dna = dna;
-        icon = new Icon(dna.getGender());
-        icon.colorize(dna.getColor());
-        age = 0;
-        hunger = 0;
-        sleepiness = 0;
-        stepsUntilMating = 0;
-        stepsRemaining = 0;
+    public int compareTo(Object o){ //Compares individuals by ID
+        int otherID = ((NpcIndividual) o).getID();
+        return ((Integer) ID).compareTo(otherID);
     }
 
     public Dna getDna(){
         return dna;
+    }
+    public int getGender(){
+        return dna.getGender();
     }
     public JComponent getWidget() {
         return icon;
@@ -66,6 +63,9 @@ public class NpcIndividual implements Individual, Comparable {
         return sleepiness;
     }
 
+    public void setID(int ID){
+        this.ID = ID;
+    }
     public void increaseAge(){
         age++;
         icon.happyBirthday();
@@ -79,65 +79,102 @@ public class NpcIndividual implements Individual, Comparable {
         hunger++;
     }
     public void decreaseHunger(){
-        hunger -= hungerChange;
+        hunger -= Settings.hungerChange;
     }
     public void increaseSleepiness(){
         sleepiness++;
     }
     public void decreaseSleepiness(){
-        sleepiness -= sleepinessChange;
+        sleepiness -= Settings.sleepinessChange;
     }
     public void mated(){
-        stepsUntilMating = matingFrequency;
+        stepsUntilMating = Settings.matingFrequency;
     }
-    public int chooseAction(ArrayList<Integer> availableActions){
-        if (availableActions.contains(Const.EATING) && hunger >= (dna.getEatingDuration() * hungerChange)){ //If eating is available, and you are hungry enough to eat
-            stepsRemaining = dna.getEatingDuration();
-            currentAction = Const.EATING;
-        } else if (availableActions.contains(Const.SLEEPING) && sleepiness >= (dna.getSleepingDuration() * sleepinessChange)){ //If sleeping is available, and you are sleepy enough to sleep
-            stepsRemaining = dna.getSleepingDuration();
-            currentAction = Const.SLEEPING;
-        } else if ( availableActions.contains(Const.MATING) &&                          //If mating is available,
-                    stepsUntilMating == 0 &&                                            //and you haven't mated recently
-                    age > youngAge &&                                                   //and you are atlease a certain age
-                    hunger < ((0.01)*maxHunger*(100 - healthinessPercent)) &&           //and you are not healthynessPercent hungry
-                    sleepiness < ((0.01)*maxSleepiness*(100 - healthinessPercent))) {   //and you are not healthynessPercent sleepy
-            stepsRemaining = 1;
-            currentAction = Const.MATING;
-        } else { //Otherwise, just play
-            stepsRemaining = 1;
-            currentAction = Const.PLAYING;
+    
+    public int chooseAction(ArrayList<Integer> actions){
+        int[] actionOrder;
+    
+        //Build the order in which they prefer to make each action
+        if (dna.getMatingOrNeedsPreference()){
+            if(dna.getEatingOrSleepingPreference()){
+                actionOrder = new int[] {Const.MATING, Const.EATING, Const.SLEEPING, Const.MIGRATING, Const.PLAYING};
+            } else {
+                actionOrder = new int[] {Const.MATING, Const.SLEEPING, Const.EATING, Const.MIGRATING, Const.PLAYING};
+            }
+        } else {
+            if(dna.getEatingOrSleepingPreference()){
+                actionOrder = new int[] {Const.EATING, Const.SLEEPING, Const.MATING, Const.MIGRATING, Const.PLAYING};
+            } else {
+                actionOrder = new int[] {Const.SLEEPING, Const.EATING, Const.MATING, Const.MIGRATING, Const.PLAYING};
+            }
+        }
+        
+        boolean chose = false;
+        //Choose an action, checking in actionOrder
+        for(int idx=0; !chose && idx < actionOrder.length; idx++){
+            if (actionOrder[idx] == Const.EATING) {
+                chose = chooseEating(actions);
+            } else if (actionOrder[idx] == Const.SLEEPING) {
+                chose = chooseSleeping(actions);
+            } else if (actionOrder[idx] == Const.MATING) {
+                chose = chooseMating(actions);
+            } else if (actionOrder[idx] == Const.MIGRATING) {
+                chose = chooseMigrating(actions);
+            } else {
+                chose = choosePlaying(actions);
+            }
         }
         
         Debug.echo("Returning a chosen action of "+currentAction+" with "+stepsRemaining+" steps remaining.");
         icon.setAction(currentAction);
         return currentAction;
     }
-    
-    public int compareTo(Object o){ //Compares individuals by ID
-        int otherID = ((NpcIndividual) o).getID();
-        return ((Integer) ID).compareTo(otherID);
+    private boolean chooseEating(ArrayList<Integer> actions){
+        if (actions.contains(Const.EATING) 
+        &&  hunger >= (dna.getEatingDuration() * Settings.hungerChange))
+        { 
+            stepsRemaining = dna.getEatingDuration();
+            currentAction = Const.EATING;
+            return true;
+        }
+        return false;
     }
-    
-    public static void setYoungAge(int newVal){
-        youngAge = newVal;
+    private boolean chooseSleeping(ArrayList<Integer> actions){
+        if (actions.contains(Const.SLEEPING)  
+        &&  sleepiness >= (dna.getSleepingDuration() * Settings.sleepinessChange))
+        {
+            stepsRemaining = dna.getSleepingDuration();
+            currentAction = Const.SLEEPING;
+            return true;
+        }
+        return false;
     }
-    public static void setMaxSleepiness(int newVal){
-        maxSleepiness = newVal;
+    private boolean chooseMating(ArrayList<Integer> actions){
+        if (actions.contains(Const.MATING)
+        &&  stepsUntilMating == 0
+        &&  age > Settings.youngAge
+        &&  hunger < ((0.01)*Settings.maxHunger*(100 - Settings.healthinessPercent))
+        &&  sleepiness < ((0.01)*Settings.maxSleepiness*(100 - Settings.healthinessPercent))) 
+        {
+            stepsRemaining = 1;
+            currentAction = Const.MATING;
+            return true;
+        }
+        return false;
     }
-    public static void setMaxHunger(int newVal){
-        maxHunger = newVal;
+    private boolean chooseMigrating(ArrayList<Integer> actions) {
+        if (actions.contains(Const.MIGRATING)) {
+            return false;
+        }
+        return false;
     }
-    public static void setHealthinessPercent(int newVal){
-        healthinessPercent = newVal;
-    }
-    public static void setMatingFrequency(int newVal){
-        matingFrequency = newVal;
-    }
-    public static void setHungerChange(int newVal){
-        hungerChange = newVal;
-    }
-    public static void setSleepinessChange(int newVal){
-        sleepinessChange = newVal;
+    private boolean choosePlaying(ArrayList<Integer> actions){
+        if (actions.contains(Const.PLAYING)) {
+            stepsRemaining = 1;
+            currentAction = Const.PLAYING;
+            return true;
+        }
+        Debug.echo("OH NO! THE WORLD IS GOING TO EXPLODE, I CANT PLAY!!!.");
+        return false;
     }
 }

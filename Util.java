@@ -24,8 +24,6 @@ public class Util {
         }
     }
 
-    public static final JComponent NULL_ICON = new NullIcon();
-
     public static void joinThread(Thread thread) {
         try {
             thread.join();
@@ -36,7 +34,7 @@ public class Util {
 
     public static Image loadImage(String filename) {
         try {
-            Image tmp = ImageIO.read(new File(filename));
+            Image tmp = ImageIO.read(Util.class.getResource(filename));
 
             return tmp;
         }

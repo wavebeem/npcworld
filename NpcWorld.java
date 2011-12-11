@@ -10,28 +10,15 @@ public class NpcWorld implements World {
     private ArrayList<NpcIndividual> matingPoolMales;
     private ArrayList<NpcIndividual> matingPoolFemales;
 
-    private int oldAge;
-
-    private double mutationChance;
-    private double crossoverChance;
-    private double deathChance;
-
-    // max capacities
-    private int eatingCapacity;
-    private int sleepingCapacity;
-    private int matingCapacity;
+    private ArrayList<NpcIndividual> migrationPool;
 
     // current availability
     private int eatingAvailability;
     private int sleepingAvailability;
-    private int matingAvailability;
-
-    private int maxHunger;
-    private int maxSleepiness;
 
     private int stepNumber;
 
-    private boolean[] availableIDs = new boolean[Settings.MAX_SIZE];
+    private boolean[] availableIDs = new boolean[Settings.maxSize];
 
     public NpcWorld() {
         population = new NpcPopulation();
@@ -41,90 +28,42 @@ public class NpcWorld implements World {
         }
 
         // initialize the population
-        for (int i = 0; i < Settings.POPULATION_SIZE; i++) {
+        for (int i = 0; i < Settings.populationSize; i++) {
             population.add(new NpcIndividual(i));
 
             availableIDs[i] = false;
         }
 
-        oldAge = Settings.OLD_AGE;
-
         stepNumber = 0;
 
-        mutationChance  = Settings.MUTATION_CHANCE;
-        crossoverChance = Settings.CROSSOVER_CHANCE;
-        deathChance     = Settings.DEATH_CHANCE;
-
-        eatingCapacity   = Settings.EATING_CAPACITY;
-        sleepingCapacity = Settings.SLEEPING_CAPACITY;
-        matingCapacity   = Settings.MATING_CAPACITY;
-
-        eatingAvailability   = eatingCapacity;
-        sleepingAvailability = sleepingCapacity;
-        matingAvailability   = matingCapacity;
-
-        maxHunger     = Settings.MAX_HUNGER;
-        maxSleepiness = Settings.MAX_SLEEPINESS;
+        eatingAvailability   = Settings.eatingCapacity;
+        sleepingAvailability = Settings.sleepingCapacity;
     }
 
-    public void setOldAge(int age) {
-        oldAge = age;
+    public NpcPopulation getPopulation() {
+        return population;
     }
 
-    public void setMutationChance(double c) {
-        mutationChance = c / 100;
-    }
+    public void step() {
+        System.out.println("Step number " + stepNumber);
+        stepNumber++;
 
-    public void setCrossoverChance(double c) {
-        crossoverChance = c / 100;
-    }
+        freeAvailabilities();
 
-    public void setDeathChance(double c) {
-        deathChance = c / 100;
-    }
+        ArrayList<Integer> keys = new ArrayList<Integer>(population.getKeys());
+        Collections.shuffle(keys);
 
-    // setters for capacities
-    public void setEatingCapacity(int c) {
-        eatingAvailability += c - eatingCapacity; 
-        eatingCapacity = c;
-    }
+        matingPoolMales = new ArrayList<NpcIndividual>();
+        matingPoolFemales = new ArrayList<NpcIndividual>();
 
-    public void setSleepingCapacity(int c) {
-        sleepingAvailability += c - sleepingCapacity; 
-        sleepingCapacity = c;
-    }
+        for (Integer k : keys) {
+            NpcIndividual ind = (NpcIndividual)population.get(k);
 
-    public void setMatingCapacity(int c) {
-        matingAvailability += c - matingCapacity; 
-        matingCapacity = c;
-    }
+            boolean killed = reap(ind);
+            if (!killed) makeAction(ind);
+        }
 
-    public int getOldAge() {
-        return oldAge;
-    }
-
-    public double getMutationChance() {
-        return mutationChance * 100;
-    }
-
-    public double getCrossoverChance() {
-        return crossoverChance * 100;
-    }
-
-    public double getDeathChance() {
-        return deathChance * 100;
-    }
-
-    public int getEatingCapacity() {
-        return eatingCapacity;
-    }
-
-    public int getSleepingCapacity() {
-        return sleepingCapacity;
-    }
-
-    public int getMatingCapacity() {
-        return matingCapacity;
+        reproduce(); // mate the individuals who chose to mate
     }
 
     // genetic operators
@@ -146,7 +85,7 @@ public class NpcWorld implements World {
         boolean crossover = true;
 
         for (int i = 0; i < newDNA.length; i++) {
-            if (Math.random() < crossoverChance) {
+            if (Math.random() < Settings.crossoverChance) {
                 crossover = !crossover;
             }
 
@@ -163,109 +102,81 @@ public class NpcWorld implements World {
     public Dna mutate(Dna d) {
         boolean[] nucleotides = d.getNucleotides();
         for (int i = 0; i < nucleotides.length; i++) {
-            if (Math.random() < mutationChance) {
+            if (Math.random() < Settings.mutationChance) {
                 nucleotides[i] = !nucleotides[i];
             }
         }
         return new NpcDna(nucleotides);
     }
 
-    public Population merge(Population p1, Population p2) {
-        System.out.println("Merging two populations");
-        return null;
-    }
-
-    public void step() {
-        System.out.println("Step number " + stepNumber);
-        stepNumber++;
-
-        ArrayList<Integer> keys = new ArrayList<Integer>(population.getKeys());
-        Collections.shuffle(keys);
-
-        eatingAvailability = eatingCapacity;
-        sleepingAvailability = sleepingCapacity;
-        matingAvailability = matingCapacity;
+    private void freeAvailabilities() {
+        eatingAvailability   = Settings.eatingCapacity;
+        sleepingAvailability = Settings.sleepingCapacity;
 
         // go through all of the individuals and decrement availabilities
         // if the individual is not done with its action
-        for (Integer k : keys) {
-            NpcIndividual curIndividual = (NpcIndividual)population.get(k);
-
-            if (curIndividual.getStepsRemaining() != 0) {
-                if (curIndividual.getCurrentAction() == Const.EATING) {
+        for (NpcIndividual i : population.getIndividuals()) {
+            if (i.getStepsRemaining() != 0) {
+                if (i.getCurrentAction() == Const.EATING) {
                     eatingAvailability--;
-                } else if (curIndividual.getCurrentAction() == Const.SLEEPING) {
+                } else if (i.getCurrentAction() == Const.SLEEPING) {
                     sleepingAvailability--;
-                } else if (curIndividual.getCurrentAction() == Const.MATING) {
-                    matingAvailability--;
                 }
             }
         }
+    }
 
-        matingPoolMales = new ArrayList<NpcIndividual>();
-        matingPoolFemales = new ArrayList<NpcIndividual>();
+    private void makeAction(NpcIndividual ind) {
+        // make the individual choose an action and act on it
+        // based on the current state of the population
+        if (ind.getStepsRemaining() == 0) {
+            ArrayList<Integer> actions = new ArrayList<Integer>();
 
-        for (Integer k : keys) {
-            NpcIndividual curIndividual = (NpcIndividual)population.get(k);
+            if (eatingAvailability   > 0) actions.add(Const.EATING  );
+            if (sleepingAvailability > 0) actions.add(Const.SLEEPING);
+            if (Settings.migrationEnabled) actions.add(Const.MIGRATING);
+            actions.add(Const.MATING);
+            actions.add(Const.PLAYING);
 
-            // make the individual choose an action and act on it
-            // based on the current state of the population
-            if (curIndividual.getStepsRemaining() == 0) {
-                ArrayList<Integer> actions = new ArrayList<Integer>();
-                if (eatingAvailability > 0) {
-                    actions.add(Const.EATING);
-                }
-                if (sleepingAvailability > 0) {
-                    actions.add(Const.SLEEPING);
-                }
-                if (matingAvailability > 0) {
-                    actions.add(Const.MATING);
-                }
+            int action = ind.chooseAction(actions);
 
-                int action = curIndividual.chooseAction(actions);
-
-                //TODO update the individual's icon
-                if (action == Const.EATING) {
-                    eatingAvailability--;
-                } else if (action == Const.SLEEPING) {
-                    sleepingAvailability--;
-                } else if (action == Const.MATING) {
-                    matingAvailability--;
-                    if (((NpcDna)curIndividual.getDna()).getGender() == Const.MALE) {
-                        matingPoolMales.add(curIndividual);
-                    } else {
-                        matingPoolFemales.add(curIndividual);
-                    }
+            if      (action == Const.EATING)    eatingAvailability--;
+            else if (action == Const.SLEEPING)  sleepingAvailability--;
+            else if (action == Const.MATING) {
+                if (ind.getGender() == Const.MALE) {
+                    matingPoolMales.add(ind);
+                } else {
+                    matingPoolFemales.add(ind);
                 }
             }
-            curIndividual.decreaseStepsRemaining();
-
-            if (curIndividual.getCurrentAction() == Const.EATING) {
-                curIndividual.decreaseHunger();
-            } else if (curIndividual.getCurrentAction() == Const.SLEEPING) {
-                curIndividual.decreaseSleepiness();
+            else if (action == Const.MIGRATING) {
+                migrationPool.add(ind);
+                removeIndividual(ind);
             }
 
-            curIndividual.increaseHunger();
-            curIndividual.increaseSleepiness();
-            curIndividual.increaseAge();
-
-            if (curIndividual.getHunger() > maxHunger ||
-                curIndividual.getSleepiness() > maxSleepiness ||
-                Math.random() < deathChance) {
-                population.remove(curIndividual);
-
-                availableIDs[curIndividual.getID()] = true;
-            }
-
-            if (curIndividual.getAge() >= oldAge && Math.random() < deathChance + 0.1) {
-                population.remove(curIndividual);
-
-                availableIDs[curIndividual.getID()] = true;
-            }
         }
 
-        reproduce(); // mate the individuals who chose to mate
+        ind.decreaseStepsRemaining();
+
+        int action = ind.getCurrentAction();
+
+        if      (action == Const.EATING)   ind.decreaseHunger();
+        else if (action == Const.SLEEPING) ind.decreaseSleepiness();
+
+        ind.increaseHunger();
+        ind.increaseSleepiness();
+        ind.increaseAge();
+    }
+
+    private boolean reap(NpcIndividual ind) {
+        if (ind.getHunger()     > Settings.maxHunger
+        ||  ind.getSleepiness() > Settings.maxSleepiness
+        ||  Math.random()       < chanceOfDeath(ind.getAge()))
+        {
+            removeIndividual(ind);
+            return true;
+        }
+        return false;
     }
 
     public void reproduce() {
@@ -287,10 +198,6 @@ public class NpcWorld implements World {
         }
     }
 
-    public NpcPopulation getPopulation() {
-        return population;
-    }
-
     public Individual mate(Individual i1, Individual i2) {
         Dna dna = mutate(crossover(i1.getDna(), i2.getDna()));
 
@@ -301,5 +208,41 @@ public class NpcWorld implements World {
         }
 
         return null;
+    }
+
+    public double chanceOfDeath(int age) {
+        if (age < Settings.oldAge) return Settings.deathChance;
+
+        int ageDiff = age - Settings.oldAge;
+        double curDeathChance = Settings.deathChance + Settings.deathChanceChange * ageDiff;
+
+        return Math.min(curDeathChance, Settings.deathChanceMax);
+    }
+
+    public int percentMale() {
+        int numMales = 0;
+        for (NpcIndividual ind : population.getIndividuals()) {
+            if (ind.getGender() == Const.MALE) numMales++;
+        }
+        return (int)((100.0 * numMales) / population.getSize());
+    }
+
+    public ArrayList<NpcIndividual> getMigrationPool() {
+        return migrationPool;
+    }
+
+    public void addIndividual(NpcIndividual ind) {
+        int id = 0;
+        while(!availableIDs[id]) {
+            id++;
+        }
+        ind.setID(id);
+        availableIDs[id] = false;
+        population.add(ind);
+    }
+
+    public void removeIndividual(NpcIndividual ind) {
+        population.remove(ind);
+        availableIDs[ind.getID()] = true;
     }
 }
