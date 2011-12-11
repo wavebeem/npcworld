@@ -44,7 +44,7 @@ public class WorldSelector extends JFrame {
 
         for (int r=0; r < rows; r++) {
             for (int c=0; c < cols; c++) {
-                WorldWidget world = new WorldWidget(gui, universe.getWorld(r, c), r, c);
+                WorldWidget world = new WorldWidget(this, universe.getWorld(r, c), r, c);
                 worlds[r][c] = world;
                 bg.add(world);
             }
@@ -63,7 +63,7 @@ public class WorldSelector extends JFrame {
         selRow = row;
         selCol = col;
         worlds[selRow][selCol].select();
-        gui.setWorld(universe.getWorld(row, col));
+        gui.selectWorldAt(row, col);
     }
 
     public void deselect() {

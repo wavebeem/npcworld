@@ -40,7 +40,6 @@ public class Grid extends JPanel {
     }
 
     public void repopulate() {
-        clearGrid();
         populateGrid();
     }
 
@@ -87,11 +86,7 @@ public class Grid extends JPanel {
     }
 
     private void clearGrid() {
-        Iterator<JComponent> it = icons.iterator();
-        while (it.hasNext()) {
-            JComponent icon = it.next();
-            remove(icon);
-            it.remove();
-        }
+        removeAll();
+        icons.clear();
     }
 }

@@ -37,6 +37,9 @@ public class GUI extends JFrame {
 
         container = getContentPane();
 
+        selector = new WorldSelector(this);
+        selector.selectWorldAt(0, 0);
+
         grid    = new Grid(6, 12, this);
         toolbar = new Toolbar(this);
         infobar = new Infobar(this);
@@ -46,9 +49,6 @@ public class GUI extends JFrame {
         container.add(infobar, BorderLayout.SOUTH);
 
         setVisible(true);
-
-        selector = new WorldSelector(this);
-        selectWorldAt(0, 0);
 
         pack();
 
@@ -69,8 +69,8 @@ public class GUI extends JFrame {
         grid.repopulate();
         infobar.fillInfo();
         repaint();
-        //grid.repaint();
         selector.repaint();
+        //grid.repaint();
     }
 
     public World getWorld() {
@@ -79,7 +79,7 @@ public class GUI extends JFrame {
 
     public void setWorld(World world) {
         this.world = world;
-        redraw();
+        //redraw();
     }
 
     public void toggleRunning() {
@@ -115,7 +115,7 @@ public class GUI extends JFrame {
     }
 
     public void selectWorldAt(int row, int col) {
-        selector.selectWorldAt(row, col);
+        setWorld(universe.getWorld(row, col));
     }
 
     private class RunnerThread extends Thread {

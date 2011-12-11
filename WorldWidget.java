@@ -14,14 +14,14 @@ public class WorldWidget extends JComponent implements MouseListener {
     public Dimension getPreferredSize() { return dimension; }
 
     private NpcWorld world;
-    private GUI gui;
+    private WorldSelector selector;
     private int row;
     private int col;
 
     private boolean selected;
 
-    public WorldWidget(GUI gui, NpcWorld world, int row, int col) {
-        this.gui   = gui;
+    public WorldWidget(WorldSelector selector, NpcWorld world, int row, int col) {
+        this.selector = selector;
         this.world = world;
         this.row   = row;
         this.col   = col;
@@ -102,6 +102,7 @@ public class WorldWidget extends JComponent implements MouseListener {
 
     public void mouseClicked(MouseEvent e) {
         Debug.echo("You clicked me!", row, col);
-        gui.selectWorldAt(row, col);
+        selector.selectWorldAt(row, col);
+        selector.repaint();
     }
 }
