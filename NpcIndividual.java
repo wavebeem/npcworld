@@ -7,7 +7,7 @@ import javax.swing.JComponent;
  */
 public class NpcIndividual implements Individual, Comparable {
     private NpcDna dna;
-    private int ID, age, currentAction, stepsRemaining, hunger, sleepiness, stepsUntilMating;
+    private int ID, age, currentAction, stepsRemaining, hunger, sleepiness, stepsSinceMating, stepsSinceMigrating;
 
     public NpcIndividual(int ID){
         this.ID = ID;
@@ -24,7 +24,8 @@ public class NpcIndividual implements Individual, Comparable {
         age = 0;
         hunger = 0;
         sleepiness = 0;
-        stepsUntilMating = 0;
+        stepsSinceMating = 0;
+		stepsSinceMigrating = 0;
         stepsRemaining = 0;
     }
     public int compareTo(Object o){ //Compares individuals by ID
@@ -65,8 +66,8 @@ public class NpcIndividual implements Individual, Comparable {
     }
     public void increaseAge(){
         age++;
-        if(stepsUntilMating > 0)
-            stepsUntilMating--;
+        stepsSinceMating++;
+		stepsSinceMigrating++;
     }
     public void decreaseStepsRemaining(){
         stepsRemaining--;
@@ -84,8 +85,11 @@ public class NpcIndividual implements Individual, Comparable {
         sleepiness -= Settings.sleepinessChange;
     }
     public void mated(){
-        stepsUntilMating = Settings.matingFrequency;
+        stepsSinceMating = 0;
     }
+	public void migrated(){
+		stepsSinceMigrating = 0;
+	}
     
     public int chooseAction(ArrayList<Integer> actions){
         int[] actionOrder;
@@ -146,7 +150,7 @@ public class NpcIndividual implements Individual, Comparable {
     }
     private boolean chooseMating(ArrayList<Integer> actions){
         if (actions.contains(Const.MATING)
-        &&  stepsUntilMating == 0
+        &&  stepsSinceMating >= Settings.matingFrequency
         &&  age > Settings.youngAge
         &&  hunger < ((0.01)*Settings.maxHunger*(100 - Settings.healthinessPercent))
         &&  sleepiness < ((0.01)*Settings.maxSleepiness*(100 - Settings.healthinessPercent))) 
@@ -158,8 +162,15 @@ public class NpcIndividual implements Individual, Comparable {
         return false;
     }
     private boolean chooseMigrating(ArrayList<Integer> actions) {
-        if (actions.contains(Const.MIGRATING)) {
-            return false;
+        if (actions.contains(Const.MIGRATING) 
+		&&	age < Settings.oldAge
+		&& 	age > Settings.youngAge
+		&&	stepsSinceMigrating >= Settings.migratingFrequency
+        &&	Util.random.nextDouble() < dna.getMigrationChance())
+		{
+			stepsRemaining = 1;
+            currentAction = Const.MIGRATING;
+			return true;
         }
         return false;
     }
