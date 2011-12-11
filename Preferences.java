@@ -90,32 +90,32 @@ public class Preferences extends JDialog {
         panel.setLayout(new GridLayout(0, 4, gapH, gapV));
         panel.setBorder(Util.makeBorder(pad));
 
-        addPair("Run delay:", _runDelay);
+        addPair("Run Delay:", _runDelay);
 
-        addPair("Death chance:", _deathChance);
-        addPair("Death chance max:", _deathChanceMax);
-        addPair("Death chance change:", _deathChanceChange);
+        addPair("Death Chance:", _deathChance);
+        addPair("Death Chance Max:", _deathChanceMax);
+        addPair("Death Chance Change:", _deathChanceChange);
 
-        addPair("Mutation chance:", _mutationChance);
-        addPair("Crossover chance:", _crossoverChance);
+        addPair("Mutation Chance:", _mutationChance);
+        addPair("Crossover Chance:", _crossoverChance);
 
-        addPair("Old age:", _oldAge);
-        addPair("Young age:", _youngAge);
+        addPair("Old Age:", _oldAge);
+        addPair("Young Age:", _youngAge);
 
-        addPair("Eating capacity:", _eatingCapacity);
-        addPair("Sleeping capacity:", _sleepingCapacity);
+        addPair("Eating Capacity:", _eatingCapacity);
+        addPair("Sleeping Capacity:", _sleepingCapacity);
 
-        addPair("Max hunger:", _maxHunger);
-        addPair("Max sleepiness:", _maxSleepiness);
+        addPair("Max Hunger:", _maxHunger);
+        addPair("Max Sleepiness:", _maxSleepiness);
 
-        addPair("Hunger change:", _hungerChange);
-        addPair("Sleepiness change:", _sleepinessChange);
+        addPair("Hunger Change:", _hungerChange);
+        addPair("Sleepiness Change:", _sleepinessChange);
 
-        addPair("Healthiness percent:", _healthinessPercent);
+        addPair("Healthiness Percent:", _healthinessPercent);
 
-        addPair("Mating frequency:", _matingFrequency);
-        addPair("Migrating frequency:", _migratingFrequency);
-        addPair("Allow migration:", _migrationEnabled);
+        addPair("Mating Frequency:", _matingFrequency);
+        addPair("Migrating Frequency:", _migratingFrequency);
+        addPair("Allow Migration:", _migrationEnabled);
 
         okPanel.add(Util.clickableButton("OK",     new OkHandler()));
         okPanel.add(Util.clickableButton("Cancel", new CancelHandler()));
