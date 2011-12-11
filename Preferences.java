@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class Preferences extends JFrame {
+public class Preferences extends JDialog {
     private static final String TITLE = "Preferences | NPC World";
 
     private LayoutManager layout;
@@ -48,6 +48,9 @@ public class Preferences extends JFrame {
     private JCheckBox _migrationEnabled;
 
     public Preferences(GUI gui) {
+        // true means make it modal
+        super((Frame) null, true);
+
         this.gui = gui;
 
         _runDelay = new JSpinner();
