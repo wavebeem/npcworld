@@ -21,6 +21,7 @@ public class About extends JDialog {
         editorPane.setContentType("text/html");
         editorPane.setText(Const.ABOUT_TEXT);
         editorPane.setEditable(false);
+        editorPane.setCaretPosition(0);
 
         scrollPane = new JScrollPane(editorPane);
         scrollPane.setPreferredSize(preferredSize);
@@ -32,7 +33,7 @@ public class About extends JDialog {
 
         add(panel);
         pack();
-
+        
         setVisible(true);
     }
 }
