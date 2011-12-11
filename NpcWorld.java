@@ -260,7 +260,7 @@ public class NpcWorld implements World {
         }
         ind.setID(id);
         availableIDs[id] = false;
-		ind.migrated();
+        ind.migrated();
         population.add(ind);
     }
 

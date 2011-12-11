@@ -25,7 +25,7 @@ public class NpcIndividual implements Individual, Comparable {
         hunger = 0;
         sleepiness = 0;
         stepsSinceMating = 0;
-		stepsSinceMigrating = 0;
+        stepsSinceMigrating = 0;
         stepsRemaining = 0;
     }
     public int compareTo(Object o){ //Compares individuals by ID
@@ -67,7 +67,7 @@ public class NpcIndividual implements Individual, Comparable {
     public void increaseAge(){
         age++;
         stepsSinceMating++;
-		stepsSinceMigrating++;
+        stepsSinceMigrating++;
     }
     public void decreaseStepsRemaining(){
         stepsRemaining--;
@@ -87,9 +87,9 @@ public class NpcIndividual implements Individual, Comparable {
     public void mated(){
         stepsSinceMating = 0;
     }
-	public void migrated(){
-		stepsSinceMigrating = 0;
-	}
+    public void migrated(){
+        stepsSinceMigrating = 0;
+    }
     
     public int chooseAction(ArrayList<Integer> actions){
         int[] actionOrder;
@@ -163,14 +163,14 @@ public class NpcIndividual implements Individual, Comparable {
     }
     private boolean chooseMigrating(ArrayList<Integer> actions) {
         if (actions.contains(Const.MIGRATING) 
-		&&	age < Settings.oldAge
-		&& 	age > Settings.youngAge
-		&&	stepsSinceMigrating >= Settings.migratingFrequency
-        &&	Util.random.nextDouble() < dna.getMigrationChance())
-		{
-			stepsRemaining = 1;
+        &&  age < Settings.oldAge
+        &&  age > Settings.youngAge
+        &&  stepsSinceMigrating >= Settings.migratingFrequency
+        &&  Util.random.nextDouble() < dna.getMigrationChance())
+        {
+            stepsRemaining = 1;
             currentAction = Const.MIGRATING;
-			return true;
+            return true;
         }
         return false;
     }
