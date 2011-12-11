@@ -8,7 +8,6 @@ import javax.swing.JComponent;
 public class NpcIndividual implements Individual, Comparable {
     private NpcDna dna;
     private int ID, age, currentAction, stepsRemaining, hunger, sleepiness, stepsUntilMating;
-    private Icon icon;
 
     public NpcIndividual(int ID){
         this.ID = ID;
@@ -22,8 +21,6 @@ public class NpcIndividual implements Individual, Comparable {
     }
     
     private void init(){
-        icon = new Icon(dna.getGender());
-        icon.colorize(dna.getColor());
         age = 0;
         hunger = 0;
         sleepiness = 0;
@@ -43,9 +40,6 @@ public class NpcIndividual implements Individual, Comparable {
     }
     public Color getColor() {
         return dna.getColor();
-    }
-    public JComponent getWidget() {
-        return icon;
     }
     public int getAge(){
         return age;
@@ -71,7 +65,6 @@ public class NpcIndividual implements Individual, Comparable {
     }
     public void increaseAge(){
         age++;
-        icon.happyBirthday();
         if(stepsUntilMating > 0)
             stepsUntilMating--;
     }
@@ -129,7 +122,6 @@ public class NpcIndividual implements Individual, Comparable {
         }
         
         Debug.echo("Returning a chosen action of "+currentAction+" with "+stepsRemaining+" steps remaining.");
-        icon.setAction(currentAction);
         return currentAction;
     }
     private boolean chooseEating(ArrayList<Integer> actions){
