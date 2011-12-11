@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.imageio.*;
 import java.io.*;
+import java.net.*;
 import java.util.Random;
 
 public class Util {
@@ -37,6 +38,21 @@ public class Util {
             Image tmp = ImageIO.read(Util.class.getResource(filename));
 
             return tmp;
+        }
+        catch (IOException e) {
+            System.err.printf("File '%s' could not be read\n", filename);
+
+            return null;
+        }
+    }
+
+    public static URL getURL(String filename) {
+        return Util.class.getResource(filename);
+    }
+
+    public static JEditorPane getEditorPane(String filename) {
+        try {
+            return new JEditorPane(Util.class.getResource(filename));
         }
         catch (IOException e) {
             System.err.printf("File '%s' could not be read\n", filename);

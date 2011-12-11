@@ -17,9 +17,8 @@ public class About extends JDialog {
 
         setTitle(TITLE);
 
-        editorPane = new JEditorPane();
+        editorPane = Util.getEditorPane("docs/about.html");
         editorPane.setContentType("text/html");
-        editorPane.setText(Const.ABOUT_TEXT);
         editorPane.setEditable(false);
         editorPane.setCaretPosition(0);
 
@@ -33,7 +32,7 @@ public class About extends JDialog {
 
         add(panel);
         pack();
-        
+
         setVisible(true);
     }
 }
