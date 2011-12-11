@@ -33,10 +33,10 @@ public class Preferences extends JDialog {
     private JSpinner _sleepingCapacity;
 
     private JSpinner _maxHunger;
-    private JSpinner _maxSleepiness;
+    private JSpinner _maxExhaustion;
 
     private JSpinner _hungerChange;
-    private JSpinner _sleepinessChange;
+    private JSpinner _exhaustionChange;
 
     private JSpinner _healthinessPercent;
 
@@ -67,10 +67,10 @@ public class Preferences extends JDialog {
         _sleepingCapacity = new JSpinner();
 
         _maxHunger     = new JSpinner();
-        _maxSleepiness = new JSpinner();
+        _maxExhaustion = new JSpinner();
 
         _hungerChange     = new JSpinner();
-        _sleepinessChange = new JSpinner();
+        _exhaustionChange = new JSpinner();
 
         _healthinessPercent = new JSpinner();
 
@@ -106,10 +106,10 @@ public class Preferences extends JDialog {
         addPair("Sleeping Capacity:", _sleepingCapacity);
 
         addPair("Max Hunger:", _maxHunger);
-        addPair("Max Sleepiness:", _maxSleepiness);
+        addPair("Max Exhaustion:", _maxExhaustion);
 
         addPair("Hunger Change:", _hungerChange);
-        addPair("Sleepiness Change:", _sleepinessChange);
+        addPair("Exhaustion Change:", _exhaustionChange);
 
         addPair("Healthiness Percent:", _healthinessPercent);
 
@@ -151,10 +151,10 @@ public class Preferences extends JDialog {
         _sleepingCapacity.setValue(Settings.sleepingCapacity);
 
         _maxHunger.setValue(Settings.maxHunger);
-        _maxSleepiness.setValue(Settings.maxSleepiness);
+        _maxExhaustion.setValue(Settings.maxExhaustion);
 
         _hungerChange.setValue(Settings.hungerChange);
-        _sleepinessChange.setValue(Settings.sleepinessChange);
+        _exhaustionChange.setValue(Settings.exhaustionChange);
 
         _healthinessPercent.setValue(Settings.healthinessPercent);
 
@@ -181,10 +181,10 @@ public class Preferences extends JDialog {
         Settings.sleepingCapacity = Util.intFromSpinner(_sleepingCapacity);
 
         Settings.maxHunger = Util.intFromSpinner(_maxHunger);
-        Settings.maxSleepiness = Util.intFromSpinner(_maxSleepiness);
+        Settings.maxExhaustion = Util.intFromSpinner(_maxExhaustion);
 
         Settings.hungerChange = Util.intFromSpinner(_hungerChange);
-        Settings.sleepinessChange = Util.intFromSpinner(_sleepinessChange);
+        Settings.exhaustionChange = Util.intFromSpinner(_exhaustionChange);
 
         Settings.healthinessPercent = Util.intFromSpinner(_healthinessPercent);
 

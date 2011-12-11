@@ -27,6 +27,7 @@ public class Const {
 
     public static final String ABOUT_TEXT =
     "<html>" + 
+    "<b><u>Descriptions of modifiable preferences:</b></u><br />" + 
     "<b>Run Delay</b>: The amount of time between steps (in milliseconds)<br />" + 
     "<b>Death Chance</b>: The chance that an individual will die if it is younger than the \"old age\"<br />" + 
     "<b>Death Chance Change</b>: The amount by which an individual's death chance increases each step after it reaches \"old age\"<br />" + 
@@ -38,10 +39,10 @@ public class Const {
     "<b>Eating Capacity</b>: The maximum number of individuals that can be eating at one time<br />" + 
     "<b>Sleeping Capacity</b>: The maximum number of individuals that can be sleeping at one time<br />" + 
     "<b>Max Hunger</b>: The maximum hunger that an individual can endure before dying<br />" + 
-    "<b>Max Sleepiness</b>: The maximum sleepiness that an individual can endure before dying<br />" + 
+    "<b>Max Exhaustion</b>: The maximum exhaustion that an individual can endure before dying<br />" + 
     "<b>Hunger Change</b>: The amount an individual's hunger is decreased for each step they spend eating<br />" + 
-    "<b>Sleepiness Change</b>:  The amount an individual's sleepiness is decreased for each step they spend sleeping<br />" + 
-    "<b>Healthiness Percent</b>: Based on an individual's hunger and sleepiness, the healthiness percent that an individual must meet in order to successfully mate<br />" + 
+    "<b>Exhaustion Change</b>:  The amount an individual's exhaustion is decreased for each step they spend sleeping<br />" + 
+    "<b>Healthiness Percent</b>: Based on an individual's hunger and exhaustion, the healthiness percent that an individual must meet in order to successfully mate<br />" + 
     "<b>Mating Frequency</b>: The number of steps an individual must wait between successfully mating and attempting to mate again<br />" + 
     "<b>Mating Frequency</b>: The number of steps an individual must wait between successfully migrating and attempting to migrate again<br />" + 
     "<b>Allow Migration</b>: Turns migration on/off<br />" + 

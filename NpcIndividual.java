@@ -7,7 +7,7 @@ import javax.swing.JComponent;
  */
 public class NpcIndividual implements Individual, Comparable {
     private NpcDna dna;
-    private int ID, age, currentAction, stepsRemaining, hunger, sleepiness, stepsSinceMating, stepsSinceMigrating;
+    private int ID, age, currentAction, stepsRemaining, hunger, exhaustion, stepsSinceMating, stepsSinceMigrating;
 
     public NpcIndividual(int ID){
         this.ID = ID;
@@ -23,7 +23,7 @@ public class NpcIndividual implements Individual, Comparable {
     private void init(){
         age = 0;
         hunger = 0;
-        sleepiness = 0;
+        exhaustion = 0;
         stepsSinceMating = 0;
         stepsSinceMigrating = 0;
         stepsRemaining = 0;
@@ -57,8 +57,8 @@ public class NpcIndividual implements Individual, Comparable {
     public int getHunger(){
         return hunger;
     }
-    public int getSleepiness(){
-        return sleepiness;
+    public int getExhaustion(){
+        return exhaustion;
     }
 
     public void setID(int ID){
@@ -78,11 +78,11 @@ public class NpcIndividual implements Individual, Comparable {
     public void decreaseHunger(){
         hunger -= Settings.hungerChange;
     }
-    public void increaseSleepiness(){
-        sleepiness++;
+    public void increaseExhaustion(){
+        exhaustion++;
     }
-    public void decreaseSleepiness(){
-        sleepiness -= Settings.sleepinessChange;
+    public void decreaseExhaustion(){
+        exhaustion -= Settings.exhaustionChange;
     }
     public void mated(){
         stepsSinceMating = 0;
@@ -140,7 +140,7 @@ public class NpcIndividual implements Individual, Comparable {
     }
     private boolean chooseSleeping(ArrayList<Integer> actions){
         if (actions.contains(Const.SLEEPING)  
-        &&  sleepiness >= (dna.getSleepingDuration() * Settings.sleepinessChange))
+        &&  exhaustion >= (dna.getSleepingDuration() * Settings.exhaustionChange))
         {
             stepsRemaining = dna.getSleepingDuration();
             currentAction = Const.SLEEPING;
@@ -153,7 +153,7 @@ public class NpcIndividual implements Individual, Comparable {
         &&  stepsSinceMating >= Settings.matingFrequency
         &&  age > Settings.youngAge
         &&  hunger < ((0.01)*Settings.maxHunger*(100 - Settings.healthinessPercent))
-        &&  sleepiness < ((0.01)*Settings.maxSleepiness*(100 - Settings.healthinessPercent))) 
+        &&  exhaustion < ((0.01)*Settings.maxExhaustion*(100 - Settings.healthinessPercent))) 
         {
             stepsRemaining = 1;
             currentAction = Const.MATING;

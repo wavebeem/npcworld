@@ -183,16 +183,16 @@ public class NpcWorld implements World {
         int action = ind.getCurrentAction();
 
         if      (action == Const.EATING)   ind.decreaseHunger();
-        else if (action == Const.SLEEPING) ind.decreaseSleepiness();
+        else if (action == Const.SLEEPING) ind.decreaseExhaustion();
 
         ind.increaseHunger();
-        ind.increaseSleepiness();
+        ind.increaseExhaustion();
         ind.increaseAge();
     }
 
     private boolean reap(NpcIndividual ind) {
         if (ind.getHunger()     > Settings.maxHunger
-        ||  ind.getSleepiness() > Settings.maxSleepiness
+        ||  ind.getExhaustion() > Settings.maxExhaustion
         ||  Math.random()       < chanceOfDeath(ind.getAge()))
         {
             removeIndividual(ind);

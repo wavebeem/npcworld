@@ -15,10 +15,10 @@ public class Settings {
     public static int sleepingCapacity = 10;
 
     public static int maxHunger     = 100;
-    public static int maxSleepiness =  50;
+    public static int maxExhaustion =  50;
 
     public static int hungerChange     = 3;
-    public static int sleepinessChange = 3;
+    public static int exhaustionChange = 3;
 
     public static int healthinessPercent = 75;
 
