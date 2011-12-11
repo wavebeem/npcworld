@@ -55,4 +55,14 @@ public class NpcUniverse implements Universe {
         }
         return adjacentWorlds;
     }
+    
+    public int getPopulationSize(){
+        int total = 0;
+        for (int row = 0; row < Const.UNIVERSE_ROWS; row++) {
+            for (int col = 0; col < Const.UNIVERSE_COLS; col++) {
+                total += worlds[row][col].getPopulation().getSize();
+            }
+        }
+        return total;
+    }
 }

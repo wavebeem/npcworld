@@ -12,10 +12,12 @@ public class Infobar extends JPanel {
     private GUI gui;
 
     private static final String[][] fields = {
-        {"Population size:", "<null>"},
-        {"Oldest age:",      "<null>"},
-        {"Average age:",     "<null>"},
-        {"Youngest age:",    "<null>"},
+        {"Step number:",                   "<null>"},
+        {"Universe-wide population size:", "<null>"},
+        {"World-wide population size:",    "<null>"},
+        {"World-wide oldest age:",         "<null>"},
+        {"World-wide average age:",        "<null>"},
+        {"World-wide youngest age:",       "<null>"},
     };
 
     private JLabel[] valueLabels;
@@ -52,9 +54,11 @@ public class Infobar extends JPanel {
         Population pop = gui.getWorld().getPopulation();
 
         // Change the label values here... TODO
-        valueLabels[0].setText("" + pop.getSize());
-        valueLabels[1].setText("" + pop.getMaxAge());
-        valueLabels[2].setText("" + pop.getAverageAge());
-        valueLabels[3].setText("" + pop.getMinAge());
+        valueLabels[0].setText("" + ((NpcWorld)gui.getWorld()).getStepNumber());
+        valueLabels[1].setText("" + ((NpcUniverse)gui.getUniverse()).getPopulationSize());
+        valueLabels[2].setText("" + pop.getSize());
+        valueLabels[3].setText("" + pop.getMaxAge());
+        valueLabels[4].setText("" + pop.getAverageAge());
+        valueLabels[5].setText("" + pop.getMinAge());
     }
 }
