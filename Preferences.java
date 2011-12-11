@@ -91,6 +91,7 @@ public class Preferences extends JDialog {
         panel.setBorder(Util.makeBorder(pad));
 
         addPair("Run Delay:", _runDelay);
+        addPair("Allow Migration:", _migrationEnabled);
 
         addPair("Death Chance:", _deathChance);
         addPair("Death Chance Max:", _deathChanceMax);
@@ -98,12 +99,12 @@ public class Preferences extends JDialog {
 
         addPair("Mutation Chance:", _mutationChance);
         addPair("Crossover Chance:", _crossoverChance);
+        
+        addPair("Eating Capacity:", _eatingCapacity);
+        addPair("Sleeping Capacity:", _sleepingCapacity);
 
         addPair("Old Age:", _oldAge);
         addPair("Young Age:", _youngAge);
-
-        addPair("Eating Capacity:", _eatingCapacity);
-        addPair("Sleeping Capacity:", _sleepingCapacity);
 
         addPair("Max Hunger:", _maxHunger);
         addPair("Max Exhaustion:", _maxExhaustion);
@@ -115,8 +116,7 @@ public class Preferences extends JDialog {
 
         addPair("Mating Frequency:", _matingFrequency);
         addPair("Migrating Frequency:", _migratingFrequency);
-        addPair("Allow Migration:", _migrationEnabled);
-
+        
         okPanel.add(Util.clickableButton("OK",     new OkHandler()));
         okPanel.add(Util.clickableButton("Cancel", new CancelHandler()));
 

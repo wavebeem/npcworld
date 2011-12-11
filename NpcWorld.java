@@ -252,6 +252,10 @@ public class NpcWorld implements World {
     public ArrayList<NpcIndividual> getMigrationPool() {
         return migrationPool;
     }
+    
+    public int getStepNumber(){
+        return stepNumber;
+    }
 
     public void addIndividual(NpcIndividual ind) {
         int id = 0;

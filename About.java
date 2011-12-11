@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class About extends JDialog {
-    public static final String TITLE = "About NPCWorld";
+    public static final String TITLE = "About NPC World";
 
     private JScrollPane scrollPane;
     private JEditorPane editorPane;
