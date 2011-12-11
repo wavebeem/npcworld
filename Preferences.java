@@ -26,8 +26,6 @@ public class Preferences extends JDialog {
     private JSpinner _mutationChance;
     private JSpinner _crossoverChance;
 
-    private JSpinner _populationSize;
-
     private JSpinner _oldAge;
     private JSpinner _youngAge;
 
@@ -62,8 +60,6 @@ public class Preferences extends JDialog {
         _mutationChance     = new JSpinner();
         _crossoverChance    = new JSpinner();
 
-        _populationSize = new JSpinner();
-
         _oldAge   = new JSpinner();
         _youngAge = new JSpinner();
 
@@ -95,7 +91,6 @@ public class Preferences extends JDialog {
         panel.setBorder(Util.makeBorder(pad));
 
         addPair("Run delay:", _runDelay);
-        addPair("Initial Population size:", _populationSize);
 
         addPair("Death chance:", _deathChance);
         addPair("Death chance max:", _deathChanceMax);
@@ -149,8 +144,6 @@ public class Preferences extends JDialog {
         _mutationChance.setValue((int) (Settings.mutationChance * 100));
         _crossoverChance.setValue((int) (Settings.crossoverChance * 100));
 
-        _populationSize.setValue(Settings.populationSize);
-
         _oldAge.setValue(Settings.oldAge);
         _youngAge.setValue(Settings.youngAge);
 
@@ -180,8 +173,6 @@ public class Preferences extends JDialog {
 
         Settings.mutationChance = Util.intFromSpinner(_mutationChance) / 100.0;
         Settings.crossoverChance = Util.intFromSpinner(_crossoverChance) / 100.0;
-
-        Settings.populationSize = Util.intFromSpinner(_populationSize);
 
         Settings.oldAge = Util.intFromSpinner(_oldAge);
         Settings.youngAge = Util.intFromSpinner(_youngAge);

@@ -8,9 +8,6 @@ public class Settings {
 
     public static int runDelay = 50;
 
-    public static int populationSize =   50;
-    public static int maxSize        = 1000;
-
     public static int oldAge   = 100;
     public static int youngAge =  10;
 

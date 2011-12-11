@@ -21,7 +21,7 @@ public class NpcWorld implements World {
     private int numMales;
     private int numFemales;
 
-    private boolean[] availableIDs = new boolean[Settings.maxSize];
+    private boolean[] availableIDs = new boolean[Const.MAX_POPULATION_SIZE];
 
     public NpcWorld() {
         population = new NpcPopulation();
@@ -38,7 +38,7 @@ public class NpcWorld implements World {
         numFemales = 0;
 
         // initialize the population
-        for (int i = 0; i < Settings.populationSize; i++) {
+        for (int i = 0; i < Const.INITIAL_POPULATION_SIZE; i++) {
             NpcIndividual ind = new NpcIndividual(i);
 
             if (ind.getGender() == Const.MALE) numMales++;
