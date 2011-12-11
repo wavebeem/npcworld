@@ -118,12 +118,14 @@ public class GUI extends JFrame {
 
     private class RunnerThread extends Thread {
         public void run() {
-			long startTime, stepTime;
+            long startTime;
+            long stepTime;
             while (running) {
-				startTime = System.currentTimeMillis();
+                startTime = System.currentTimeMillis();
                 step();
-				stepTime = startTime - System.currentTimeMillis();
-				if(stepTime < Settings.runDelay)	Util.sleep((int) (Settings.runDelay-stepTime));
+                stepTime = System.currentTimeMillis() - startTime;
+                if (stepTime < Settings.runDelay)
+                    Util.sleep((int) (Settings.runDelay - stepTime));
             }
         }
     }
