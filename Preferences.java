@@ -11,6 +11,7 @@ public class Preferences extends JFrame {
     private GUI gui;
 
     private JPanel panel;
+    private JPanel okPanel;
 
     private static final int gapH = 3;
     private static final int gapV = 3;
@@ -26,7 +27,6 @@ public class Preferences extends JFrame {
     private JSpinner _crossoverChance;
 
     private JSpinner _populationSize;
-    private JSpinner _maxSize;
 
     private JSpinner _oldAge;
     private JSpinner _youngAge;
@@ -44,6 +44,8 @@ public class Preferences extends JFrame {
 
     private JSpinner _matingFrequency;
 
+    private JCheckBox _migrationEnabled;
+
     public Preferences(GUI gui) {
         this.gui = gui;
 
@@ -57,7 +59,6 @@ public class Preferences extends JFrame {
         _crossoverChance    = new JSpinner();
 
         _populationSize = new JSpinner();
-        _maxSize        = new JSpinner();
 
         _oldAge   = new JSpinner();
         _youngAge = new JSpinner();
@@ -75,17 +76,21 @@ public class Preferences extends JFrame {
 
         _matingFrequency = new JSpinner();
 
+        _migrationEnabled = new JCheckBox();
+
         setTitle(TITLE);
 
         container = getContentPane();
         panel     = new JPanel();
-        //container.setLayout(new GridLayout(0, 1, gapH, gapV));
-        //container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+        okPanel   = new JPanel();
+        container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
         container.add(panel);
+        container.add(okPanel);
         panel.setLayout(new GridLayout(0, 4, gapH, gapV));
         panel.setBorder(Util.makeBorder(pad));
 
         addPair("Run delay:", _runDelay);
+        addPair("Initial Population size:", _populationSize);
 
         addPair("Death chance:", _deathChance);
         addPair("Death chance max:", _deathChanceMax);
@@ -93,9 +98,6 @@ public class Preferences extends JFrame {
 
         addPair("Mutation chance:", _mutationChance);
         addPair("Crossover chance:", _crossoverChance);
-
-        addPair("Population size:", _populationSize);
-        addPair("Max size:", _maxSize);
 
         addPair("Old age:", _oldAge);
         addPair("Young age:", _youngAge);
@@ -112,12 +114,10 @@ public class Preferences extends JFrame {
         addPair("Healthiness percent:", _healthinessPercent);
 
         addPair("Mating frequency:", _matingFrequency);
-        addPair("", new ZeroPaddingComponent());
+        addPair("Allow migration:", _migrationEnabled);
 
-        panel.add(new ZeroPaddingComponent());
-        panel.add(Util.clickableButton("OK",     new OkHandler()));
-        panel.add(Util.clickableButton("Cancel", new CancelHandler()));
-        panel.add(new ZeroPaddingComponent());
+        okPanel.add(Util.clickableButton("OK",     new OkHandler()));
+        okPanel.add(Util.clickableButton("Cancel", new CancelHandler()));
 
         setResizable(false);
 
@@ -138,13 +138,12 @@ public class Preferences extends JFrame {
 
         _deathChance.setValue((int) (Settings.deathChance * 100));
         _deathChanceMax.setValue((int) (Settings.deathChanceMax * 100));
-        _deathChanceChange.setValue((int) (Settings.deathChanceMax * 100));
+        _deathChanceChange.setValue((int) (Settings.deathChanceChange * 100));
 
         _mutationChance.setValue((int) (Settings.mutationChance * 100));
         _crossoverChance.setValue((int) (Settings.crossoverChance * 100));
 
         _populationSize.setValue(Settings.populationSize);
-        _maxSize.setValue(Settings.maxSize);
 
         _oldAge.setValue(Settings.oldAge);
         _youngAge.setValue(Settings.youngAge);
@@ -161,6 +160,8 @@ public class Preferences extends JFrame {
         _healthinessPercent.setValue(Settings.healthinessPercent);
 
         _matingFrequency.setValue(Settings.matingFrequency);
+
+        _migrationEnabled.setSelected(Settings.migrationEnabled);
     }
 
     private void saveCurrentValues() {
@@ -168,13 +169,12 @@ public class Preferences extends JFrame {
 
         Settings.deathChance = Util.intFromSpinner(_deathChance) / 100.0;
         Settings.deathChanceMax = Util.intFromSpinner(_deathChanceMax) / 100.0;
-        Settings.deathChanceChange = Util.intFromSpinner(_deathChanceMax) / 100.0;
+        Settings.deathChanceChange = Util.intFromSpinner(_deathChanceChange) / 100.0;
 
         Settings.mutationChance = Util.intFromSpinner(_mutationChance) / 100.0;
         Settings.crossoverChance = Util.intFromSpinner(_crossoverChance) / 100.0;
 
         Settings.populationSize = Util.intFromSpinner(_populationSize);
-        Settings.maxSize = Util.intFromSpinner(_maxSize);
 
         Settings.oldAge = Util.intFromSpinner(_oldAge);
         Settings.youngAge = Util.intFromSpinner(_youngAge);
@@ -191,6 +191,8 @@ public class Preferences extends JFrame {
         Settings.healthinessPercent = Util.intFromSpinner(_healthinessPercent);
 
         Settings.matingFrequency = Util.intFromSpinner(_matingFrequency);
+
+        Settings.migrationEnabled = _migrationEnabled.isSelected();
     }
 
     private class OkHandler implements ActionListener {

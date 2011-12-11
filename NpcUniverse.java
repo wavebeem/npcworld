@@ -8,8 +8,8 @@ public class NpcUniverse implements Universe {
 
     public NpcUniverse(){
         worlds = new NpcWorld[Const.UNIVERSE_ROWS][Const.UNIVERSE_COLS];
-        for (int row = 0; row < worlds.length; row++) {
-            for (int col = 0; col < worlds[0].length; col++) {
+        for (int row = 0; row < Const.UNIVERSE_ROWS; row++) {
+            for (int col = 0; col < Const.UNIVERSE_COLS; col++) {
                 worlds[row][col] = new NpcWorld();
             }
         }
@@ -25,11 +25,13 @@ public class NpcUniverse implements Universe {
                 worlds[row][col].step();
             }
         }
+        if(Settings.migrationEnabled)
+            migrateWorlds();
     }
 
     private void migrateWorlds(){
-        for (int row = 0; row < worlds.length; row++) {
-            for (int col = 0; col < worlds[0].length; col++) {
+        for (int row = 0; row < Const.UNIVERSE_ROWS; row++) {
+            for (int col = 0; col < Const.UNIVERSE_COLS; col++) {
                 NpcWorld world = worlds[row][col];
                 ArrayList<NpcIndividual> migrationPool = world.getMigrationPool();
                 ArrayList<NpcWorld> adjacentWorlds = getAdjacentWorlds(row, col);
