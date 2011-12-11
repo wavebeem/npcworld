@@ -29,6 +29,8 @@ public class WorldSelector extends JFrame {
         final int rows = Const.UNIVERSE_ROWS;
         final int cols = Const.UNIVERSE_COLS;
 
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
         JPanel bg = new JPanel();
 
         bg.setBackground(bgColor);
