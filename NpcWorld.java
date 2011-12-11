@@ -30,9 +30,17 @@ public class NpcWorld implements World {
             availableIDs[i] = true;
         }
 
+        numMales   = 0;
+        numFemales = 0;
+
         // initialize the population
         for (int i = 0; i < Settings.populationSize; i++) {
-            population.add(new NpcIndividual(i));
+            NpcIndividual ind = new NpcIndividual(i);
+
+            if (ind.getGender() == Const.MALE) numMales++;
+            else numFemales++;
+
+            population.add(ind);
 
             availableIDs[i] = false;
         }
