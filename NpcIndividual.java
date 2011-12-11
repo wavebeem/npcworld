@@ -41,6 +41,9 @@ public class NpcIndividual implements Individual, Comparable {
     public int getGender(){
         return dna.getGender();
     }
+    public Color getColor() {
+        return dna.getColor();
+    }
     public JComponent getWidget() {
         return icon;
     }
