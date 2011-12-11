@@ -5,8 +5,9 @@ import java.awt.event.*;
 public class WorldWidget extends JComponent implements MouseListener {
     private Color color = new Color(0x00cc00);
     private static final Color innerBg = new Color(0x222222);
-    private static final Color selBg = new Color(0xccaa00);
+    private static final Color selBg = new Color(0xaaaaaa);
     private static final int borderWidth = 3;
+    private static final int innerBorderWidth = 3;
 
     private Dimension dimension = new Dimension(64, 64);
 
@@ -35,7 +36,17 @@ public class WorldWidget extends JComponent implements MouseListener {
     }
 
     private void calculateColor() {
-        color = new Color(0x444444);
+        final int n    = world.getPopulation().getSize();
+        final int femHue = -180;
+        final int manHue =    0;
+        final int perc = world.percentMale();
+        final int comp = 100 - perc;
+        final int rgb  = Color.HSBtoRGB(
+            ((comp/100f)*femHue)/360f,
+            0.75f,
+            (float) Math.min(1.00, n/((float)Const.LARGE_POPULATION))
+        );
+        color = new Color(rgb);
     }
 
     public void paintComponent(Graphics g) {
@@ -49,14 +60,15 @@ public class WorldWidget extends JComponent implements MouseListener {
         final int w   = getWidth();
         final int h   = getHeight();
         final int off = borderWidth;
+        final int offf = innerBorderWidth;
         final int xx  = x  + off;
         final int yy  = y  + off;
         final int ww  = w  - off - off;
         final int hh  = h  - off - off;
-        final int xxx = xx + 1;
-        final int yyy = yy + 1;
-        final int www = ww - 2;
-        final int hhh = hh - 2;
+        final int xxx = xx + offf;
+        final int yyy = yy + offf;
+        final int www = ww - offf - offf;
+        final int hhh = hh - offf - offf;
 
         calculateColor();
 

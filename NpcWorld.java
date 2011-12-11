@@ -45,7 +45,6 @@ public class NpcWorld implements World {
     }
 
     public void step() {
-        System.out.println("Step number " + stepNumber);
         stepNumber++;
 
         freeAvailabilities();

@@ -16,6 +16,8 @@ public class Const {
     public static int EATING_OR_SLEEPING_PREFERENCE_IDX = 6;
     public static int MATING_OR_NEEDS_PREFERENCE_IDX    = 7;
 
-    public static int UNIVERSE_ROWS = 3;
-    public static int UNIVERSE_COLS = 3;
+    public static int UNIVERSE_ROWS = 9;
+    public static int UNIVERSE_COLS = 9;
+
+    public static int LARGE_POPULATION = 100;
 }

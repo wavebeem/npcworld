@@ -14,6 +14,7 @@ public class GUI extends JFrame {
     private Toolbar toolbar;
     private Infobar infobar;
     private World   world;
+    private NpcUniverse universe;
 
     private WorldSelector selector;
 
@@ -23,8 +24,7 @@ public class GUI extends JFrame {
     public GUI() {
         Util.tryForNiceTheme();
 
-        world    = new NpcWorld();
-        selector = new WorldSelector(this);
+        universe = new NpcUniverse();
 
         thread   = null;
         running  = false;
@@ -45,21 +45,32 @@ public class GUI extends JFrame {
         container.add(toolbar, BorderLayout.NORTH);
         container.add(infobar, BorderLayout.SOUTH);
 
+        setVisible(true);
+
+        selector = new WorldSelector(this);
+        selectWorldAt(0, 0);
+
         pack();
 
-        setVisible(true);
+        redraw();
+    }
+
+    public NpcUniverse getUniverse() {
+        return universe;
     }
 
     public void step() {
-        world.step();
+        universe.step();
         redraw();
     }
 
     public void redraw() {
+        Debug.echo("HEY YOU HEY YOU >>>>>>>>> grid =", grid);
         grid.repopulate();
         infobar.fillInfo();
-        selector.repaint();
         repaint();
+        //grid.repaint();
+        selector.repaint();
     }
 
     public World getWorld() {
@@ -68,6 +79,7 @@ public class GUI extends JFrame {
 
     public void setWorld(World world) {
         this.world = world;
+        redraw();
     }
 
     public void toggleRunning() {
@@ -104,7 +116,6 @@ public class GUI extends JFrame {
 
     public void selectWorldAt(int row, int col) {
         selector.selectWorldAt(row, col);
-        redraw();
     }
 
     private class RunnerThread extends Thread {

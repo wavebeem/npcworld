@@ -1,5 +1,5 @@
 public class Debug {
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     public static void echo(Object... args) {
         if (! DEBUG)

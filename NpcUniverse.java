@@ -15,7 +15,7 @@ public class NpcUniverse implements Universe {
         }
     }
 
-    public World getWorld(int row, int col){
+    public NpcWorld getWorld(int row, int col){
         return worlds[row][col];
     }
 

@@ -6,7 +6,7 @@ public class Settings {
     public static double mutationChance    = 0.1;
     public static double crossoverChance   = 0.1;
 
-    public static int runDelay = 250;
+    public static int runDelay = 0;
 
     public static int populationSize =   50;
     public static int maxSize        = 1000;
@@ -26,6 +26,6 @@ public class Settings {
     public static int healthinessPercent = 75;
 
     public static int matingFrequency = 10;
-    
+
     public static boolean migrationEnabled = false;
 }
