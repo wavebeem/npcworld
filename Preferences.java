@@ -91,7 +91,7 @@ public class Preferences extends JDialog {
         panel.setBorder(Util.makeBorder(pad));
 
         addPair("Run delay:", _runDelay);
-        
+
         addPair("Death chance:", _deathChance);
         addPair("Death chance max:", _deathChanceMax);
         addPair("Death chance change:", _deathChanceChange);
