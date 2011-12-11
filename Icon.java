@@ -38,35 +38,42 @@ public class Icon extends JComponent {
     private Font  font;
     private int   age;
     private int   action;
+    private int   gender;
+    private boolean isAlive;
 
     private final int width;
     private final int height;
     private final Dimension dimension;
 
-    public Icon(int gender) {
+    public Icon(NpcIndividual ind) {
         width  = 68;
         height = 68;
+        dimension = new Dimension(width, height);
 
         setFontSize(16);
 
-        age = 0;
-
-        color  = Color.RED;
-        filter = new ColorizeFilter(color);
-
-        dimension = new Dimension(width, height);
-
-        untaintedImage =
-            gender == Const.MALE?   imageMale:
-            gender == Const.FEMALE? imageFemale:
-            null;
-        image = untaintedImage;
-        image = filterImage(untaintedImage);
-
-        setAction(Const.PLAYING);
+        setIndividual(ind);
     }
 
-    public void setAction(int state) {
+    public void setIndividual(NpcIndividual ind) {
+        if (ind == null) {
+            isAlive = false;
+            bgColor = bgPlaying;
+            return;
+        }
+
+        isAlive = true;
+        setAction(ind.getCurrentAction());
+        setGender(ind.getGender());
+        setColor(ind.getColor());
+        setAge(ind.getAge());
+    }
+
+    private void setAge(int age) {
+        this.age = age;
+    }
+
+    private void setAction(int state) {
         this.action = state;
 
         switch (action) {
@@ -77,6 +84,14 @@ public class Icon extends JComponent {
         }
     }
 
+    private void setGender(int gender) {
+        this.gender = gender;
+        untaintedImage =
+            gender == Const.MALE?   imageMale:
+            gender == Const.FEMALE? imageFemale:
+            null;
+    }
+
     private void setFontSize(int size) {
         if (fontSize == size)
             return;
@@ -85,11 +100,7 @@ public class Icon extends JComponent {
         font     = new Font(Font.MONOSPACED, Font.BOLD, fontSize);
     }
 
-    public void happyBirthday() {
-        age++;
-    }
-
-    public void colorize(Color newColor) {
+    private void setColor(Color newColor) {
         color  = newColor;
         filter = new ColorizeFilter(color);
         image  = filterImage(untaintedImage);
@@ -102,6 +113,19 @@ public class Icon extends JComponent {
     public Dimension getPreferredSize() { return dimension; }
 
     public void paintComponent(Graphics g) {
+        if (isAlive) paintAlive(g);
+        else         paintDead(g);
+    }
+
+    private void paintDead(Graphics g) {
+        final int w = getWidth();
+        final int h = getHeight();
+
+        g.setColor(bgColor);
+        g.fillRect(0, 0, w, h);
+    }
+
+    private void paintAlive(Graphics g) {
         final int w = getWidth();
         final int h = getHeight();
 
@@ -124,7 +148,6 @@ public class Icon extends JComponent {
         g.drawImage(overlay, overlayX, overlayY, overlayW, overlayH, null);
 
         g.setColor(textBg);
-        //g.fillRect(0, 0, w, overlayH - 1);
 
         setFontSize(overlayH - 4);
         g.setFont(font);

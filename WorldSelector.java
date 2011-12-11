@@ -69,4 +69,8 @@ public class WorldSelector extends JFrame {
     public void deselect() {
         worlds[selRow][selCol].deselect();
     }
+
+    public void updateGUI() {
+        gui.redraw();
+    }
 }

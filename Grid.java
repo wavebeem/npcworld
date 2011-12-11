@@ -17,33 +17,41 @@ public class Grid extends JPanel {
 
     private LayoutManager layout;
 
-    private List<JComponent> icons;
+    private List<Icon> icons;
 
     private GUI gui;
 
     public Grid(int rows, int cols, GUI gui) {
         this.rows = rows;
         this.cols = cols;
-        this.size = Settings.maxSize;
+        this.size = rows * cols;
         this.gui  = gui;
 
-        icons = new ArrayList<JComponent>(size);
+        icons = new ArrayList<Icon>(rows * cols);
 
         layout = new GridLayout(rows, cols, gapH, gapV);
         setLayout(layout);
 
-        populateGrid();
-
         setBackground(bgColor);
 
         setBorder(Util.makeBorder(borderW));
+
+        for (int x=0; x < size; x++) {
+            icons.add(new Icon(null));
+        }
+
+        for (Icon icon: icons) {
+            add(icon);
+        }
+
+        populateGrid();
     }
 
     public void repopulate() {
         populateGrid();
     }
 
-    private void populateGrid() {
+    private synchronized void populateGrid() {
         clearGrid();
 
         NpcWorld world;
@@ -56,37 +64,27 @@ public class Grid extends JPanel {
         inds  = pop.getIndividuals();
         it    = inds.iterator();
 
-        for (int x=0; x < size; x++) {
-            icons.add(new NullIcon());
+        int x = 0;
+        while (x < size && it.hasNext()) {
+            NpcIndividual thing;
+            int idx;
+
+            thing = it.next();
+            idx   = thing.getID();
+
+            if (idx < size) {
+                icons.get(idx).setIndividual(thing);
+            }
+
+            x++;
         }
 
-        for (int x=0; x < size; x++) {
-            if (it.hasNext()) {
-                NpcIndividual thing;
-                JComponent icon;
-                int idx;
-
-                thing = it.next();
-                idx   = thing.getID();
-                icon  = thing.getWidget();
-
-                icons.set(idx, icon);
-            }
-        }
-
-        Iterator<JComponent> iconIt = icons.iterator();
-        for (int i=0; i < (rows * cols); i++) {
-            if (iconIt.hasNext()) {
-                add(iconIt.next());
-            }
-            else {
-                break;
-            }
-        }
+        repaint();
     }
 
-    private void clearGrid() {
-        removeAll();
-        icons.clear();
+    private synchronized void clearGrid() {
+        for (Icon icon: icons) {
+            icon.setIndividual(null);
+        }
     }
 }

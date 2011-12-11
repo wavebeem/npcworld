@@ -104,5 +104,6 @@ public class WorldWidget extends JComponent implements MouseListener {
         Debug.echo("You clicked me!", row, col);
         selector.selectWorldAt(row, col);
         selector.repaint();
+        selector.updateGUI();
     }
 }

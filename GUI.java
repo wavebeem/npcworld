@@ -70,7 +70,6 @@ public class GUI extends JFrame {
         infobar.fillInfo();
         repaint();
         selector.repaint();
-        //grid.repaint();
     }
 
     public World getWorld() {
@@ -79,7 +78,6 @@ public class GUI extends JFrame {
 
     public void setWorld(World world) {
         this.world = world;
-        //redraw();
     }
 
     public void toggleRunning() {
