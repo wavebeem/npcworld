@@ -26,6 +26,7 @@ public class Settings {
     public static int healthinessPercent = 75;
 
     public static int matingFrequency = 10;
+	public static int migratingFrequency = 10;
 
     public static boolean migrationEnabled = false;
 }
