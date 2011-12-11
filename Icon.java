@@ -14,15 +14,17 @@ public class Icon extends JComponent {
 
     private Color textBg = new Color(0x111111);
 
-    private static final Image overlayEating   = Util.loadImage("img/overlays/eating.png");
-    private static final Image overlayMating   = Util.loadImage("img/overlays/mating.png");
-    private static final Image overlaySleeping = Util.loadImage("img/overlays/sleeping.png");
-    private static final Image overlayPlaying  = null;
+    private static final Image overlayEating    = Util.loadImage("img/overlays/eating.png");
+    private static final Image overlayMating    = Util.loadImage("img/overlays/mating.png");
+    private static final Image overlaySleeping  = Util.loadImage("img/overlays/sleeping.png");
+    private static final Image overlayMigrating = Util.loadImage("img/overlays/migrating.png");
+    private static final Image overlayPlaying   = null;
 
-    private static final Color bgEating   = new Color(0x115511);
-    private static final Color bgMating   = new Color(0x661111);
-    private static final Color bgSleeping = new Color(0x114455);
-    private static final Color bgPlaying  = new Color(0x111111);
+    private static final Color bgEating    = new Color(0x115511);
+    private static final Color bgMating    = new Color(0x661111);
+    private static final Color bgSleeping  = new Color(0x114455);
+    private static final Color bgMigrating = new Color(0x777711);
+    private static final Color bgPlaying   = new Color(0x111111);
 
     private static final Image imageMale   = Util.loadImage("img/sprites/m.png");
     private static final Image imageFemale = Util.loadImage("img/sprites/f.png");
@@ -77,10 +79,11 @@ public class Icon extends JComponent {
         this.action = state;
 
         switch (action) {
-        case Const.SLEEPING: overlay = overlaySleeping; bgColor = bgSleeping; break;
-        case Const.EATING:   overlay = overlayEating;   bgColor = bgEating;   break;
-        case Const.MATING:   overlay = overlayMating;   bgColor = bgMating;   break;
-        case Const.PLAYING:  overlay = overlayPlaying;  bgColor = bgPlaying;  break;
+        case Const.SLEEPING:  overlay = overlaySleeping;  bgColor = bgSleeping;  break;
+        case Const.EATING:    overlay = overlayEating;    bgColor = bgEating;    break;
+        case Const.MATING:    overlay = overlayMating;    bgColor = bgMating;    break;
+        case Const.MIGRATING: overlay = overlayMigrating; bgColor = bgMigrating; break;
+        case Const.PLAYING:   overlay = overlayPlaying;   bgColor = bgPlaying;   break;
         }
     }
 
