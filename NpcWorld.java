@@ -18,6 +18,9 @@ public class NpcWorld implements World {
 
     private int stepNumber;
 
+    private int numMales;
+    private int numFemales;
+
     private boolean[] availableIDs = new boolean[Settings.maxSize];
 
     public NpcWorld() {
@@ -55,11 +58,18 @@ public class NpcWorld implements World {
         matingPoolMales = new ArrayList<NpcIndividual>();
         matingPoolFemales = new ArrayList<NpcIndividual>();
 
+        numMales   = 0;
+        numFemales = 0;
+
         for (Integer k : keys) {
             NpcIndividual ind = (NpcIndividual)population.get(k);
 
             boolean killed = reap(ind);
-            if (!killed) makeAction(ind);
+            if (!killed) {
+                makeAction(ind);
+                if (ind.getGender() == Const.MALE) numMales++;
+                else numFemales++;
+            }
         }
 
         reproduce(); // mate the individuals who chose to mate
@@ -219,11 +229,11 @@ public class NpcWorld implements World {
     }
 
     public int percentMale() {
-        int numMales = 0;
-        for (NpcIndividual ind : population.getIndividuals()) {
-            if (ind.getGender() == Const.MALE) numMales++;
-        }
         return (int)((100.0 * numMales) / population.getSize());
+    }
+
+    public int percentFemale() {
+        return (int)((100.0 * numFemales) / population.getSize());
     }
 
     public ArrayList<NpcIndividual> getMigrationPool() {
