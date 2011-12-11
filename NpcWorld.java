@@ -26,6 +26,10 @@ public class NpcWorld implements World {
     public NpcWorld() {
         population = new NpcPopulation();
 
+        matingPoolMales   = new ArrayList<NpcIndividual>();
+        matingPoolFemales = new ArrayList<NpcIndividual>();
+        migrationPool     = new ArrayList<NpcIndividual>();
+
         for (int i = 0; i < availableIDs.length; i++) {
             availableIDs[i] = true;
         }
