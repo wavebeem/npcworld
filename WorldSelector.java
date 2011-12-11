@@ -59,10 +59,14 @@ public class WorldSelector extends JFrame {
 
     public void selectWorldAt(int row, int col) {
         Debug.echo("Select world at (", row, ",", col, ")");
-        worlds[row][col].deselect();
+        worlds[selRow][selCol].deselect();
         selRow = row;
         selCol = col;
-        worlds[row][col].select();
+        worlds[selRow][selCol].select();
         gui.setWorld(worlds[row][col].getWorld());
+    }
+
+    public void deselect() {
+        worlds[selRow][selCol].deselect();
     }
 }

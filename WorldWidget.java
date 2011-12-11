@@ -4,6 +4,9 @@ import java.awt.event.*;
 
 public class WorldWidget extends JComponent implements MouseListener {
     private Color color = new Color(0x00cc00);
+    private static final Color innerBg = new Color(0x222222);
+    private static final Color selBg = new Color(0xccaa00);
+    private static final int borderWidth = 3;
 
     private Dimension dimension = new Dimension(64, 64);
 
@@ -32,14 +35,42 @@ public class WorldWidget extends JComponent implements MouseListener {
     }
 
     private void calculateColor() {
-        color = new Color(
-            Util.random.nextInt(256),
-            Util.random.nextInt(256),
-            Util.random.nextInt(256)
-        );
+        color = new Color(0x444444);
     }
 
     public void paintComponent(Graphics g) {
+        if (selected) selectedPaint(g);
+        else          unselectedPaint(g);
+    }
+
+    private void selectedPaint(Graphics g) {
+        final int x   = 0;
+        final int y   = 0;
+        final int w   = getWidth();
+        final int h   = getHeight();
+        final int off = borderWidth;
+        final int xx  = x  + off;
+        final int yy  = y  + off;
+        final int ww  = w  - off - off;
+        final int hh  = h  - off - off;
+        final int xxx = xx + 1;
+        final int yyy = yy + 1;
+        final int www = ww - 2;
+        final int hhh = hh - 2;
+
+        calculateColor();
+
+        g.setColor(selBg);
+        g.fillRect(x, y, w, h);
+
+        g.setColor(innerBg);
+        g.fillRect(xx, yy, ww, hh);
+
+        g.setColor(color);
+        g.fillRect(xxx, yyy, www, hhh);
+    }
+
+    private void unselectedPaint(Graphics g) {
         final int w = getWidth();
         final int h = getHeight();
 
@@ -59,7 +90,6 @@ public class WorldWidget extends JComponent implements MouseListener {
 
     public void mouseClicked(MouseEvent e) {
         Debug.echo("You clicked me!", row, col);
-        gui.setWorld(world);
-        gui.redraw();
+        gui.selectWorldAt(row, col);
     }
 }

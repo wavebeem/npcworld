@@ -58,6 +58,7 @@ public class GUI extends JFrame {
     public void redraw() {
         grid.repopulate();
         infobar.fillInfo();
+        selector.repaint();
         repaint();
     }
 
@@ -99,6 +100,11 @@ public class GUI extends JFrame {
 
     public boolean isRunning() {
         return running;
+    }
+
+    public void selectWorldAt(int row, int col) {
+        selector.selectWorldAt(row, col);
+        redraw();
     }
 
     private class RunnerThread extends Thread {
