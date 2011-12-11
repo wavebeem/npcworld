@@ -16,7 +16,7 @@ public class NpcDna implements Dna {
     };
     private boolean[] nucleotides;
     private int eatingDuration, sleepDuration, colorIdx, gender;
-	private double migrationChance;
+    private double migrationChance;
     private boolean eatingOrSleepingPreference, matingOrNeedsPreference;
 
     public NpcDna(){
@@ -44,7 +44,7 @@ public class NpcDna implements Dna {
         initColorIdx();
         initEatingOrSleepingPreference();
         initMatingOrNeedsPreference();
-		initMigrationChance();
+        initMigrationChance();
     }
     private void initGender(){
         gender = toDecimal(nucleotides, Const.GENDER_IDX, Const.EATING_DURATION_IDX);
@@ -70,10 +70,10 @@ public class NpcDna implements Dna {
         matingOrNeedsPreference = nucleotides[Const.MATING_OR_NEEDS_PREFERENCE_IDX];
         Debug.echo("Initializing the MatingOrNeedsPreference based off nucleotides to "+matingOrNeedsPreference+".");
     }
-	private void initMigrationChance(){
-		migrationChance = (100.0/15)*toDecimal(nucleotides, Const.MIGRATION_CHANCE_IDX, Const.NUCLEOTIDES_SIZE);
+    private void initMigrationChance(){
+        migrationChance = (100.0/15)*toDecimal(nucleotides, Const.MIGRATION_CHANCE_IDX, Const.NUCLEOTIDES_SIZE);
         Debug.echo("Initializing the MigrationChance based off nucleotides to "+migrationChance+".");
-	}
+    }
 
     //Converts the given boolean array starting at startIdx (inclusive) to endIndex (exclusive) to decimal
     private static int toDecimal(boolean[] array, int startIdx, int endIdx){
@@ -110,7 +110,7 @@ public class NpcDna implements Dna {
     public boolean getMatingOrNeedsPreference(){
         return matingOrNeedsPreference;
     }
-	public double getMigrationChance(){
-		return migrationChance;
-	}
+    public double getMigrationChance(){
+        return migrationChance;
+    }
 }
