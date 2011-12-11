@@ -8,6 +8,7 @@ public class Toolbar extends JPanel {
     private JButton buttonStep;
     private JButton buttonPlay;
     private JButton buttonPrefs;
+    private JButton buttonAbout;
     private JButton buttonQuit;
 
     private GUI   gui;
@@ -20,11 +21,14 @@ public class Toolbar extends JPanel {
         buttonStep  = Util.clickableButton("Step",        new StepAction());
         buttonPlay  = Util.clickableButton("Play/Pause",  new PlayAction());
         buttonPrefs = Util.clickableButton("Preferences", new PreferencesAction());
+        buttonAbout = Util.clickableButton("About",       new AboutAction());
         buttonQuit  = Util.clickableButton("Quit",        new QuitAction());
 
         add(buttonStep);
         add(buttonPlay);
+        add(new JSeparator());
         add(buttonPrefs);
+        add(buttonAbout);
         add(buttonQuit);
     }
 
@@ -48,14 +52,22 @@ public class Toolbar extends JPanel {
         }
     }
 
+    private class AboutAction implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            new About();
+        }
+    }
+
     private void disableOtherButtons() {
         buttonStep .setEnabled(false);
         buttonPrefs.setEnabled(false);
+        buttonAbout.setEnabled(false);
     }
 
     private void enableOtherButtons() {
         buttonStep .setEnabled(true);
         buttonPrefs.setEnabled(true);
+        buttonAbout.setEnabled(true);
     }
 
     private class PreferencesAction implements ActionListener {

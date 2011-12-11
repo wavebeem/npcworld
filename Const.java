@@ -21,4 +21,20 @@ public class Const {
     public static int UNIVERSE_COLS = 4;
 
     public static int LARGE_POPULATION = 100;
+
+    public static final String ABOUT_TEXT =
+    "Copyright 2011 Brian Mock, Ashley Fisher, Trevor Griswold\n" +
+    "Copyright 2011 Brian Mock, Ashley Fisher, Trevor Griswold\n" +
+    "Copyright 2011 Brian Mock, Ashley Fisher, Trevor Griswold\n" +
+    "Copyright 2011 Brian Mock, Ashley Fisher, Trevor Griswold\n" +
+    "Copyright 2011 Brian Mock, Ashley Fisher, Trevor Griswold\n" +
+    "Copyright 2011 Brian Mock, Ashley Fisher, Trevor Griswold\n" +
+    "Copyright 2011 Brian Mock, Ashley Fisher, Trevor Griswold\n" +
+    "Copyright 2011 Brian Mock, Ashley Fisher, Trevor Griswold\n" +
+    "Copyright 2011 Brian Mock, Ashley Fisher, Trevor Griswold\n" +
+    "Copyright 2011 Brian Mock, Ashley Fisher, Trevor Griswold\n" +
+    "Copyright 2011 Brian Mock, Ashley Fisher, Trevor Griswold\n" +
+    "Copyright 2011 Brian Mock, Ashley Fisher, Trevor Griswold\n" +
+    "Copyright 2011 Brian Mock, Ashley Fisher, Trevor Griswold\n" +
+    "Copyright 2011 Brian Mock, Ashley Fisher, Trevor Griswold";
 }
