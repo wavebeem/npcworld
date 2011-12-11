@@ -43,6 +43,7 @@ public class Preferences extends JFrame {
     private JSpinner _healthinessPercent;
 
     private JSpinner _matingFrequency;
+	private JSpinner _migratingFrequency;
 
     private JCheckBox _migrationEnabled;
 
@@ -75,6 +76,7 @@ public class Preferences extends JFrame {
         _healthinessPercent = new JSpinner();
 
         _matingFrequency = new JSpinner();
+		_migratingFrequency = new JSpinner();
 
         _migrationEnabled = new JCheckBox();
 
@@ -114,6 +116,7 @@ public class Preferences extends JFrame {
         addPair("Healthiness percent:", _healthinessPercent);
 
         addPair("Mating frequency:", _matingFrequency);
+		addPair("Migrating frequency:", _migratingFrequency);
         addPair("Allow migration:", _migrationEnabled);
 
         okPanel.add(Util.clickableButton("OK",     new OkHandler()));
@@ -160,6 +163,7 @@ public class Preferences extends JFrame {
         _healthinessPercent.setValue(Settings.healthinessPercent);
 
         _matingFrequency.setValue(Settings.matingFrequency);
+		_migratingFrequency.setValue(Settings.migratingFrequency);
 
         _migrationEnabled.setSelected(Settings.migrationEnabled);
     }
@@ -191,6 +195,7 @@ public class Preferences extends JFrame {
         Settings.healthinessPercent = Util.intFromSpinner(_healthinessPercent);
 
         Settings.matingFrequency = Util.intFromSpinner(_matingFrequency);
+		Settings.migratingFrequency = Util.intFromSpinner(_migratingFrequency);
 
         Settings.migrationEnabled = _migrationEnabled.isSelected();
     }
