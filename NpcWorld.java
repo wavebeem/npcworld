@@ -68,8 +68,9 @@ public class NpcWorld implements World {
         ArrayList<Integer> keys = new ArrayList<Integer>(population.getKeys());
         Collections.shuffle(keys);
 
-        matingPoolMales = new ArrayList<NpcIndividual>();
+        matingPoolMales   = new ArrayList<NpcIndividual>();
         matingPoolFemales = new ArrayList<NpcIndividual>();
+        migrationPool     = new ArrayList<NpcIndividual>();
 
         numMales   = 0;
         numFemales = 0;
