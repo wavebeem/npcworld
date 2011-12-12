@@ -64,6 +64,14 @@ public class Toolbar extends JPanel {
         buttonAbout.setEnabled(false);
     }
 
+    public void disableSimulationButtons() {
+        buttonStep .setEnabled(false);
+        buttonPlay .setEnabled(false);
+        buttonPrefs.setEnabled(false);
+        buttonAbout.setEnabled(true);
+        buttonQuit .setEnabled(true);
+    }
+
     private void enableOtherButtons() {
         buttonStep .setEnabled(true);
         buttonPrefs.setEnabled(true);

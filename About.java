@@ -10,7 +10,7 @@ public class About extends JDialog {
 
     private static final int margin = 6;
 
-    private static final Dimension preferredSize = new Dimension(400, 400);
+    private static final Dimension preferredSize = new Dimension(500, 400);
 
     public About() {
         super((Frame) null, true);
