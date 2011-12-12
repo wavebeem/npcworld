@@ -120,14 +120,20 @@ public class GUI extends JFrame {
         public void run() {
             long startTime;
             long stepTime;
+
             while (running) {
                 startTime = System.currentTimeMillis();
                 step();
                 stepTime = System.currentTimeMillis() - startTime;
-                if (stepTime < Settings.runDelay)
+
+                if (stepTime < Settings.runDelay) {
                     Util.sleep((int) (Settings.runDelay - stepTime));
-                if(universe.getPopulationSize() <= 0)
+                }
+
+                if (universe.getPopulationSize() <= 0) {
+                    toolbar.disableSimulationButtons();
                     endRun();
+                }
             }
         }
     }
