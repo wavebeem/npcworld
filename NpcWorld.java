@@ -261,6 +261,7 @@ public class NpcWorld implements World {
         int id = 0;
         while(!availableIDs[id]) {
             id++;
+            if (id >= availableIDs.length) return;
         }
         ind.setID(id);
         availableIDs[id] = false;
