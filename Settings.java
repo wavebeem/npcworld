@@ -1,3 +1,7 @@
+/**
+ * @author Brian Mock (mock.brian@gmail.com)
+ */
+
 public class Settings {
     public static double deathChance       = 0.01;
     public static double deathChanceMax    = 0.50;

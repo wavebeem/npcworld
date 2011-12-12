@@ -1,3 +1,7 @@
+/**
+ * @author Brian Mock (mock.brian@gmail.com)
+ */
+
 import java.awt.image.*;
 import java.awt.*;
 

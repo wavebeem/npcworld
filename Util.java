@@ -1,3 +1,7 @@
+/**
+ * @author Brian Mock (mock.brian@gmail.com)
+ */
+
 import javax.swing.border.*;
 import javax.swing.UIManager.*;
 import javax.swing.*;

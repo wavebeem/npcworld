@@ -1,3 +1,7 @@
+/**
+ * @author Brian Mock (mock.brian@gmail.com)
+ */
+
 public class Debug {
     private static final boolean DEBUG = false;
 
