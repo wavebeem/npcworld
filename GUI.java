@@ -126,6 +126,8 @@ public class GUI extends JFrame {
                 stepTime = System.currentTimeMillis() - startTime;
                 if (stepTime < Settings.runDelay)
                     Util.sleep((int) (Settings.runDelay - stepTime));
+                if(universe.getPopulationSize() <= 0)
+                    endRun();
             }
         }
     }
